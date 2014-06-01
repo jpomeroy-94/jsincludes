@@ -1,4 +1,4 @@
-var ajaxObject = Class.create({
+var AjaxObject = Class.create({
 //--- this object is non functional
 //--- initialize
 	initialize: function() {
