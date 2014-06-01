@@ -1,4 +1,4 @@
-var formObject = Class.create({
+var FormObject = Class.create({
 // 042813 writeForToServer writes dataIdSuffix to etc for validateForm to use
 // 050513 runOperationV2 change formid|form name to formname|form name, same for jobname, operationname
 //--- data structures
@@ -30,7 +30,7 @@ var formObject = Class.create({
 	},
 //==============================================================
 	setFormName: function(formName){
-		containerObj.jsDebug('formObj.setFormName('+formName+')');
+		ContainerObj.jsDebug('FormObj.setFormName('+formName+')');
 		//alert ('set formname: '+formName);//xxx
 		this.formName=formName;
 		tst=this.formHash[this.formName];
@@ -46,14 +46,14 @@ var formObject = Class.create({
 	setName: function(formName){this.setFormName(formName);},
 //==============================================================
 	loadEtc: function(etcName,etcValue){
-		containerObj.jsDebug('formObj.loadEtc('+etcName+')');
+		ContainerObj.jsDebug('FormObj.loadEtc('+etcName+')');
 		this.formHash[this.formName]['etc'].set(etcName,etcValue);
 		//left off here
 		//alert (etcName+': '+etcValue);//xxx
 	},
 //==============================================================
 	setEtcValue: function(etcName,etcValue){
-		containerObj.jsDebug('formObj.loadEtc('+etcName+')');
+		ContainerObj.jsDebug('FormObj.loadEtc('+etcName+')');
 		this.formHash[this.formName]['etc'].set(etcName,etcValue);
 		//left off here
 		//alert (etcName+': '+etcValue);//xxx
@@ -67,7 +67,7 @@ var formObject = Class.create({
 	},
 //=============================================================
 	addFormData: function(tableId,tableRowNo,formData){
-		containerObj.jsDebug('formObj.addFormData(tableId,tableRowNo,dataHash');
+		ContainerObj.jsDebug('FormObj.addFormData(tableId,tableRowNo,dataHash');
 		formName=this.formName;
 		var formIdStrg=this.formHash[this.formName]['etc'].get('dbcolumnids');
 		var formIdAry=formIdStrg.split('~');
@@ -110,7 +110,7 @@ var formObject = Class.create({
 			if (theBase != null){
 				var dataType=dataTypesAry[lp];
 				if (dataType=='date' && useValue != ''){
-					useValue=utilObj.convertDate(useValue,'dateconv1');
+					useValue=UtilObj.convertDate(useValue,'dateconv1');
 				}
 				//- update the form dom
 				theBase.value=useValue;
@@ -130,30 +130,30 @@ var formObject = Class.create({
 	},
 //=============================================================
 	addFragment: function(fragName,formFragment){
-		containerObj.jsDebug('formObj.addFragment('+fragName+',*formFragment*)');
+		ContainerObj.jsDebug('FormObj.addFragment('+fragName+',*formFragment*)');
 		this.formFragmentAry.set(fragName,formFragment);
 	},
 //==============================================================
 	setOptionXrefForm: function(formName){
-		containerObj.jsDebug('formObj.setOptionXrefForm('+formName+')');
+		ContainerObj.jsDebug('FormObj.setOptionXrefForm('+formName+')');
 		if (this.formHash[formName]==undefined){this.formHash[formName]=new Hash();}
 		this.formHash[formName]['formoptionxrefary']=new Array();
 	},
 //==============================================================
 	addOptionXref: function(formName,optionValue,formXrefValue){
-		containerObj.jsDebug('formObj.addOptionXref('+formName+','+optionValue+','+formXrefValue+')');
+		ContainerObj.jsDebug('FormObj.addOptionXref('+formName+','+optionValue+','+formXrefValue+')');
 		this.formHash[formName]['formoptionxrefary'][optionValue]=formXrefValue;
 	},
 //==============================================================
 	updateEtc: function(formName,etcName,etcValue){
-		containerObj.jsDebug('formObj.updateEtc('+etcName+','+etcValue+')');
+		ContainerObj.jsDebug('FormObj.updateEtc('+etcName+','+etcValue+')');
 		if (this.formHash[formName]==undefined){this.formHash[formName]=new Hash();}
 		if (this.formHash[formName]['etc']==undefined){this.formHash[formName]['etc']=new Hash();}
 		this.formHash[formName]['etc'].set(etcName,etcValue);
 	},
 //==============================================================
 	loadFragment: function(theValue,formName,containerId) {
-		containerObj.jsDebug('formObj.loadFragment('+theValue+','+formName+','+containerId+')');
+		ContainerObj.jsDebug('FormObj.loadFragment('+theValue+','+formName+','+containerId+')');
 		base=$(containerId);
 		var fragName=this.formHash[formName]['formoptionxrefary'][theValue];
 		if (fragName != undefined){
@@ -168,7 +168,7 @@ var formObject = Class.create({
 	},
 //==============================================================
 	loadFormSetups: function(formName,dataDefs,displayDefs){
-		containerObj.jsDebug('formObj.loadFOrmSetups('+formName+',*datadefs*,*displaydefs*)');
+		ContainerObj.jsDebug('FormObj.loadFOrmSetups('+formName+',*datadefs*,*displaydefs*)');
 		if (this.formHash[formName]==undefined){this.formHash[formName]=new Hash();}
 		if (this.formHash[formName]['etc']==undefined){this.formHash[formName]['etc']=new Hash();}
 		this.formHash[formName]['etc'].set('datadefs',dataDefs);
@@ -180,7 +180,7 @@ var formObject = Class.create({
 	},
 //==============================================================
 	loadFormSetupsV2deprecated: function(formName,dataDefNames,dataDefIds){
-		containerObj.jsDebug('formObj.loadFOrmSetupsV2');
+		ContainerObj.jsDebug('FormObj.loadFOrmSetupsV2');
 		if (this.formHash[formName]==undefined){this.formHash[formName]=new Hash();}
 		if (this.formHash[formName]['etc']==undefined){this.formHash[formName]['etc']=new Hash();}
 		this.formHash[formName]['etc'].set('datadefnames',dataDefNames);
@@ -189,10 +189,10 @@ var formObject = Class.create({
 	},
 //==============================================================
 	openForm: function(formData){
-		containerObj.jsDebug('formObj.openForm(*formData*');
+		ContainerObj.jsDebug('FormObj.openForm(*formData*');
 		formName=this.formName;
 		if (formData == undefined){var formData = new Hash();}
-		//containerObj.displayAry(this.formHash[this.formName]['etc']);//xxx
+		//ContainerObj.displayAry(this.formHash[this.formName]['etc']);//xxx
 		var containerId=this.formHash[this.formName]['etc'].get('formcontainerid');
 		var formIdStrg=this.formHash[this.formName]['etc'].get('dbcolumnids');
 		var formIdAry=formIdStrg.split('~');
@@ -231,7 +231,7 @@ var formObject = Class.create({
 				$(useId).value=useValue;
 			}
 			catch (err){
-				alert ('formObj.openForm invalid useid: '+useId+', usename: '+useName+', formname: '+formName);
+				alert ('FormObj.openForm invalid useid: '+useId+', usename: '+useName+', formname: '+formName);
 				exit();
 			}
 			var regEx=formRegExsAry[lp];
@@ -249,12 +249,12 @@ var formObject = Class.create({
 			$(containerId).style.visibility='visible';
 		}
 		catch (err){
-			alert ('formObj.opernform invalid containerid: '+containerId+', formname: '+formName);
+			alert ('FormObj.opernform invalid containerid: '+containerId+', formname: '+formName);
 		}
 	},
 //==============================================================
 	buildFormValidationFields: function(){
-		containerObj.jsDebug('formObj.buildFormValidationFields()');
+		ContainerObj.jsDebug('FormObj.buildFormValidationFields()');
 		formName=this.formName;
 //- get ids
 		var formIdStrg=this.formHash[this.formName]['etc'].get('dbcolumnids');
@@ -302,7 +302,7 @@ var formObject = Class.create({
 	},
 //==============================================================
 	fileForm: function(){
-		containerObj.jsDebug('formObj.fileForm()');
+		ContainerObj.jsDebug('FormObj.fileForm()');
 		var fatalError=this.validateForm();
 		//alert ('fatal error: '+fatalError);//xxx
 		if (!fatalError){
@@ -318,23 +318,23 @@ var formObject = Class.create({
 				var useValue = $(useId).value;
 				formData.set(useName,useValue);
 			}
-			tableObj.fileUpdate(formData);
+			TableObj.fileUpdate(formData);
 			var containerId=this.formHash[this.formName]['etc'].get('formcontainerid');
 			if (containerId != undefined){$(containerId).style.visibility='hidden';}
-			//containerObj.displayAry(this.formHash[this.formName]['etc']);//xxx
+			//ContainerObj.displayAry(this.formHash[this.formName]['etc']);//xxx
 		}
 	},
 //=============================================================
 	getFormData: function(formName){
-		userObj.doLog('init','in formobj.getformdata form('+formName+')');
+		UserObj.doLog('init','in formobj.getformdata form('+formName+')');
 		var test=this.formHash[formName];
 		if (test != undefined){
 			this.setFormName(formName);
 			var formIdStrg=this.formHash[this.formName]['etc'].get('dbcolumnids');
-			//userObj.doLog('x',formIdStrg);
+			//UserObj.doLog('x',formIdStrg);
 			var formIdAry=formIdStrg.split('~');
 			var formNameStrg=this.formHash[this.formName]['etc'].get('dbcolumnnames');
-			//userObj.doLog('x',formNameStrg);
+			//UserObj.doLog('x',formNameStrg);
 			var formNameAry=formNameStrg.split('~');
 			//alert ('formidstrg: '+formIdStrg+', formnamestrg: '+formNameStrg);//xxxf
 			var noCols=formIdAry.length;
@@ -343,21 +343,21 @@ var formObject = Class.create({
 				var useId=formIdAry[lp];
 				var useName=formNameAry[lp];
 				var useValue = $(useId).value;
-				userObj.doLog('x','name: '+useName+', useid: '+useId+' usevalue: '+useValue);
+				UserObj.doLog('x','name: '+useName+', useid: '+useId+' usevalue: '+useValue);
 				formData.set(useName,useValue);
 			}
 		}
 		else {
 			var formData = new Array();
 		}
-		//containerObj.displayHash('formobj.getformdata',formData);//xxxf
-		//userObj.displayLog('formObj.getFormData at end');
+		//ContainerObj.displayHash('formobj.getformdata',formData);//xxxf
+		//UserObj.displayLog('FormObj.getFormData at end');
 		return formData;
 	},
 //==============================================================
 	fileFormV2: function(rowNo){
-		containerObj.jsDebug('formObj.fileFormV2(rowNo)');
-		var fatalError=formObj.validateForm();
+		ContainerObj.jsDebug('FormObj.fileFormV2(rowNo)');
+		var fatalError=FormObj.validateForm();
 		//alert ('fatal error: '+fatalError);//xxx
 		if (!fatalError){
 			var formIdStrg=this.formHash[this.formName]['etc'].get('dbcolumnids');
@@ -371,27 +371,27 @@ var formObject = Class.create({
 				try {
 					useId=useId.replace(/NN/,rowNo);
 				} catch (err){
-					alert ('formObj.fileFormV2: '+err+' useid: '+useId);
+					alert ('FormObj.fileFormV2: '+err+' useid: '+useId);
 				}
 				var useName=formNameAry[lp];
 				try {
 					var theDataType=this.formHash[this.formName]['datatypesary'][lp];
 				} catch (err){
-					alert ('formObj.fileFormV2: '+err+', formname: '+formName+', lp: '+lp);
+					alert ('FormObj.fileFormV2: '+err+', formname: '+formName+', lp: '+lp);
 				}
 				try {
 					var useValue = $(useId).value;
 				} catch (err){
-					alert ('formObj.fileFormV2: '+err+' useid: '+useId);
+					alert ('FormObj.fileFormV2: '+err+' useid: '+useId);
 				}
 				if (theDataType=='date'){
-					useValue=utilObj.convertDate(useValue,'date1');
+					useValue=UtilObj.convertDate(useValue,'date1');
 				}
 				formData.set(useName,useValue);
 			}
 			//xxxd - last left off
-			tableObj.setCurrentRow(formData);
-			tableObj.fileUpdate(formData);
+			TableObj.setCurrentRow(formData);
+			TableObj.fileUpdate(formData);
 /*
 // dont want to hide it since it is a menu
 			var containerId=this.getEtcValue('formcontainerid');
@@ -401,19 +401,19 @@ var formObject = Class.create({
 					alert ('form '+formName+' has a bad containerid: '+containerId);
 				}
 			}
-			//containerObj.displayAry(this.formHash[this.formName]['etc']);//xxx
+			//ContainerObj.displayAry(this.formHash[this.formName]['etc']);//xxx
 */
 		}
 	},
 //==============================================================
 	validateForm: function(){
-		userObj.unRestrictHide();//xxxf ????
+		UserObj.unRestrictHide();//xxxf ????
 		var fatalError=false;
 		try {
 			var formNameStrg=this.formHash[this.formName]['etc'].get('dbcolumnnames');
 			var formNameAry=formNameStrg.split('~');
 		} catch (e){
-			alert ('formObj.validateForm: formname: '+formName+', dbcolumnnames is null');
+			alert ('FormObj.validateForm: formname: '+formName+', dbcolumnnames is null');
 			exit();
 		}
 		var formErrorReportType=this.getEtcValue('formerrorreporttype');
@@ -442,7 +442,7 @@ var formObject = Class.create({
 				}
 				catch (e){
 					vl=1;
-					//alert ('formObj.validateForm: '+e+', theId: '+theId+', form: '+this.formName);
+					//alert ('FormObj.validateForm: '+e+', theId: '+theId+', form: '+this.formName);
 				}
 			if (regEx != ''){
 				regExLastCh=regEx.substr(regEx.length-1,1);
@@ -470,7 +470,7 @@ var formObject = Class.create({
 						try {
 							$(theErrId).innerHTML=errorMsg;
 						} catch (e){
-							alert ('formObj.validateForm: '+dbColumnName+' '+errorMsg );
+							alert ('FormObj.validateForm: '+dbColumnName+' '+errorMsg );
 							exit();
 						}
 					}
@@ -489,16 +489,16 @@ var formObject = Class.create({
 			else {alert (dbColumnName+' does not have an id field!!!');}
 		}	
 		if (fatalError===true){
-			userObj.restrictHide();
+			UserObj.restrictHide();
 		}
 		return fatalError;
 	},
 //==============================================================
 	validateInput: function(fieldName){
-		containerObj.jsDebug('formObj.validateInput('+fieldName+')');
+		ContainerObj.jsDebug('FormObj.validateInput('+fieldName+')');
 		try {
 			var fieldHash=this.formHash[this.formName]['formfields'][fieldName];
-			//containerObj.displayHash('formObj.validateInput formfields formname: '+this.formName,this.formHash[this.formName]['formfields']);//xxxd
+			//ContainerObj.displayHash('FormObj.validateInput formfields formname: '+this.formName,this.formHash[this.formName]['formfields']);//xxxd
 		}
 		catch (err){
 			this.buildFormValidationFields();
@@ -563,7 +563,7 @@ var formObject = Class.create({
 	},
 //==============================================================
 	setupValidations: function(formName, colName, dbTableMetaNotNull, validateRegEx, validateKeyMap, validateErrorMsg){
-		containerObj.jsDebug('formObj.setupValidations('+formName+','+colName+','+dbTableMetaNotNull+','+validateRegEx+','+validateKeyMap+','+validateErrorMsg+')');
+		ContainerObj.jsDebug('FormObj.setupValidations('+formName+','+colName+','+dbTableMetaNotNull+','+validateRegEx+','+validateKeyMap+','+validateErrorMsg+')');
 		var tst=this.formHash[formName];
 			if (tst==undefined){
 				this.formHash[formName]=new Hash();
@@ -574,7 +574,7 @@ var formObject = Class.create({
 	},
 //==============================================================
 	writeFormToServer: function(formName,jobName){
-		containerObj.jsDebug('formObj.writeFormToServer('+formName+','+jobName+')');
+		ContainerObj.jsDebug('FormObj.writeFormToServer('+formName+','+jobName+')');
 		this.setFormName(formName);
 		var operationName='insert_db_from_ajax';
 		var sendDataAry=new Array();
@@ -586,7 +586,7 @@ var formObject = Class.create({
 		var dbColumnNames=this.getEtcValue('dbcolumnnames');
 		var dbColumnIds=this.getEtcValue('dbcolumnids');
 		//alert ('formname: '+this.formName+', formname: '+formName);//xxxd
-		//containerObj.displayAry(this.formHash[this.formName]['etc']);//xxxd
+		//ContainerObj.displayAry(this.formHash[this.formName]['etc']);//xxxd
 		sendDataAry[1]='datadef|'+dbColumnNames;
 //--- get form data
 		var dbColumnIdsAry=dbColumnIds.split('~');
@@ -600,7 +600,7 @@ var formObject = Class.create({
 		//- how do I get a selected list which is options[selectedindex]
 			if (dataId != ''){
 				try {dataValue=$(dataId).value;}
-				catch (err){alert ('formObj.writeFormToServer: '+err+' dataid: '+dataId);}
+				catch (err){alert ('FormObj.writeFormToServer: '+err+' dataid: '+dataId);}
 			}
 			else {dataValue='';}
 			dataSendValues+=useDelim+dataValue;
@@ -610,7 +610,7 @@ var formObject = Class.create({
 		sendDataAry[3]='formname|'+formName;
 		var sessionName=this.getEtcValue('sessionname');
 		sendDataAry[0]='sessionname|'+sessionName;
-		ajaxObj.postAjaxSimple(formName,jobName,operationName,dbTableName,sendDataAry);
+		AjaxObj.postAjaxSimple(formName,jobName,operationName,dbTableName,sendDataAry);
 },
 //============================================================== xxxf
 	writeFormToServerV2: function(jobParamsAry){
@@ -641,7 +641,7 @@ var formObject = Class.create({
 			}
 			catch (err) {
 				alert ('formobj.writeformtoserverv2('+err+'): dbcolumnids: '+dbColumnIds+' formname: '+formName);
-				containerObj.displayHash('etc',this.formHash[this.formName]);//xxxf
+				ContainerObj.displayHash('etc',this.formHash[this.formName]);//xxxf
 			}
 			var dataSendValues='';
 			var theNo=dbColumnIdsAry.length;
@@ -654,11 +654,11 @@ var formObject = Class.create({
 				if (dataId != ''){
 					var useDataId=dataId+dataIdSuffix;
 					try {dataValue=$(useDataId).value;}
-					catch (err){alert ('formObj.writeFormToServerv2: '+err+' dataid: '+useDataId);}
+					catch (err){alert ('FormObj.writeFormToServerv2: '+err+' dataid: '+useDataId);}
 				}
 				else {dataValue='';}
 				//xxxf - below may not always be a string
-				dataValue=utilObj.cleanString(dataValue);
+				dataValue=UtilObj.cleanString(dataValue);
 				dataSendValues+=useDelim+dataValue;
 				useDelim=valueDelim;
 			}
@@ -684,7 +684,7 @@ var formObject = Class.create({
 //			- stick it into senddataary
 			sendDataAry[4]='paramnames|'+sendDataParamNames;
 			sendDataAry[5]='paramvalues|'+sendDataParamValues;
-			ajaxObj.postAjaxSimple(formName,jobName,operationName,dbTableName,sendDataAry);
+			AjaxObj.postAjaxSimple(formName,jobName,operationName,dbTableName,sendDataAry);
 		}
 	},
 //==============================================================
@@ -692,7 +692,7 @@ var formObject = Class.create({
 		this.setFormName(formName);
 		var sessionName=this.getEtcValue('sessionname');
 		//alert ('formname: '+formName);//xxxd
-		//containerObj.displayAry(formObj.formHash['metaprofileform']['etc']);//xxxd
+		//ContainerObj.displayAry(FormObj.formHash['metaprofileform']['etc']);//xxxd
 		sendDataAry=new Array();
 		var operationName='retrieve_form_db_from_ajax';
 		var dbTableName=this.getEtcValue('dbtablename');
@@ -702,13 +702,13 @@ var formObject = Class.create({
 		sendDataAry[3]='paramnames|sessionname';
 		sendDataAry[4]='paramvalues|'+sessionName;
 		//alert (jobName+', '+operationName+', '+sendDataAry);//xxxd
-		ajaxObj.getFormDbViaAjax(jobName,operationName,sendDataAry);
+		AjaxObj.getFormDbViaAjax(jobName,operationName,sendDataAry);
 		//alert ('done');//xxxd
 	},
 //==============================================================
 // xxxf! don't clear out hidden fields
 	clearFormFields: function(formName){
-		containerObj.jsDebug('formObj.clearFormFields('+formName+')');
+		ContainerObj.jsDebug('FormObj.clearFormFields('+formName+')');
 		var dbColumnIds=this.formHash[formName]['etc'].get('dbcolumnids');
 		//alert ('clearformfields for '+formName+' dbcolumnids: '+dbColumnIds);//xxxf
 		var dbColumnIdsAry=dbColumnIds.split('~');
@@ -724,7 +724,7 @@ var formObject = Class.create({
 					try {
 						$(dataId).value='';
 					}
-					catch (err){alert ('formObj.clearformfields ('+err+') formname: '+formName+', dataid: '+dataId);}
+					catch (err){alert ('FormObj.clearformfields ('+err+') formname: '+formName+', dataid: '+dataId);}
 				}
 			}
 		}
@@ -754,15 +754,15 @@ var formObject = Class.create({
 			var dbColumnValue=workHash.get(dbColumnName);
 			//xxxf - below should not be run if this is used for
 			//       setup fields where %br%, etc. are left untouched
-			dbColumnValue=utilObj.convertString(dbColumnValue);
+			dbColumnValue=UtilObj.convertString(dbColumnValue);
 			//alert (dbColumnId+': '+dbColumnValue);//xxxd
 			try {$(dbColumnId).value=dbColumnValue;}
-			catch (err){alert ('formObj.loadFormFields: '+err+' dbcolumnid: '+dbColumnId);}
+			catch (err){alert ('FormObj.loadFormFields: '+err+' dbcolumnid: '+dbColumnId);}
 		}
 	},
 //==============================================================
 	deleteEntry: function(keyName){
-		containerObj.jsDebug('formObj.validateForm()');
+		ContainerObj.jsDebug('FormObj.validateForm()');
 		var formIdStrg=this.formHash[this.formName]['etc'].get('dbcolumnids');
 		var formIdAry=formIdStrg.split('~');
 		var formNameStrg=this.formHash[this.formName]['etc'].get('dbcolumnnames');
@@ -778,14 +778,14 @@ var formObject = Class.create({
 			}
 		}
 		if (keyValue != ''){
-			tableObj.deleteEntry(keyValue);
+			TableObj.deleteEntry(keyValue);
 			this.exitForm();
 		}
 		return keyValue;
 	},
 //==============================================================
 	deleteEntryV2: function(keyName,dateName,menuRowNo){
-		containerObj.jsDebug('formObj.validateForm()');
+		ContainerObj.jsDebug('FormObj.validateForm()');
 		var formIdStrg=this.formHash[this.formName]['etc'].get('dbcolumnids');
 		var formIdAry=formIdStrg.split('~');
 		var formNameStrg=this.formHash[this.formName]['etc'].get('dbcolumnnames');
@@ -808,7 +808,7 @@ var formObject = Class.create({
 			}
 				if (ctr>1){theLp=theCnt;}
 		}
-		tableObj.deleteEntry(keyValue);
+		TableObj.deleteEntry(keyValue);
 		//xxxd: was aborting: this.exitForm();
 		var returnHash=new Hash();
 		returnHash['datevalue']=dateValue;
@@ -836,7 +836,7 @@ var formObject = Class.create({
 		var dbColumnIds=this.getEtcValue('dbcolumnids');
 //--- get fixed definition form data
 		var operationName=this.getEtcValue('formoperation');
-		var companyProfileId=userObj.getEtcValue('companyprofileid');
+		var companyProfileId=UserObj.getEtcValue('companyprofileid');
 		var jobName=$('jobid').value;
 		var dbTableName=this.getEtcValue('dbtablename');
 		sendDataAry[sendDataAry.length]='dbtablename|'+dbTableName;
@@ -853,12 +853,12 @@ var formObject = Class.create({
 			dataId=dbColumnIdsAry[lp];
 			if (dataId != ''){
 				try {dataValue=$(dataId).value;}
-				catch (err){alert ('formObj.writeFormToServer: '+err+' dataid: '+dataId);}
+				catch (err){alert ('FormObj.writeFormToServer: '+err+' dataid: '+dataId);}
 			}
 			else {dataValue='';}
 			sendDataAry[sendDataAry.length]=dataId+'|'+dataValue;
 		}
-		ajaxObj.postFormDataAjax(jobName,operationName,sendDataAry);
+		AjaxObj.postFormDataAjax(jobName,operationName,sendDataAry);
 },
 //=============================================================
 	runOperationV2: function(jobName,formName){
@@ -871,7 +871,7 @@ var formObject = Class.create({
 		var dbColumnNames=this.getEtcValue('dbcolumnnames');
 //		--- get fixed definition form data
 		var operationName=this.getEtcValue('formoperation');
-		var companyProfileId=userObj.getEtcValue('companyprofileid');
+		var companyProfileId=UserObj.getEtcValue('companyprofileid');
 		var jobName=$('jobid').value;
 		var dbTableName=this.getEtcValue('dbtablename');
 		sendDataAry[sendDataAry.length]='dbtablename|'+dbTableName;
@@ -890,18 +890,18 @@ var formObject = Class.create({
 			dataName=dbColumnNamesAry[lp];
 			if (dataId != ''){
 				try {dataValue=$(dataId).value;}
-				catch (err){alert ('formObj.writeFormToServer: '+err+' dataid: '+dataId);}
+				catch (err){alert ('FormObj.writeFormToServer: '+err+' dataid: '+dataId);}
 			}
 			else {dataValue='';}
 			sendDataAry[sendDataAry.length]=dataName+'|'+dataValue;
 		}
-		ajaxObj.postFormDataAjax(jobName,operationName,sendDataAry);
+		AjaxObj.postFormDataAjax(jobName,operationName,sendDataAry);
 	},
 //==============================================================
 	writeMultFormsToServer: function(jobParamsAry){
 		jobName=jobParamsAry[0];
 		formName=jobParamsAry[1];
-		containerObj.jsDebug('formObj.writeFormToServer('+formName+','+jobName+')');
+		ContainerObj.jsDebug('FormObj.writeFormToServer('+formName+','+jobName+')');
 		this.setFormName(formName);
 		var operationName=this.getEtcValue('formoperation');
 		var sendDataAry=new Array();
@@ -915,7 +915,7 @@ var formObject = Class.create({
 		var formCount=this.getEtcValue('formcount');
 		if (formCount == undefined){formCount=0;}
 		//alert ('formname: '+formName+', formCount: '+formCount);//xxxf
-		//containerObj.displayHash(formName,this.formHash[this.formName]['etc']);//xxxf
+		//ContainerObj.displayHash(formName,this.formHash[this.formName]['etc']);//xxxf
 		sendDataAry[1]='datadef|'+dbColumnNames;
 		var dbColumnIdsAry=dbColumnIds.split('~');
 		var theNo=dbColumnIdsAry.length;
@@ -939,7 +939,7 @@ var formObject = Class.create({
 					var useDataId=dataId+dataIdSuffix;
 					try {dataValue=$(useDataId).value;}
 					catch (err){
-						alert ('formObj.writeMultiFormsToServer('+formLp+'): '+err+' dataid: '+useDataId);
+						alert ('FormObj.writeMultiFormsToServer('+formLp+'): '+err+' dataid: '+useDataId);
 						exit();
 					}
 				}
@@ -985,13 +985,13 @@ var formObject = Class.create({
 		sendDataAry[5]='paramvalues|'+sendDataParamValues;
 		var theLen=sendDataAry.length;
 		//alert ('formname: '+formName+', jobname: '+jobName+', operationName: '+operationName+', senddataary[0]: '+sendDataAry[0]+"\n"+', senddataary[1]: '+sendDataAry[1]+"\n"+', senddataary[2]: '+sendDataAry[2]);//xxxf
-		ajaxObj.postAjaxSimple(formName,jobName,operationName,dbTableName,sendDataAry);
+		AjaxObj.postAjaxSimple(formName,jobName,operationName,dbTableName,sendDataAry);
 	},
 //==============================================================
 	convertField: function(jobParamsAry){
 		var fieldToConvert=jobParamsAry[0];
 		var fieldValue=$(fieldToConvert).value;
-		fieldValue=utilObj.convertString(fieldValue);
+		fieldValue=UtilObj.convertString(fieldValue);
 		$(fieldToConvert).value=fieldValue;
 	},
 //==============================================================

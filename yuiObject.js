@@ -1,7 +1,7 @@
-var yuiObject = Class.create({
+var YuiObject = Class.create({
 	setupDrag: function(idName){
 		//xxxf666
-		//utilObj.writeLog('debug9id','yuidrag');
+		//UtilObj.writeLog('debug9id','yuidrag');
 		var dmy=1;
 		dmy=2;
 		YUI({combine: true, timeout: 10000}).use('dd-drag', function(Y) {

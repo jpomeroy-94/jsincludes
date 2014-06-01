@@ -1,4 +1,4 @@
-var calendarObject = Class.create({
+var CalendarObject = Class.create({
 //- data structures
 //this.calendarName
 //this.calendarHash[<calendarName>]['etc']['id']		... id
@@ -35,21 +35,21 @@ var calendarObject = Class.create({
 	},
 //==============================================================================
 	reset: function(job,container,loadId,menuName,menuElementNo){
-		containerObj.jsDebug('calendarObj.reset(job,container,loadId,menuName,menuElementNo)');
+		ContainerObj.jsDebug('CalendarObj.reset(job,container,loadId,menuName,menuElementNo)');
 		calendarName=this.calendarName;
 		var tableName=this.getEtcValue('calendarentrydbtablename');
-		tableObj.setTableName(tableName);
+		TableObj.setTableName(tableName);
 		this.calendarHash[calendarName]['etc']= new Hash();
 		this.calendarHash[calendarName]['dataary'] = new Array();
 		this.calendarHash[calendarName]['workdayary'] = new Array();
-		menuObj.reset(job,container,loadId,menuName,menuElementNo);
+		MenuObj.reset(job,container,loadId,menuName,menuElementNo);
 	},
 //==============================================================================
 	itIsInside: function(startDate,endDate,checkDate){
-		containerObj.jsDebug('calendarObj.itIsInside(startDate,endDate,checkDate');
-		var startDateMins=utilObj.getDateStuff(startDate,'allminutes');
-		var endDateMins=utilObj.getDateStuff(endDate,'allminutes');
-		var checkDateMins=utilObj.getDateStuff(checkDate,'allminutes');
+		ContainerObj.jsDebug('CalendarObj.itIsInside(startDate,endDate,checkDate');
+		var startDateMins=UtilObj.getDateStuff(startDate,'allminutes');
+		var endDateMins=UtilObj.getDateStuff(endDate,'allminutes');
+		var checkDateMins=UtilObj.getDateStuff(checkDate,'allminutes');
 		if (endDateMins >= checkDateMins && startDateMins <= checkDateMins){
 			var itIsOk=true;
 		}
@@ -58,7 +58,7 @@ var calendarObject = Class.create({
 	},
 //==============================================================================
 	displayDay: function(base,theCode){
-		containerObj.jsDebug('calendarObj.displayDay(base,theCode)');
+		ContainerObj.jsDebug('CalendarObj.displayDay(base,theCode)');
 		var calendarName=this.calendarName;
 		var theDayAll=base.innerHTML;
 		var theDayAllAry=theDayAll.split('<');
@@ -67,35 +67,35 @@ var calendarObject = Class.create({
 		this.setEtcValue('daydisplay',0);
 		var theMonthNo=this.getEtcValue('curmonthno');
 		var theYearNo=this.getEtcValue('curyearno');
-		//containerObj.displayAry(this.calendarHash[calendarName]['etc']);//
+		//ContainerObj.displayAry(this.calendarHash[calendarName]['etc']);//
 		var theTableName=this.getEtcValue('calendarentrydbtablename');
 		var selectColumn=this.getEtcValue('calendarentrydatename');
-		tableObj.setTableName(theTableName);
-		var dataAry=tableObj.getRowsByDate(theYearNo,theMonthNo,theDayNo,selectColumn,0);		
+		TableObj.setTableName(theTableName);
+		var dataAry=TableObj.getRowsByDate(theYearNo,theMonthNo,theDayNo,selectColumn,0);		
 		//- get id of table and do clears
 		var calendarMenuId=this.getEtcValue('calendarmenuid');
 		//- delete all rows with forms
 		var startRow=1;
 		var endRow=99;
-		utilObj.deleteTableRows(calendarMenuId,startRow,endRow);
+		UtilObj.deleteTableRows(calendarMenuId,startRow,endRow);
 		var formName=this.getEtcValue('calendarmenuformname');
-		formObj.setFormName(formName);
+		FormObj.setFormName(formName);
 		//- set insert form
-		utilObj.insertTableRow(calendarMenuId,1);
-		formObj.addFormHtml(calendarMenuId,1,'insert');
+		UtilObj.insertTableRow(calendarMenuId,1);
+		FormObj.addFormHtml(calendarMenuId,1,'insert');
 		dataHash=new Hash();
 		var entryDateName=this.getEtcValue('calendarentrydatename');
 		var thisEntryDate=theMonthNo+'/'+theDayNo+'/'+theYearNo;
 		dataHash.set(entryDateName,thisEntryDate);
-		formObj.addFormData(calendarMenuId,1,dataHash);
+		FormObj.addFormData(calendarMenuId,1,dataHash);
 		//- set update forms
 		var theLength=dataAry.length;
 		for (var rowLp=0;rowLp<theLength;rowLp++){
-			var dataHash=tableObj.convertToHash(dataAry[rowLp]);
+			var dataHash=TableObj.convertToHash(dataAry[rowLp]);
 			var tableRowNo=Number(rowLp)+2;
-			utilObj.insertTableRow(calendarMenuId,tableRowNo);
-			formObj.addFormHtml(calendarMenuId,tableRowNo,'update');
-			formObj.addFormData(calendarMenuId,tableRowNo,dataHash);
+			UtilObj.insertTableRow(calendarMenuId,tableRowNo);
+			FormObj.addFormHtml(calendarMenuId,tableRowNo,'update');
+			FormObj.addFormData(calendarMenuId,tableRowNo,dataHash);
 		}
 		//- loop on bottom two
 		//- load repeating form into table cell
@@ -106,9 +106,9 @@ var calendarObject = Class.create({
 		try {
 			theBase.style.visibility='visible';
 		} catch (err){
-			alert ('calendarObj.displayDay: '+err+' menuContainerId: '+menuContainerId);
+			alert ('CalendarObj.displayDay: '+err+' menuContainerId: '+menuContainerId);
 		}
-		containerObj.setFocus(menuContainerId,15);	
+		ContainerObj.setFocus(menuContainerId,15);	
 		//alert ('set loadclass: '+menuContainerId+' to 15');//xxxd
 	},
 	//===================================================xxxf22
@@ -122,48 +122,48 @@ var calendarObject = Class.create({
 	},
 //==============================================================================
 	getMenuDisplay: function(theDays){
-		containerObj.jsDebug('calendarObj.getMenuDisplay(theDays)');
+		ContainerObj.jsDebug('CalendarObj.getMenuDisplay(theDays)');
 		var calendarName=this.calendarName;
 		this.setEtcValue('daydisplay',theDays);
 		var theDayNo=this.getEtcValue('curdayno');
 		var theMonthNo=this.getEtcValue('curmonthno');
 		var theYearNo=this.getEtcValue('curyearno');
-		//containerObj.displayAry(this.calendarHash[calendarName]['etc']);//
+		//ContainerObj.displayAry(this.calendarHash[calendarName]['etc']);//
 		var theTableName=this.getEtcValue('calendarentrydbtablename');
 		var selectColumn=this.getEtcValue('calendarentrydatename');
-		tableObj.setTableName(theTableName);
-		var dataAry=tableObj.getRowsByDate(theYearNo,theMonthNo,theDayNo,selectColumn,theDays);		
+		TableObj.setTableName(theTableName);
+		var dataAry=TableObj.getRowsByDate(theYearNo,theMonthNo,theDayNo,selectColumn,theDays);		
 		//- get id of table and do clears
 		var calendarMenuId=this.getEtcValue('calendarmenuid');
 		//- delete all rows with forms
 		var startRow=1;
 		var endRow=99;
-		utilObj.deleteTableRows(calendarMenuId,startRow,endRow);
+		UtilObj.deleteTableRows(calendarMenuId,startRow,endRow);
 		var formName=this.getEtcValue('calendarmenuformname');
-		formObj.setFormName(formName);
+		FormObj.setFormName(formName);
 		//- set insert form
-		utilObj.insertTableRow(calendarMenuId,1);
-		formObj.addFormHtml(calendarMenuId,1,'insert');
+		UtilObj.insertTableRow(calendarMenuId,1);
+		FormObj.addFormHtml(calendarMenuId,1,'insert');
 		dataHash=new Hash();
 		var entryDateName=this.getEtcValue('calendarentrydatename');
 		var thisEntryDate=theMonthNo+'/'+theDayNo+'/'+theYearNo;
 		dataHash.set(entryDateName,thisEntryDate);
-		formObj.addFormData(calendarMenuId,1,dataHash);
+		FormObj.addFormData(calendarMenuId,1,dataHash);
 		//- set update forms
 		var theLength=dataAry.length;
 		for (var rowLp=0;rowLp<theLength;rowLp++){
-			var dataHash=tableObj.convertToHash(dataAry[rowLp]);
+			var dataHash=TableObj.convertToHash(dataAry[rowLp]);
 			var tableRowNo=Number(rowLp)+2;
-			utilObj.insertTableRow(calendarMenuId,tableRowNo);
-			formObj.addFormHtml(calendarMenuId,tableRowNo,'update');
-			formObj.addFormData(calendarMenuId,tableRowNo,dataHash);
+			UtilObj.insertTableRow(calendarMenuId,tableRowNo);
+			FormObj.addFormHtml(calendarMenuId,tableRowNo,'update');
+			FormObj.addFormData(calendarMenuId,tableRowNo,dataHash);
 		}
 		var menuContainerId=this.getEtcValue('calendarmenucontainerid');
-		containerObj.setFocus(menuContainerId,15);
+		ContainerObj.setFocus(menuContainerId,15);
 	},
 //==============================================================================
 	getDayInfo: function(base){
-		containerObj.jsDebug('calendarObj.getDayInfo(base)');
+		ContainerObj.jsDebug('CalendarObj.getDayInfo(base)');
 		var calendarName=this.calendarName;
 		var theDayAll=base.innerHTML;
 		var theDayAllAry=theDayAll.split('<');
@@ -177,7 +177,7 @@ var calendarObject = Class.create({
 	},
 //==============================================================================
 	getClientJob: function(theDate,searchString){
-		containerObj.jsDebug('calendarObj.getClientJob(theDate,searchString');
+		ContainerObj.jsDebug('CalendarObj.getClientJob(theDate,searchString');
 		var calendarName=this.calendarName;
 		var keyName=this.getEtcValue('calendarentrykeyname');
 		var dateName=this.getEtcValue('calendarentrydatename');
@@ -213,7 +213,7 @@ var calendarObject = Class.create({
 	},
 //==============================================================================
 	openForm: function(base,formType){
-		containerObj.jsDebug('calendarObj.fileForm()');
+		ContainerObj.jsDebug('CalendarObj.fileForm()');
 		calendarName=this.calendarName;
 		var currentEventKey=this.getEtcValue('thekey');
 		if (currentEventKey != undefined){
@@ -252,9 +252,9 @@ var calendarObject = Class.create({
 			}
 		}
 		var dbTableName=this.getEtcValue('calendarentrydbtablename');
-		tableObj.setTableName(dbTableName);
+		TableObj.setTableName(dbTableName);
 		var formName=this.getEtcValue('formname');
-		formObj.setFormName(formName);
+		FormObj.setFormName(formName);
 		keyName=this.getEtcValue('calendarentrykeyname');
 		tst=formData.get(keyName);
 		if (tst=='' || tst==undefined){
@@ -263,13 +263,13 @@ var calendarObject = Class.create({
 		}
 		var dateName=this.getEtcValue('calendarentrydatename');
 		var entryDate_raw=formData.get(dateName);
-		var entryDate=utilObj.convertDate(entryDate_raw,'dateconv1');
+		var entryDate=UtilObj.convertDate(entryDate_raw,'dateconv1');
 		formData.set(dateName,entryDate);
-		formObj.openForm(formData);
+		FormObj.openForm(formData);
 	},
 //==============================================================================
 	setupDirs: function(){
-		containerObj.jsDebug('calendarObj.setupDirs()');
+		ContainerObj.jsDebug('CalendarObj.setupDirs()');
 		calendarName=this.calendarName;
 		tst=this.calendarHash[calendarName];
 		if (tst==undefined){
@@ -290,14 +290,14 @@ var calendarObject = Class.create({
 	},
 //==============================================================================
 	loadDesc: function (saveName,saveValue){
-		containerObj.jsDebug('calendarObj.setupDirs('+saveName+', '+saveValue+')');
+		ContainerObj.jsDebug('CalendarObj.setupDirs('+saveName+', '+saveValue+')');
 		this.setupDirs();
 		calendarName=this.calendarName;
 		this.calendarHash[calendarName]['desc'].set(saveName,saveValue);
 	},
 //==============================================================================
 	setupDataDirs: function (yearNo,monthNo,dayNo){
-		containerObj.jsDebug('calendarObj.setupDataDirs(yearNo,monthNo,dayNo');
+		ContainerObj.jsDebug('CalendarObj.setupDataDirs(yearNo,monthNo,dayNo');
 		calendarName=this.calendarName;
 		tst=this.calendarHash[calendarName]['dataary'][yearNo];
 		if (tst==undefined){this.calendarHash[calendarName]['dataary'][yearNo]=new Array();}
@@ -308,7 +308,7 @@ var calendarObject = Class.create({
 	},
 //==============================================================================
 	loadEventData: function (yearNo,monthNo,dayNo,dataStrg){
-		containerObj.jsDebug('calendarObj.loadData('+yearNo+', '+monthNo+', '+dayNo+', '+dataStrg+')');
+		ContainerObj.jsDebug('CalendarObj.loadData('+yearNo+', '+monthNo+', '+dayNo+', '+dataStrg+')');
 		//vl=prompt(yearNo+', '+monthNo+', '+dayNo+', '+dataStrg,'exit');if (vl=='exit'){exit();}
 		this.setupDataDirs(yearNo,monthNo,dayNo);
 		var workAry=dataStrg.split('~');
@@ -341,7 +341,7 @@ var calendarObject = Class.create({
 	},
 //==============================================================================
 	loadDataDir: function (yearNo,monthNo,dayNo,eventHash){
-		containerObj.jsDebug('calendarObj.loadDataDir('+yearNo+', '+monthNo+', '+dayNo+'dataStrg)');
+		ContainerObj.jsDebug('CalendarObj.loadDataDir('+yearNo+', '+monthNo+', '+dayNo+'dataStrg)');
 		var keyName=this.getEtcValue('calendarentrykeyname');
 		var titleName=this.getEtcValue('calendarentrytitlename');
 		var dateName=this.getEtcValue('calendarentrydatename');
@@ -349,7 +349,7 @@ var calendarObject = Class.create({
 		var className=this.getEtcValue('calendarentryclassname');
 		var theTitle=eventHash.get(titleName);
 		var theDate=eventHash.get(dateName);
-		var theDate=utilObj.convertDate(theDate,'internal');
+		var theDate=UtilObj.convertDate(theDate,'internal');
 		var theTime=eventHash.get(timeName);
 		var theClass=eventHash.get(className);
 		var theKey=eventHash.get(keyName);
@@ -380,12 +380,12 @@ var calendarObject = Class.create({
 		var theLen=this.calendarHash[this.calendarName]['dataary'][yearNo][monthNo][dayNo].length;
 		for (var lp=0;lp<theLen;lp++){
 			var rowHash=this.calendarHash[calendarName]['dataary'][yearNo][monthNo][dayNo][lp];
-			containerObj.displayAry(rowHash);		
+			ContainerObj.displayAry(rowHash);		
 		}
 	},
 //==============================================================================
 	loadEtc: function(saveName,saveValue){
-		containerObj.jsDebug('calendarObj.loadEtc('+saveName+', '+saveValue+')');
+		ContainerObj.jsDebug('CalendarObj.loadEtc('+saveName+', '+saveValue+')');
 		this.setEtcValue(saveName,saveValue);
 	},
 //==============================================================================
@@ -394,14 +394,14 @@ var calendarObject = Class.create({
 	},
 //==============================================================================
 	setEtcValue: function(saveName,saveValue){
-		containerObj.jsDebug('calendarObj.setEtcValue('+saveName+', '+saveValue+')');
+		ContainerObj.jsDebug('CalendarObj.setEtcValue('+saveName+', '+saveValue+')');
 		calendarName=this.calendarName;
 		this.setupDirs();
 		this.calendarHash[calendarName]['etc'].set(saveName,saveValue);	
 	},	
 //==============================================================================
 	getEtcValue: function(getName){
-		containerObj.jsDebug('calendarObj.getEtcValue(getName)');
+		ContainerObj.jsDebug('CalendarObj.getEtcValue(getName)');
 		try {
 			var etcValue=this.calendarHash[this.calendarName]['etc'].get(getName);
 		} 
@@ -413,7 +413,7 @@ var calendarObject = Class.create({
 	},
 //==============================================================================
 	areYouAlive: function(){
-		containerObj.jsDebug('calendarObj.areYouAlive()');
+		ContainerObj.jsDebug('CalendarObj.areYouAlive()');
 		calendarName=this.calendarName;
 		if (calendarName==undefined){var areYouAlive=false;}
 		else {var areYouAlive=true;}
@@ -421,7 +421,7 @@ var calendarObject = Class.create({
 	},
 //==============================================================================
 	 displayMessage: function(aBase,calendarName) {
-		containerObj.jsDebug('calendarObj.displayMessage(*base*, '+calendarName+')');
+		ContainerObj.jsDebug('CalendarObj.displayMessage(*base*, '+calendarName+')');
 		calendarName=this.calendarName;
 		var eventString=aBase.innerHTML;
 		var eventAry=eventString.split('~');
@@ -432,7 +432,7 @@ var calendarObject = Class.create({
 	},
 //==============================================================================
 	nextMonth: function(calendarName) {
-		containerObj.jsDebug('calendarObj.nextMonth('+calendarName+')');
+		ContainerObj.jsDebug('CalendarObj.nextMonth('+calendarName+')');
 		calendarName=this.calendarName;
 		var curMonthNo=this.calendarHash[calendarName]['etc'].get('curmonthno');
 		var curYearNo=this.calendarHash[calendarName]['etc'].get('curyearno');
@@ -474,7 +474,7 @@ var calendarObject = Class.create({
 //- display it
 			//alert ($('thecalendarid').innerHTML);//xxxf
 			//xxx: below should be defineable
-			//containerObj.displayAry(this.calendarHash[calendarName]['etc']);//xxxf
+			//ContainerObj.displayAry(this.calendarHash[calendarName]['etc']);//xxxf
 			var doInsertClass='doinsert';
 			var theBase=$(calendarId);
 			var monthNo=this.calendarHash[calendarName]['etc'].get('curmonthno');
@@ -512,7 +512,7 @@ var calendarObject = Class.create({
 				//alert ('calendarid: '+calendarId+', thebase: '+theBase);//xxxd
 				theBase.caption.innerHTML=monthNameAry[(monthNo-1)]+' '+yearNo;
 			}
-			catch (err){alert ('calendarObj.displaymonth('+err+') monthno: '+monthNo);}
+			catch (err){alert ('CalendarObj.displaymonth('+err+') monthno: '+monthNo);}
 			var doneIt=false;
 			for (var rowCtr=1;rowCtr<=6;rowCtr++){
 				var rowAccess=theBase.rows[rowCtr].cells;
@@ -596,16 +596,16 @@ var calendarObject = Class.create({
 	},
 //==============================================================================
 	copyInTable: function(dbTableName){
-		containerObj.jsDebug('calendarObj.copyInTable('+dbTableName+')');
+		ContainerObj.jsDebug('CalendarObj.copyInTable('+dbTableName+')');
 		var dateColumnName=this.getEtcValue('calendarentrydatename');
 		//xxxr - needs to be redone below
 		var theDateType='clientjob';
 		//- end of stuff I need to change
-		tableObj.setTableName(dbTableName);
-		var dataDef=tableObj.getEtcValue('datadef');
+		TableObj.setTableName(dbTableName);
+		var dataDef=TableObj.getEtcValue('datadef');
 		var dataDefAry=dataDef.split('~');
 		var dataCnt=dataDefAry.length;
-		var tableRowsAry=tableObj.getSortedRows();
+		var tableRowsAry=TableObj.getSortedRows();
 		var tableRowCnt=tableRowsAry.length;
 		for (var dataRowLp=0;dataRowLp<tableRowCnt;dataRowLp++){
 			tableRowAry=tableRowsAry[dataRowLp];
@@ -614,7 +614,7 @@ var calendarObject = Class.create({
 				newTableRowHash.set(dataDefAry[dataLp],tableRowAry[dataLp]);
 			}
 			var tableRowDate=newTableRowHash.get(dateColumnName);
-			dateHash=utilObj.convertDateToHash(tableRowDate);
+			dateHash=UtilObj.convertDateToHash(tableRowDate);
 			var theYear=dateHash.get('yearno');
 			var theMonth=dateHash.get('monthno');
 			var theDay=dateHash.get('dayno');
@@ -631,10 +631,10 @@ var calendarObject = Class.create({
 		//xxx - needs to be ajax fed!!!
 		var theDateType='clientjob';
 		//xxx - needs to be found in employeeprofile
-		formObj.fileForm();
-		newTableRowHash=tableObj.getLastRowUpdated();
+		FormObj.fileForm();
+		newTableRowHash=TableObj.getLastRowUpdated();
 		var tableRowDate=newTableRowHash.get(dateColumnName);
-		var dateHash=utilObj.convertDateToHash(tableRowDate);
+		var dateHash=UtilObj.convertDateToHash(tableRowDate);
 		theYear=dateHash.get('yearno');
 		theMonth=dateHash.get('monthno');
 		theDay=dateHash.get('dayno');
@@ -662,10 +662,10 @@ var calendarObject = Class.create({
 		//xxx - needs to be ajax fed!!!
 		var theDateType='clientjob';
 		//xxx - needs to be found in employeeprofile
-		formObj.fileFormV2(rowNo);
-		newTableRowHash=tableObj.getLastRowUpdated();
+		FormObj.fileFormV2(rowNo);
+		newTableRowHash=TableObj.getLastRowUpdated();
 		var tableRowDate=newTableRowHash.get(dateColumnName);
-		var dateHash=utilObj.convertDateToHash(tableRowDate);
+		var dateHash=UtilObj.convertDateToHash(tableRowDate);
 		theYear=dateHash.get('yearno');
 		theMonth=dateHash.get('monthno');
 		theDay=dateHash.get('dayno');
@@ -703,7 +703,7 @@ var calendarObject = Class.create({
 //============================================================================== 
 	deleteEntry: function(){
 		var keyName=this.getEtcValue('calendarentrykeyname');
-		var keyValue=formObj.deleteEntry(keyName);
+		var keyValue=FormObj.deleteEntry(keyName);
 		this.removeClientJob(keyValue);
 		this.displayMonth();
 	},
@@ -731,7 +731,7 @@ var calendarObject = Class.create({
 	deleteEntryV2: function(menuRowNo){
 		var keyName=this.getEtcValue('calendarentrykeyname');
 		var dateName=this.getEtcValue('calendarentrydatename');
-		var returnHash=formObj.deleteEntryV2(keyName,dateName,menuRowNo);
+		var returnHash=FormObj.deleteEntryV2(keyName,dateName,menuRowNo);
 		var keyValue=returnHash['keyvalue'];
 		var dateValue=returnHash['datevalue'];
 		this.removeCalendarData(keyValue,dateValue);
@@ -742,7 +742,7 @@ var calendarObject = Class.create({
 //==============================================================================
 	removeCalendarData: function(keyValue,dateValue){
 		var calendarName=this.calendarName;
-		var dateHash=utilObj.convertDateToHash(dateValue);
+		var dateHash=UtilObj.convertDateToHash(dateValue);
 		var theMonthNo=Number(dateHash.get('monthno'));
 		var theYearNo=Number(dateHash.get('yearno'));
 		var theDayNo=Number(dateHash.get('dayno'));
@@ -805,7 +805,7 @@ var calendarObject = Class.create({
 				});
 			});
 		});
-		//containerObj.displayAry(this.calendarHash[calendarName]['dataary'][2009][3][29][0]);//xxxf
+		//ContainerObj.displayAry(this.calendarHash[calendarName]['dataary'][2009][3][29][0]);//xxxf
 	},
 //============================================================================== 
 	doAlert: function(alertMsg){

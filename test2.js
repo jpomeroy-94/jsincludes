@@ -1,4 +1,4 @@
-var calendarObject = Class.create({
+var CalendarObject = Class.create({
 //--- initialize
 	initialize: function() {
 		null;

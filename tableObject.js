@@ -1,4 +1,4 @@
-var tableObject = Class.create({
+var TableObject = Class.create({
 // 2/1/13 new method showHideTableColumn
 //- data structures
 //this.tableName
@@ -31,7 +31,7 @@ var tableObject = Class.create({
 	doAlert: function(alertMsg){alert (alertMsg);},
 //========================================================
 // ?@ displayEtc: function()?C display all of tablehash[tablename]['etc']
-	displayEtc: function(){containerObj.displayHash('table/etc',this.tableHash[this.tableName]['etc']);},
+	displayEtc: function(){ContainerObj.displayHash('table/etc',this.tableHash[this.tableName]['etc']);},
 //==============================================================================
 // ?@ deleteTableRowServer: function(jobName, tableName, dbKeyValue)?C calls postAjaxSimple(formname,jobname,operation,tablename,senddataary), 
 	deleteTableRowServer: function(jobName,tableName,dbKeyValue){
@@ -40,7 +40,7 @@ var tableObject = Class.create({
 		var dbKeyName=this.getEtcValue('keyname');
 		var sessionName=this.getEtcValue('sessionname');
 		//alert ('sessionname: '+sessionName);//xxxd
-		//containerObj.displayAry(this.tableHash[this.tableName]['etc']);//xxxd
+		//ContainerObj.displayAry(this.tableHash[this.tableName]['etc']);//xxxd
 		sendDataAry=new Array();
 		sendDataAry[sendDataAry.length]='dbtablename|'+dbTableName;
 		sendDataAry[sendDataAry.length]=dbKeyName+'|'+dbKeyValue;
@@ -52,7 +52,7 @@ var tableObject = Class.create({
 		tableName='';
 		//alert ('form: '+formName+', jobname: '+jobName+', operation: '+operation+', tablename: '+tableName);//xxxd
 		//alert (sendDataAry);//xxxd
-		ajaxObj.postAjaxSimple(formName,jobName,operation,tableName,sendDataAry);
+		AjaxObj.postAjaxSimple(formName,jobName,operation,tableName,sendDataAry);
 	},
 //==============================================================================
 // ?@ dataSortObj: function(dataAryId,dataDate,dataTime)?C sort an object
@@ -76,13 +76,13 @@ var tableObject = Class.create({
 //==============================================================================
 // ?@ rebuildTheSortAry: function()?C ?
 	rebuildTheSortAry: function(){
-		containerObj.jsDebug('tableObj.rebuildTheSortAry()');
+		ContainerObj.jsDebug('TableObj.rebuildTheSortAry()');
 		//- only used with the calendar so make sure it is there 
 		//- and that this is the table tied to the calendar
-	   	var areYouLive=calendarObj.areYouAlive();
+	   	var areYouLive=CalendarObj.areYouAlive();
 	   	var doItThisTime=false;
 	   	if (areYouLive){
-	   		var checkTableName=calendarObj.getEtcValue('calendarentrydbtablename');
+	   		var checkTableName=CalendarObj.getEtcValue('calendarentrydbtablename');
 			var tableName=this.tableName;
 			if (checkTableName == tableName && checkTableName != undefined){
 				doItThisTime=true;				
@@ -96,7 +96,7 @@ var tableObject = Class.create({
 			for (var lp=0;lp<theLen;lp++){
 				var theDataRow=this.tableHash[this.tableName]['dataary'][lp];
 				var theDate=theDataRow[datePos];
-				theDate=utilObj.convertDate(theDate,'internal');
+				theDate=UtilObj.convertDate(theDate,'internal');
 				theTime=theDataRow[timePos];
 				dataSortAry[lp]=new this.dataSortObj(lp,theDate,theTime);
 			}
@@ -107,20 +107,20 @@ var tableObject = Class.create({
 //==============================================================================
 // ?@ sortDataAryObj: function()?C
 	sortDataAryObj: function(){
-		containerObj.jsDebug('tableObj.sortDataAryObj()');
+		ContainerObj.jsDebug('TableObj.sortDataAryObj()');
 		var tst=this.tableHash[this.tableName]['datasortary'];
 		if (tst==undefined){this.tableHash[this.tableName]['datasortary']=new Array();}
 		try {
 			this.tableHash[this.tableName]['datasortary'].sort(this.sortTheDataAry);
 		} catch (err){
-			alert ('tableObj.sortDataAryObj: '+err+', tablename: '+this.tableName);
-			containerObj.displayAry(this.tableHash[this.tableName]['etc']);//xxxd
+			alert ('TableObj.sortDataAryObj: '+err+', tablename: '+this.tableName);
+			ContainerObj.displayAry(this.tableHash[this.tableName]['etc']);//xxxd
 		}
 	},
 //==============================================================================
 // ?@ getRows(): function?C
 	getRows: function(){
-		containerObj.jsDebug('tableObj.getRows()');
+		ContainerObj.jsDebug('TableObj.getRows()');
 		var theDataAry= this.tableHash[this.tableName]['dataary'];
 		if (theDataAry==undefined){theDataAry=new Array();}
 		return theDataAry;
@@ -128,7 +128,7 @@ var tableObject = Class.create({
 //==============================================================================
 // ?@ getSortedRows: function()?C
 	getSortedRows: function(){
-		containerObj.jsDebug('tableObj.getSortedRows()');
+		ContainerObj.jsDebug('TableObj.getSortedRows()');
 		var returnAry=new Array();
 		var theDataAry= this.tableHash[this.tableName]['dataary'];
 		this.sortDataAryObj();
@@ -144,21 +144,21 @@ var tableObject = Class.create({
 //==============================================================================
 // ?@ getRowsByDate: function(theYearNo,theMonthNo, theDayNo, selectColumn, selectRange)?C
 	getRowsByDate: function(theYearNo,theMonthNo,theDayNo,selectColumn,selectRange){
-		containerObj.jsDebug('tableObj.getRowsByDate(theYearNo,theMonthNo,theDayNo,selectColumn,selectRange)');
+		ContainerObj.jsDebug('TableObj.getRowsByDate(theYearNo,theMonthNo,theDayNo,selectColumn,selectRange)');
 		returnAry=this.getRowsByDateV2(theYearNo,theMonthNo,theDayNo,selectRange);
 		return returnAry;
 	},
 //==============================================================================
 // ?@ getRowsByDateV2: function(startYearNo,startMonthNo,startDayNo,selectRange)
 	getRowsByDateV2: function(startYearNo,startMonthNo,startDayNo, selectRange){
-		containerObj.jsDebug('tableObj.getRowsByDateV2(theYearNo,theMonthNo,theDayNo,selectColumn,selectRange)');
+		ContainerObj.jsDebug('TableObj.getRowsByDateV2(theYearNo,theMonthNo,theDayNo,selectColumn,selectRange)');
 		var tableName=this.tableName;
 		this.sortDataAryObj();
 		var debugStrg='';
 		var startDate=startMonthNo+'/'+startDayNo+'/'+startYearNo;
-		endDate=utilObj.getEndDate(startDate,selectRange);
-		endDate=utilObj.convertDate(endDate,'internal');
-		startDate=utilObj.convertDate(startDate,'internal');//just for debugging
+		endDate=UtilObj.getEndDate(startDate,selectRange);
+		endDate=UtilObj.convertDate(endDate,'internal');
+		startDate=UtilObj.convertDate(startDate,'internal');//just for debugging
 		endDateAry=endDate.split('-');
 		endYearNo=Number(endDateAry[0]);
 		endMonthNo=Number(endDateAry[1]);
@@ -214,7 +214,7 @@ var tableObject = Class.create({
 //=============================================================================deprecated
 	// ?@openForm: function(dataProfileId) ?C		
 	linkToForm: function(rowNo){
-		containerObj.jsDebug('tableObj.linkToForm('+rowNo+')');
+		ContainerObj.jsDebug('TableObj.linkToForm('+rowNo+')');
 		alert ('this is deprecated');
 		tableDataAry=this.tableHash[this.tableName]['dataary'][rowNo];
 		//alert (rowNo+': '+tableDataAry);//xxx
@@ -228,23 +228,23 @@ var tableObject = Class.create({
 			formData.set(tableDataDefAry[lp],tableDataAry[lp]);
 		}
 		this.tableHash[this.tableName]['etc'].set('currentrow',rowNo);
-		formObj.openForm(formData);
+		FormObj.openForm(formData);
 	}, 
 //==============================================================================
 	// ?@openForm: function(dataProfileId) ?C
 	openForm: function(dataProfileId){
-		containerObj.jsDebug('tableObj.linkToForm('+dataProfileId+')');
+		ContainerObj.jsDebug('TableObj.linkToForm('+dataProfileId+')');
 		tableName=this.tableName;
 		rowNo=this.tableHash[tableName]['datakeyindexhash'].get(dataProfileId);
 		tableDataAry=this.tableHash[tableName]['dataary'][rowNo];
 		formData=this.convertToHash(tableDataAry);
 		this.tableHash[this.tableName]['etc'].set('currentrow',rowNo);
-		formObj.openForm(formData);
+		FormObj.openForm(formData);
 	},
 //==============================================================================
 // ?@convertToHash: function(tableDataAry) ?C
 	convertToHash: function(tableDataAry){
-		containerObj.jsDebug('tableObj.convertToHash(tableDataAry');
+		ContainerObj.jsDebug('TableObj.convertToHash(tableDataAry');
 		var tableDataDefStrg=this.tableHash[this.tableName]['etc'].get('datadef');
 		tableDataDefStrg=tableDataDefStrg+'';
 		var tableDataDefAry = tableDataDefStrg.split('~');
@@ -262,7 +262,7 @@ var tableObject = Class.create({
 					var aryName='tabledatadefary';
 				}
 				alert ('error with array '+aryName+' lp: '+lp);
-				containerObj.displayStack();
+				ContainerObj.displayStack();
 				theCnt=0;
 			}
 		}
@@ -271,7 +271,7 @@ var tableObject = Class.create({
 //==============================================================================
 	// ?@insertRow: function() ?C
 	insertRow: function(){
-		containerObj.jsDebug('tableObj.insertRow()');
+		ContainerObj.jsDebug('TableObj.insertRow()');
 		var tableName=this.tableName;
 		var tst=this.tableHash[tableName]['dataary'];
 		if (tst==undefined){this.tableHash[tableName]['dataary']=new Array();}
@@ -288,19 +288,19 @@ var tableObject = Class.create({
 			formData.set(tableDataDefAry[lp],'');
 		}
 		this.tableHash[this.tableName]['etc'].set('currentrow',rowNo);
-		formObj.openForm(formData);
+		FormObj.openForm(formData);
 	}, 
 //==============================================================================
 //?@setError: function(errorMsg)
 	setError: function(errorMsg){
-		containerObj.jsDebug('tableObj.setError('+errorMsg+')');
+		ContainerObj.jsDebug('TableObj.setError('+errorMsg+')');
 		this.tableHash[tableName]['etc'].set('errorcode',errorMsg);
 		alert (errorMsg);
 	},
 //==============================================================================
 // ?@setTableName: function(tableName) ?C
 	setTableName: function(tableName){
-		containerObj.jsDebug('tableObj.setTableName('+tableName+')');
+		ContainerObj.jsDebug('TableObj.setTableName('+tableName+')');
 		//alert ('set table name to: '+tableName);//xxx
 		this.tableName=tableName;
 		var tst=this.tableHash[this.tableName];
@@ -313,7 +313,7 @@ var tableObject = Class.create({
 // ?@loadEtc: function(etcName,etcValue)?C
 	loadEtc: function(etcName,etcValue){
 		//alert (etcName+': '+etcValue);//xxx
-		containerObj.jsDebug('tableObj.loadEtc('+etcName+')');
+		ContainerObj.jsDebug('TableObj.loadEtc('+etcName+')');
 		var tst=this.tableHash[this.tableName]['etc'];
 		if (tst==undefined){this.tableHash[this.tableName]['etc']=new Hash();}
 		this.tableHash[this.tableName]['etc'].set(etcName,etcValue);
@@ -321,7 +321,7 @@ var tableObject = Class.create({
 //==============================================================================
 //?@loadDisplay: function(displayStrg)?C
 	loadDisplay: function(displayStrg){
-		containerObj.jsDebug('tableObj.loadDisplay(displaystrg:...)');
+		ContainerObj.jsDebug('TableObj.loadDisplay(displaystrg:...)');
 		var thisDisplayAry=displayStrg.split('~');
 		tst=this.tableHash[this.tableName]['displayary'];
 		if (tst==undefined){this.tableHash[this.tableName]['displayary'] = new Array();}
@@ -330,7 +330,7 @@ var tableObject = Class.create({
 //==============================================================================
 	//?@loadSelect: function(selectStrg)?C
 	loadSelect: function(selectStrg){
-		containerObj.jsDebug('tableObj.loadSelect(selectstrg:...)');
+		ContainerObj.jsDebug('TableObj.loadSelect(selectstrg:...)');
 		tst=this.tableHash[this.tableName]['selectary'];
 		if (tst==undefined){this.tableHash[this.tableName]['selectary'] = new Array();}
 		this.tableHash[this.tableName]['selectary'][this.tableHash[this.tableName]['selectary'].length] = selectStrg;
@@ -338,16 +338,16 @@ var tableObject = Class.create({
 //==============================================================================
 	//?@loadData: function(dataStrg)?C
 	loadData: function(dataStrg){
-		containerObj.jsDebug('tableObj.dataStrg(datastrg:...)');
+		ContainerObj.jsDebug('TableObj.dataStrg(datastrg:...)');
 	   	var thisDataAry=dataStrg.split('~');
 	   	//document.write(dataStrg+'<br>');//xxx
 		tst=this.tableHash[this.tableName]['dataary'];
 	   	if (tst==undefined){this.tableHash[this.tableName]['dataary'] = new Array();}
 	   	var currentId=this.tableHash[this.tableName]['dataary'].length;
 	   	this.tableHash[this.tableName]['dataary'][currentId] = thisDataAry;
-	   	var areYouLive=calendarObj.areYouAlive();
+	   	var areYouLive=CalendarObj.areYouAlive();
 	   	if (areYouLive){
-		   	var checkTableName=calendarObj.getEtcValue('calendarentrydbtablename');
+		   	var checkTableName=CalendarObj.getEtcValue('calendarentrydbtablename');
 	   	}
 	   	else {
 	   		checkTableName='thereisnoname';
@@ -357,8 +357,8 @@ var tableObject = Class.create({
 		   	if (tst==undefined){this.tableHash[this.tableName]['datasortary'] = new Array();}
 		   	var datePos=this.getEtcValue('datepos');
 		   	if (datePos==undefined){
-			   	var dateName=calendarObj.getEtcValue('calendarentrydatename');
-	   			var timeName=calendarObj.getEtcValue('calendarentrystarttimename');
+			   	var dateName=CalendarObj.getEtcValue('calendarentrydatename');
+	   			var timeName=CalendarObj.getEtcValue('calendarentrystarttimename');
 	   			var dataDefs=this.getEtcValue('datadef');
 	   			var dataDefsAry=dataDefs.split('~');
 	   			var getCtr=0;
@@ -387,7 +387,7 @@ var tableObject = Class.create({
 		   		thisDataAry[tempProfileIdPos]=false;
 		   	}
 		   	var theDate=thisDataAry[datePos];
-		   	theDate=utilObj.convertDate(theDate,'internal');
+		   	theDate=UtilObj.convertDate(theDate,'internal');
 		   	var theTime=thisDataAry[timePos];
 	   		this.tableHash[this.tableName]['datasortary'][currentId]=new this.dataSortObj(currentId,theDate,theTime);
 	   	}
@@ -396,7 +396,7 @@ var tableObject = Class.create({
 //==============================================================================
 	//?@pagePrevious: function(tableName)?C
 	pagePrevious: function(tableName){
-		containerObj.jsDebug('tableObj.pagePrevious(tablename: '+tableName+')');
+		ContainerObj.jsDebug('TableObj.pagePrevious(tablename: '+tableName+')');
 		this.tableName=tableName;
 		var pageNo=this.tableHash[this.tableName]['etc'].get('pageno');
 		pageNo--;
@@ -407,7 +407,7 @@ var tableObject = Class.create({
 //==============================================================================
 	//?@pageNext: function(tableName)?C
 	pageNext: function(tableName){
-		containerObj.jsDebug('tableObj.pageNext()');
+		ContainerObj.jsDebug('TableObj.pageNext()');
 		this.tableName=tableName;
 		var pageNo=this.tableHash[this.tableName]['etc'].get('pageno');
 		pageNo++;
@@ -417,7 +417,7 @@ var tableObject = Class.create({
 //==============================================================================
 	//?@pageFirst: function()?C
 	pageFirst: function(){
-		containerObj.jsDebug('tableObj.pageFirst()');
+		ContainerObj.jsDebug('TableObj.pageFirst()');
 		var pageNo=1;
 		this.tableHash[this.tableName]['etc'].set('pageno',pageNo);
 		this.displayPage();
@@ -425,7 +425,7 @@ var tableObject = Class.create({
 //==============================================================================
 	//?@pageLast: function()?C
 	pageLast: function(){
-		containerObj.jsDebug('tableObj.pageLast()');
+		ContainerObj.jsDebug('TableObj.pageLast()');
 		var maxDataAry=this.tableHash[this.tableName]['etc'].get('maxdataary');
 		var pageSize=this.tableHash[this.tableName]['etc'].get('pagesize');
 		var pageNo=Math.round(maxDataAry / pageSize)+1;
@@ -435,7 +435,7 @@ var tableObject = Class.create({
 //==============================================================================xxxdwip
 	//?@displayPage: function()?C
 	displayPage: function(){
-		utilObj.writeLog('debug1id','!!tableObj.displaypage!!');
+		UtilObj.writeLog('debug1id','!!TableObj.displaypage!!');
 //- copy in page number save during reset to priorpageno
 		var pageNoId=this.tableHash[this.tableName]['etc'].get('pagenoid');
 		var priorPageNo=this.tableHash[this.tableName]['etc'].get('priorpageno');
@@ -465,18 +465,18 @@ var tableObject = Class.create({
 		var adjPageSize = pageSize+1;
 //- do reset stuff
 		var reset=this.getEtcValue('reset');
-		utilObj.writeLog('debug1id',"tableobj.dispg: reset: "+reset);
+		UtilObj.writeLog('debug1id',"tableobj.dispg: reset: "+reset);
 		if (reset==true){
-			utilObj.writeLog('debug1id',"do reset for table");//xxxd
+			UtilObj.writeLog('debug1id',"do reset for table");//xxxd
 			this.setEtcValue('reset',false);
 			reducedAry=this.tableHash[this.tableName]['displayary'];
 			this.tableHash[this.tableName]['reducedary']=reducedAry;
 //--- date select
 			try {
-				var fromDateId=userObj.getEtcValue(tableName+'_fromdateid');
-				var toDateId=userObj.getEtcValue(tableName+'_todateid');
-				var dateColName=userObj.getEtcValue(tableName+'_datecolname');
-				utilObj.writeLog('debug3id','tableObj.dispge: fromdateid: '+fromDateId+', todateid: '+toDateId+', datecolname: '+dateColName);
+				var fromDateId=UserObj.getEtcValue(tableName+'_fromdateid');
+				var toDateId=UserObj.getEtcValue(tableName+'_todateid');
+				var dateColName=UserObj.getEtcValue(tableName+'_datecolname');
+				UtilObj.writeLog('debug3id','TableObj.dispge: fromdateid: '+fromDateId+', todateid: '+toDateId+', datecolname: '+dateColName);
 				if (fromDateId != undefined && fromDateId != '' && toDateId != undefined && toDateId != ''){
 					if (dateColName != undefined && dateColName != ''){
 						//this.setEtcValue('dontdisplaypage',true);
@@ -491,17 +491,17 @@ var tableObject = Class.create({
 				}
 			}
 			catch (err){
-				alert ('tableObj.displayPage: '+err);
-				containerObj.displayHash(this.tableName,this.tableHash[this.tableName]['etc']);
+				alert ('TableObj.displayPage: '+err);
+				ContainerObj.displayHash(this.tableName,this.tableHash[this.tableName]['etc']);
 			}
 			var reducedAryLen=reducedAry.length;
-			utilObj.writeLog('debug3id','after selectdate before select reducedAryLen: '+reducedAryLen);
+			UtilObj.writeLog('debug3id','after selectdate before select reducedAryLen: '+reducedAryLen);
 //--- typeselect
 			try {
-				var valueSelect=userObj.getEtcValue(tableName+'_selectcolumnvalue');
-				var columnSelect=userObj.getEtcValue(tableName+'_selectcolumnname');
-				var columnNoSelect=userObj.getEtcValue(tableName+'_selectcolumnno');
-				utilObj.writeLog('debug1id','tableObj.dispge: valueselect: '+valueSelect+', columnSelect: '+columnSelect+', columnNoSelect: '+columnNoSelect);
+				var valueSelect=UserObj.getEtcValue(tableName+'_selectcolumnvalue');
+				var columnSelect=UserObj.getEtcValue(tableName+'_selectcolumnname');
+				var columnNoSelect=UserObj.getEtcValue(tableName+'_selectcolumnno');
+				UtilObj.writeLog('debug1id','TableObj.dispge: valueselect: '+valueSelect+', columnSelect: '+columnSelect+', columnNoSelect: '+columnNoSelect);
 				if (valueSelect != undefined){
 					if (columnSelect != null && columnSelect != undefined){
 						this.setEtcValue('dontdisplaypage',true);
@@ -515,48 +515,48 @@ var tableObject = Class.create({
 				}
 			}
 			catch (err){
-				alert ('tableObj.displayPage: '+err+' nameString: '+nameString);
-				containerObj.displayHash(this.tableName,this.tableHash[this.tableName]['etc']);
+				alert ('TableObj.displayPage: '+err+' nameString: '+nameString);
+				ContainerObj.displayHash(this.tableName,this.tableHash[this.tableName]['etc']);
 			}
 			var reducedAryLen=reducedAry.length;
-			utilObj.writeLog('debug3id','after selectvalue before select reducedAryLen: '+reducedAryLen);
+			UtilObj.writeLog('debug3id','after selectvalue before select reducedAryLen: '+reducedAryLen);
 //--- general select
 			try {
-				var nameString=userObj.getEtcValue(this.tableName+'_namestring');
-				utilObj.writeLog('debug3id','tableobj.dispge: namestring: '+nameString);
+				var nameString=UserObj.getEtcValue(this.tableName+'_namestring');
+				UtilObj.writeLog('debug3id','tableobj.dispge: namestring: '+nameString);
 				if (nameString != undefined){
 					var nameStringValue=$(nameString).value;
 					if (nameStringValue != null && nameStringValue != undefined){
-						utilObj.writeLog('debug3id','tableObj.displayPage call selectRows');
+						UtilObj.writeLog('debug3id','TableObj.displayPage call selectRows');
 						this.selectRows(nameString);
 						var reducedAry=this.tableHash[this.tableName]['reducedary'];
 					}
 				}
 				else {
 					//reducedAry=this.tableHash[this.tableName]['displayary'];
-					utilObj.writeLog('debug3id','tableObj.displayPage: namestring is undefined so do nothing');
+					UtilObj.writeLog('debug3id','TableObj.displayPage: namestring is undefined so do nothing');
 				}
 			}
 			catch (err){
-				alert ('tableObj.displayPage: '+err+' nameString: '+nameString);
-				containerObj.displayHash(this.tableName,this.tableHash[this.tableName]['etc']);
+				alert ('TableObj.displayPage: '+err+' nameString: '+nameString);
+				ContainerObj.displayHash(this.tableName,this.tableHash[this.tableName]['etc']);
 			}
 		}
 		else {
 			if (reducedAry == undefined){
-				utilObj.writeLog('debug3id',"tableObj.displayPage: reset is false and reducedary is: "+reducedAry+", reducedary=displayary");
+				UtilObj.writeLog('debug3id',"TableObj.displayPage: reset is false and reducedary is: "+reducedAry+", reducedary=displayary");
 				reducedAry=this.tableHash[this.tableName]['displayary'];
 				this.tableHash[this.tableName]['reducedary']=reducedAry;
 			}
 		}
 //
-		utilObj.writeLog('debug3id',"tableObj.displayPage: reducedaryLen: "+reducedAry.length+', displayaryLen: '+displayAry.length);//xxxd
+		UtilObj.writeLog('debug3id',"TableObj.displayPage: reducedaryLen: "+reducedAry.length+', displayaryLen: '+displayAry.length);//xxxd
 		maxDataAry=reducedAry.length;
 		this.tableHash[this.tableName]['etc'].set('maxdataary',maxDataAry);
-		utilObj.writeLog('debug3id',"tableObj.displayPage: adjPageSize: "+adjPageSize+', maxDataAry: '+maxDataAry);
+		UtilObj.writeLog('debug3id',"TableObj.displayPage: adjPageSize: "+adjPageSize+', maxDataAry: '+maxDataAry);
 		var debugStrg='';
 		for (rowCtr=1;rowCtr<adjPageSize;rowCtr++){
-			//utilObj.writeLog('debug3id','rowctr: '+rowCtr);
+			//UtilObj.writeLog('debug3id','rowctr: '+rowCtr);
 			var curAryRowCtr=startAryRow+(rowCtr-1);
 			if (curAryRowCtr < maxDataAry){
 				//aborts below because tableid is null
@@ -583,7 +583,7 @@ var tableObject = Class.create({
 				}
 				catch (err){
 					rowError=true;
-					//alert ('tableObj.displayPage: '+err+' rowCtr: '+rowCtr+', tableid: '+tableId);
+					//alert ('TableObj.displayPage: '+err+' rowCtr: '+rowCtr+', tableid: '+tableId);
 				}
 				if (!rowError){
 					for (columnCtr = 0;columnCtr<columnCnt;columnCtr++){
@@ -592,17 +592,17 @@ var tableObject = Class.create({
 				}
 			}		
 		}
-		//utilObj.writeLog('debug3id','debugStrg: '+debugStrg);
+		//UtilObj.writeLog('debug3id','debugStrg: '+debugStrg);
 	},
 //==============================================================================
 	//?@preSelRows: function(jobParamsAry)?C
 	preSelRows: function(jobParamsAry){
-		utilObj.writeLog('debug1id','!!tableObj.preselrows!!');
+		UtilObj.writeLog('debug1id','!!TableObj.preselrows!!');
 		var tableName=jobParamsAry[0];
 //- select rows
 		var nameString=jobParamsAry[1];
 		this.tableName=tableName;
-		utilObj.writeLog('debug1id','call selectrows with tablename: '+tableName+', nameString: '+nameString);
+		UtilObj.writeLog('debug1id','call selectrows with tablename: '+tableName+', nameString: '+nameString);
 		this.selectRows(nameString);
 //- re display page
 		this.displayPage();
@@ -610,7 +610,7 @@ var tableObject = Class.create({
 //==============================================================================xxxdwip
 	//?@selectRows: function(nameString)?C
 	selectRows: function(nameString){
-		utilObj.writeLog('debug1id','!!tableObj.selectRows!!');
+		UtilObj.writeLog('debug1id','!!TableObj.selectRows!!');
 		var selectAry=this.tableHash[this.tableName]['newselectary'];
 		if (selectAry == undefined){
 			var selectAry=this.tableHash[this.tableName]['selectary'];
@@ -627,7 +627,7 @@ var tableObject = Class.create({
 		var selectString = $(nameString).value;
 		//alert ('nameString: '+nameString+'selectstring: '+selectString);//
 		this.setEtcValue('namestring',nameString);
-		userObj.setEtcValue(this.tableName+'_namestring',nameString);
+		UserObj.setEtcValue(this.tableName+'_namestring',nameString);
 		var selectString_lower = selectString.toLowerCase();
 		var selectStringLen = selectString.length;
 		var posCtr, posCtr2;
@@ -657,7 +657,7 @@ var tableObject = Class.create({
 					chkData_lower=chkData.toLowerCase();
 				}
 				catch (err){
-					//alert ('tableObj.selectrows: '+err+', selectarylen: '+selectAry.length+', datactr: '+dataCtr);
+					//alert ('TableObj.selectrows: '+err+', selectarylen: '+selectAry.length+', datactr: '+dataCtr);
 					errorFlg=true;
 					debugStrg+=dataCtr+': error! chkdata: '+chkData+'<br>';
 				}
@@ -671,35 +671,35 @@ var tableObject = Class.create({
 				}
 			}
 		}
-		//utilObj.writeLog('debug1id',debugStrg);
+		//UtilObj.writeLog('debug1id',debugStrg);
 		pageNo=1;
 		lineNo=1;
 		maxDataAry=reducedAry.length;
 		this.tableHash[this.tableName]['reducedary']=reducedAry;
 		//this.tableHash[this.tableName]['reduceddataary']=reducedDataAry;
 		var reducedAryLen=reducedAry.length;
-		utilObj.writeLog('debug1id','end of selectrows reducedarylen: '+reducedAryLen);
+		UtilObj.writeLog('debug1id','end of selectrows reducedarylen: '+reducedAryLen);
 	},
 //==============================================================================xxxdwip
 	//?@selectRowsDate: function(jobParamsAry)?C
 	selectRowsDate: function(jobParamsAry){
-		utilObj.writeLog('debug1id','!!tableObj.selectRowsDate!!');
+		UtilObj.writeLog('debug1id','!!TableObj.selectRowsDate!!');
 		var tableName=jobParamsAry[0];
 		this.tableName=tableName;
 		var dataAry=this.tableHash[this.tableName]['dataary'];
 //- from Date
 		var fromDateId=jobParamsAry[1];
 		var fromDateRaw=$(fromDateId).value;
-		var fromDate=utilObj.convertDate(fromDateRaw,'internal');
-		var fromDateNumber=utilObj.convertDate(fromDate,'millisecondsbeginofday');
+		var fromDate=UtilObj.convertDate(fromDateRaw,'internal');
+		var fromDateNumber=UtilObj.convertDate(fromDate,'millisecondsbeginofday');
 //- to Date
 		var toDateId=jobParamsAry[2];
 		var toDateRaw=$(toDateId).value;
-		var toDate=utilObj.convertDate(toDateRaw,'internal');
-		var toDateNumber=utilObj.convertDate(toDate,'millisecondsendofday');
+		var toDate=UtilObj.convertDate(toDateRaw,'internal');
+		var toDateNumber=UtilObj.convertDate(toDate,'millisecondsendofday');
 //- column number of date column
 		var dateColName=jobParamsAry[3];
-		//containerObj.displayHash('etc',this.tableHash[this.tableName]['etc']);
+		//ContainerObj.displayHash('etc',this.tableHash[this.tableName]['etc']);
 		var dataDef=this.getEtcValue('datadef');
 		try {
 			var colNamesAry=dataDef.split('~');
@@ -715,9 +715,9 @@ var tableObject = Class.create({
 		}
 		this.setEtcValue('fromdate',fromDate);
 		this.setEtcValue('todate',toDate);
-		userObj.setEtcValue(fromDateId,this.tableName+'_fromdateid');
-		userObj.setEtcValue(toDateId,this.tableName+'_todateid');
-		userObj.setEtcValue(dateColName,this.tableName+'_datecolname');
+		UserObj.setEtcValue(fromDateId,this.tableName+'_fromdateid');
+		UserObj.setEtcValue(toDateId,this.tableName+'_todateid');
+		UserObj.setEtcValue(dateColName,this.tableName+'_datecolname');
 		var posCtr, posCtr2;
 		var chkData, chkData_lower, chkChar, dataCtr, maxDataAryBak;
 		var lineNo = 0;
@@ -730,14 +730,14 @@ var tableObject = Class.create({
 		reducedAry[0]=displayAry[0];
 		var maxDataAry=this.tableHash[this.tableName]['dataary'].length;
 		maxDataAry=Number(maxDataAry)+Number(1);
-		utilObj.writeLog('debug1id','tableObj.selectRowsDate: todate: '+toDate+', fromDate: '+fromDate+', thedatecol: '+theDateCol+', maxdataary: '+maxDataAry);
+		UtilObj.writeLog('debug1id','TableObj.selectRowsDate: todate: '+toDate+', fromDate: '+fromDate+', thedatecol: '+theDateCol+', maxdataary: '+maxDataAry);
 		var debugStrg='compare detail...<br>';
 		if (toDate == '' || fromDate == '' || theDateCol == 9999){reducedAry=displayAry;}
 		else {
 			for (dataCtr=1;dataCtr<maxDataAry;dataCtr++){
 				chkDateRaw=dataAry[dataCtr-1][theDateCol];
-				chkDate=utilObj.convertDate(chkDateRaw,'internal');
-				chkDateNumber=utilObj.convertDate(chkDate,'millisecondsbeginofday');
+				chkDate=UtilObj.convertDate(chkDateRaw,'internal');
+				chkDateNumber=UtilObj.convertDate(chkDate,'millisecondsbeginofday');
 				if (chkDateNumber != undefined){
 					var debugStrg2='fromdate: '+fromDateNumber+' <= chkDateNumber: '+chkDateNumber+' <= thDateNumber: '+toDateNumber;
 					if (fromDateNumber <= chkDateNumber && toDateNumber >= chkDateNumber){
@@ -755,7 +755,7 @@ var tableObject = Class.create({
 					alert ('invalid date: '+chkDate);
 				}
 			}
-			utilObj.writeLog('debug1id',debugStrg);
+			UtilObj.writeLog('debug1id',debugStrg);
 		}
 		pageNo=1;
 		lineNo=1;
@@ -766,13 +766,13 @@ var tableObject = Class.create({
 		this.tableHash[this.tableName]['newdataary']=newDataAry;
 		this.tableHash[this.tableName]['newdisplayary']=reducedAry;
 		this.setEtcValue('reset',false);
-		utilObj.writeLog('debug1id','since redid reducedary, newselect, newdata, newdisplay then turn off reset because no need');
-		utilObj.writeLog('debug1id','end of selectrowsdate: reducedarylen: '+reducedAry.length+', newselectarylen: '+newSelectAry.length+', newdataarylen: '+newDataAry.length+', newdisplayarylen: '+reducedAry.length);
+		UtilObj.writeLog('debug1id','since redid reducedary, newselect, newdata, newdisplay then turn off reset because no need');
+		UtilObj.writeLog('debug1id','end of selectrowsdate: reducedarylen: '+reducedAry.length+', newselectarylen: '+newSelectAry.length+', newdataarylen: '+newDataAry.length+', newdisplayarylen: '+reducedAry.length);
 	},
 //==============================================================================xxxdwip
 	//?@selectRowsValue: function(jobParamsAry)?C
 	selectRowsValue: function(jobParamsAry){
-		utilObj.writeLog('debug1id','!!selectrowsvalue!!');
+		UtilObj.writeLog('debug1id','!!selectrowsvalue!!');
 		var tableName=jobParamsAry[0];
 		this.tableName=tableName;
 		var dataAry=this.tableHash[this.tableName]['dataary'];
@@ -780,9 +780,9 @@ var tableObject = Class.create({
 		var selectColumnValue=jobParamsAry[1];
 //- column number to select from
 		var selectColumnName=jobParamsAry[2];
-		userObj.setEtcValue('selectcolumnvalue',selectColumnValue);
-		userObj.setEtcValue('selectcolumnname',selectColumnName);
-		//containerObj.displayHash('etc',this.tableHash[this.tableName]['etc']);
+		UserObj.setEtcValue('selectcolumnvalue',selectColumnValue);
+		UserObj.setEtcValue('selectcolumnname',selectColumnName);
+		//ContainerObj.displayHash('etc',this.tableHash[this.tableName]['etc']);
 		var dataDef=this.getEtcValue('datadef');
 		try {
 			var colNamesAry=dataDef.split('~');
@@ -797,12 +797,12 @@ var tableObject = Class.create({
 				break;
 			}
 		}
-		if (theSelCol==9999){alert ('tableObj.selectRowsValue: invalid select column: '+theSelCol);exit();}
+		if (theSelCol==9999){alert ('TableObj.selectRowsValue: invalid select column: '+theSelCol);exit();}
 		//exit();//xxxf
 		//xxxd ??? why are we doing the below
-		userObj.setEtcValue(tableName+'_selectcolumnvalue',selectColumnValue);
-		userObj.setEtcValue(tableName+'_selectcolumnname',selectColumnName);
-		userObj.setEtcValue(tableName+'_selectcolumnno',theSelCol);
+		UserObj.setEtcValue(tableName+'_selectcolumnvalue',selectColumnValue);
+		UserObj.setEtcValue(tableName+'_selectcolumnname',selectColumnName);
+		UserObj.setEtcValue(tableName+'_selectcolumnno',theSelCol);
 		var posCtr, posCtr2;
 		var chkData, chkData_lower, chkChar, dataCtr, maxDataAryBak;
 		var lineNo = 0;
@@ -844,42 +844,42 @@ var tableObject = Class.create({
 		var newDataLen=newDataAry.length;
 		this.tableHash[this.tableName]['newdisplayary']=reducedAry;
 		var reducedAryLen=reducedAry.length;
-		utilObj.writeLog('debug1id',"tableObj.selectRowsValue at end: newSelectAry: "+newSelLen+', newdatalen: '+newDataLen+', reducedLen: '+reducedAryLen);
+		UtilObj.writeLog('debug1id',"TableObj.selectRowsValue at end: newSelectAry: "+newSelLen+', newdatalen: '+newDataLen+', reducedLen: '+reducedAryLen);
 	},
 //==============================================================================
 	//?@removeDisplay: function()?C
 	removeDisplay: function(){
-		containerObj.jsDebug('tableObj.removeDisplay()');
-		containerObj.removeDisplay();
+		ContainerObj.jsDebug('TableObj.removeDisplay()');
+		ContainerObj.removeDisplay();
 	},
 //==============================================================================
 	//?@getEtcValue: function(etcName)?C
 	getEtcValue: function(etcName){
-		containerObj.jsDebug('tableObj.getEtcValue(etcName: '+etcName+')');
+		ContainerObj.jsDebug('TableObj.getEtcValue(etcName: '+etcName+')');
 		try {etcValue=this.tableHash[this.tableName]['etc'].get(etcName);}
 		catch(err){
 			alert ('tablename: '+this.tableName+', filename: '+etcName+' is not in etc!');
-			containerObj.displayStack('ta.getEtcValue');
+			ContainerObj.displayStack('ta.getEtcValue');
 		}
 		return etcValue;
 	},
 //==============================================================================
 	//?@setEtcValue: function(etcName,etcValue)?C
 	setEtcValue: function(etcName,etcValue){
-		containerObj.jsDebug('tableObj.setEtcValue(etcName: '+etcName+', etcvalue: '+etcValue+')');
+		ContainerObj.jsDebug('TableObj.setEtcValue(etcName: '+etcName+', etcvalue: '+etcValue+')');
 		this.tableHash[this.tableName]['etc'].set(etcName,etcValue);
 	},
 //==============================================================================
 	//?@removeEtcValue: function(etcName)?C
 	removeEtcValue: function(etcName){
-		//containerObj.displayHash('etcbefore',this.tableHash[this.tableName]['etc']);
+		//ContainerObj.displayHash('etcbefore',this.tableHash[this.tableName]['etc']);
 		this.tableHash[this.tableName]['etc'].unset(etcName);
-		//containerObj.displayHash('etcafter',this.tableHash[this.tableName]['etc']);
+		//ContainerObj.displayHash('etcafter',this.tableHash[this.tableName]['etc']);
 	},
 //==============================================================================
 	//?@appendToServerQueue: function(rowNo)?C
 	appendToServerQueue: function(rowNo){
-		containerObj.jsDebug('tableObj.appendToServerQueue(rowNo: '+rowNo+')');
+		ContainerObj.jsDebug('TableObj.appendToServerQueue(rowNo: '+rowNo+')');
 		var tableName=this.tableName;
 		var tst=this.tableHash[this.tableName]['toserver'];
 		if (tst == undefined){this.tableHash[this.tableName]['toserver']=Array();}
@@ -896,7 +896,7 @@ var tableObject = Class.create({
 //==============================================================================
 	//?@setCurrentRow: function(rowHash)?C
 	setCurrentRow: function(rowHash){
-		containerObj.jsDebug('tableObj.setCurrentRow(rowHash)');
+		ContainerObj.jsDebug('TableObj.setCurrentRow(rowHash)');
 		tableName=this.tableName;
 		var keyName=this.getEtcValue('keyname');
 		var keyValue=rowHash.get(keyName);
@@ -914,7 +914,7 @@ var tableObject = Class.create({
 			try {
 				rowNo=this.tableHash[tableName]['dataary'].length;
 			} catch (err){
-				alert ('tableObj.setCurrentRow: '+err+' tablename: '+tableName+' dataary');
+				alert ('TableObj.setCurrentRow: '+err+' tablename: '+tableName+' dataary');
 			}
 			this.updateDataAryIndex(keyValue, rowNo);
 		}
@@ -935,7 +935,7 @@ var tableObject = Class.create({
 //==============================================================================
 	//?@fileUpdate: function(rowHash)?C
 	fileUpdate: function(rowHash){
-		containerObj.jsDebug('tableObj.fileUpdate(rowAry: ...)');
+		ContainerObj.jsDebug('TableObj.fileUpdate(rowAry: ...)');
 		var tmpAdj=1;
 	//- init
 		var tableName=this.tableName;
@@ -1071,9 +1071,9 @@ var tableObject = Class.create({
 		this.tableHash[tableName]['etc'].set('sendtoserver',true);
 		var iconMenu=this.getEtcValue('tableiconmenu');
 		if (iconMenu != ''){
-			menuObj.swap(iconMenu);
-			menuObj.setAlertClass('set');
-			menuObj.reverseSwap();
+			MenuObj.swap(iconMenu);
+			MenuObj.setAlertClass('set');
+			MenuObj.reverseSwap();
 		}
 		else {alert ('no icon menu');}	
 		var nameString=this.tableHash[tableName]['etc'].get('namestring');
@@ -1089,7 +1089,7 @@ var tableObject = Class.create({
 //==============================================================================
 	//?@writeDbRowsToServer: function()?C
 	writeDbRowsToServer: function(){
-		containerObj.jsDebug('tableObj.writeDbRowsToServer()');
+		ContainerObj.jsDebug('TableObj.writeDbRowsToServer()');
 //-xxxr below needs to be fixed
 		var jobName='pgesidesktop';
 		var operationName='write_db_from_ajax';
@@ -1110,19 +1110,19 @@ var tableObject = Class.create({
 		var theLen=sendDataAry.length;
 		sendDataAry[theLen]='datadef|'+dataDef;
 //--- get column data
-		var tempProfileIdPos=tableObj.getEtcValue('tempprofileidpos');
-		var keyPos=tableObj.getEtcValue('keypos');
+		var tempProfileIdPos=TableObj.getEtcValue('tempprofileidpos');
+		var keyPos=TableObj.getEtcValue('keypos');
 		if (tempProfileIdPos == undefined || keyPos == undefined){
 			this.getDataAryPointers();
-			var tempProfileIdPos=tableObj.getEtcValue('tempprofileidpos');
-			var keyPos=tableObj.getEtcValue('keypos');
+			var tempProfileIdPos=TableObj.getEtcValue('tempprofileidpos');
+			var keyPos=TableObj.getEtcValue('keypos');
 		}
 		var queueAry=this.tableHash[tableName]['toserver'];
 		if (queueAry==undefined){queueAry=new Array();}
 		queueAry.each(function(rowNo) {
 			if (rowNo != undefined){
-				//this. does not work within this loop so had to do tableObj!!!
-				tableDataAry=tableObj.tableHash[tableName]['dataary'][rowNo];
+				//this. does not work within this loop so had to do TableObj!!!
+				tableDataAry=TableObj.tableHash[tableName]['dataary'][rowNo];
 				//alert ('ta.wdbrts: id '+tableDataAry[keyPos]+', tempprofileid: '+tableDataAry[tempProfileIdPos]);//xxx
 				updateRow=tableDataAry.join('~');
 				sendDataAry[sendDataAry.length]='tabledata|'+updateRow;
@@ -1145,23 +1145,23 @@ var tableObject = Class.create({
 				sendDataAry[sendDataAry.length]='deldata|'+keyNoStrg;
 			}
 		}
-		//containerObj.displayAry('jobname: '+jobName+', operationname: '+operationName);//xxx
-		ajaxObj.ajaxPostToServer(jobName,operationName,sendDataAry);		
+		//ContainerObj.displayAry('jobname: '+jobName+', operationname: '+operationName);//xxx
+		AjaxObj.ajaxPostToServer(jobName,operationName,sendDataAry);		
 	},
 //==============================================================================
 	//?@clearUpdateFlags: function()?C
 	clearUpdateFlags: function(){
-		containerObj.jsDebug('tableObj.clearUpdateFlags()');
+		ContainerObj.jsDebug('TableObj.clearUpdateFlags()');
 		tableName=this.tableName;
 		this.tableHash[tableName]['toserver'] = new Array();
 		this.tableHash[tableName]['etc'].set('sendtoserver',false);
 		//alert ('tableobj: clearupdatflags: xxx');//xxx
-		menuObj.setAlertClass('unset');
+		MenuObj.setAlertClass('unset');
 	},
 //==============================================================================
 	//?@convertRowAryToHash: function(rowAry)?C
 	convertRowAryToHash: function(rowAry){
-		containerObj.jsDebug('tableObj.convertRowAryToHash(rowAry)');
+		ContainerObj.jsDebug('TableObj.convertRowAryToHash(rowAry)');
 		var dataDefStrg=this.tableHash[this.tableName]['etc'].get('datadef');
 		var dataDefAry = dataDefStrg.split('~');
 		var theCnt=rowAry.length;
@@ -1177,7 +1177,7 @@ var tableObject = Class.create({
 //==============================================================================
 	//?@getLastRowUpdated: function()?C
 	getLastRowUpdated: function(){
-		containerObj.jsDebug('tableObj.getLastRowUpdated()');
+		ContainerObj.jsDebug('TableObj.getLastRowUpdated()');
 		var lastRowUpdated=this.getEtcValue('lastrowupdated');
 		var rowAry=this.tableHash[this.tableName]['dataary'][lastRowUpdated];
 		var rowHash=this.convertRowAryToHash(rowAry);
@@ -1186,7 +1186,7 @@ var tableObject = Class.create({
 //===============================================================================
 	//?@loadKeyIndex: function(keyIndexStrg)?C
 	loadKeyIndex: function(keyIndexStrg){
-		containerObj.jsDebug('tableObj.loadKeyIndex(keyIndexStrg)');
+		ContainerObj.jsDebug('TableObj.loadKeyIndex(keyIndexStrg)');
 		tableName=this.tableName;
 		var keyIndexAry=keyIndexStrg.split('~');
 		var keyIndexNo=keyIndexAry.length;
@@ -1200,7 +1200,7 @@ var tableObject = Class.create({
 //===============================================================================
 	//?@rebuildKeyIndex: function()?C
 	rebuildKeyIndex: function(){
-		containerObj.jsDebug('tableObj.rebuildKeyIndex()');
+		ContainerObj.jsDebug('TableObj.rebuildKeyIndex()');
 		tableName=this.tableName;
 		var keyPos=this.getEtcValue('keypos');
 		if (keyPos == undefined){
@@ -1229,7 +1229,7 @@ var tableObject = Class.create({
 //===============================================================================
 	//?@getRowFromKey: function(keyId)?C
 	getRowFromKey: function(keyId){
-		containerObj.jsDebug('tableObj.getRowFromKey(keyId)');
+		ContainerObj.jsDebug('TableObj.getRowFromKey(keyId)');
 		tableName=this.tableName;
 		rowNo=this.tableHash[tableName]['datakeyindexhash'].get(keyId);
 		return rowNo;
@@ -1237,7 +1237,7 @@ var tableObject = Class.create({
 //===============================================================================
 	//?@deleteEntry: function(keyValue)?C
 	deleteEntry: function(keyValue){
-		containerObj.jsDebug('tableObj.deleteEntry(keyValue)');
+		ContainerObj.jsDebug('TableObj.deleteEntry(keyValue)');
 		tableName=this.tableName;
 		var rowNo=this.getRowFromKey(keyValue);
 		//- remove row in display
@@ -1255,9 +1255,9 @@ var tableObject = Class.create({
 		this.tableHash[tableName]['etc'].set('sendtoserver',true);
 		var iconMenu=this.getEtcValue('tableiconmenu');
 		if (iconMenu != ''){
-			menuObj.swap(iconMenu);
-			menuObj.setAlertClass('set');
-			menuObj.reverseSwap();
+			MenuObj.swap(iconMenu);
+			MenuObj.setAlertClass('set');
+			MenuObj.reverseSwap();
 		}
 		else {alert ('no icon menu');}	
 		var nameString=this.tableHash[tableName]['etc'].get('namestring');
@@ -1274,7 +1274,7 @@ var tableObject = Class.create({
 //========================================================================
 	//?@reset: function(showHtml)?C
 	reset: function(showHtml){
-		containerObj.jsDebug('tableObj.reset()');
+		ContainerObj.jsDebug('TableObj.reset()');
 		tableName=this.tableName;
 		if (showHtml==false){var pageNo=this.getEtcValue('pageno');}
 		this.tableHash[tableName]=new Array();
@@ -1295,23 +1295,23 @@ var tableObject = Class.create({
 //========================================================================
 	//?@getIndexNo: function(theKeyId)?C
 	getIndexNo: function(theKeyId){
-		containerObj.jsDebug('tableObj.getIndexNo(theKeyId)');
+		ContainerObj.jsDebug('TableObj.getIndexNo(theKeyId)');
 		var indexId=this.tableHash[this.tableName]['datakeyindexhash'].get(theKeyId);
 		//alert ('ta.gin: indexId: '+indexId+', thekeyid: '+theKeyId);//xxx
-		//containerObj.displayAry(this.tableHash[this.tableName]['datakeyindexhash']);//xxx
+		//ContainerObj.displayAry(this.tableHash[this.tableName]['datakeyindexhash']);//xxx
 		return indexId;
 	},
 //========================================================================
 	//?@renameDataAryIndex: function(theTempId,theRealId,indexId)?C
 	renameDataAryIndex: function(theTempId,theRealId,indexId){
-		containerObj.jsDebug('tableObj.renameDataAryIndex(theTempId,theRealId,indexId)');
+		ContainerObj.jsDebug('TableObj.renameDataAryIndex(theTempId,theRealId,indexId)');
 		this.tableHash[this.tableName]['datakeyindexhash'].remove(theTempId);
 		this.tableHash[this.tableName]['datakeyindexhash'].set(theRealId,indexId);
 	},
 //========================================================================
 	//?@updateDataAryIndex: function(keyId,indexId)?C
 	updateDataAryIndex: function(keyId,indexId){
-		containerObj.jsDebug('tableObj.updateDataAryIndex(keyId,indexId)');
+		ContainerObj.jsDebug('TableObj.updateDataAryIndex(keyId,indexId)');
 		tst=this.tableHash[this.tableName]['datakeyindexhash'];
 		if (tst==undefined){this.tableHash[this.tableName]['datakeyindexhash']= new Hash();}
 		this.tableHash[this.tableName]['datakeyindexhash'].set(keyId,indexId);
@@ -1319,13 +1319,13 @@ var tableObject = Class.create({
 //========================================================================
 	//?@getDataAryPointers: function()?C
 	getDataAryPointers: function(){
-		containerObj.jsDebug('tableObj.getgetDataAryPointers()');
+		ContainerObj.jsDebug('TableObj.getgetDataAryPointers()');
 		var keyName=this.getEtcValue('keyname');
 		//-do the below only for the calendar
-		var areYouLive=calendarObj.areYouAlive();
+		var areYouLive=CalendarObj.areYouAlive();
 	   	if (areYouLive){
-	   		var dateName=calendarObj.getEtcValue('calendarentrydatename');
-			var timeName=calendarObj.getEtcValue('calendarentrystarttimename');
+	   		var dateName=CalendarObj.getEtcValue('calendarentrydatename');
+			var timeName=CalendarObj.getEtcValue('calendarentrystarttimename');
 			var dataDef=this.getEtcValue('datadef');
 			var dataDefAry=dataDef.split('~');
 			var dataDefLength=dataDefAry.length;
@@ -1348,7 +1348,7 @@ var tableObject = Class.create({
 //========================================================================
 	//?@convTempIds: function(tableName,idConvAry)?C
 	convTempIds: function(tableName,idConvAry){
-		containerObj.jsDebug('tableObj.convTempIds(tableName,idConvAry)');
+		ContainerObj.jsDebug('TableObj.convTempIds(tableName,idConvAry)');
 		this.tableName=tableName;
 		var keyPos=this.getEtcValue('keypos');
 		//alert ('ta.convtempids: tablename: '+tableName+', idconvary: '+idConvAry);//xxx
@@ -1365,13 +1365,13 @@ var tableObject = Class.create({
 			var theValueAry=theValueStrg.split('%');
 			var theTempId=theValueAry[0];
 			var theRealId=theValueAry[1];
-			var theIndexId=tableObj.getIndexNo(theTempId);
+			var theIndexId=TableObj.getIndexNo(theTempId);
 			//- the below blows up because theIndexId is undefined
-			tableObj.tableHash[tableName]['dataary'][theIndexId][keyPos]=theRealId;
+			TableObj.tableHash[tableName]['dataary'][theIndexId][keyPos]=theRealId;
 			//alert ('xxx2');
-			tableObj.tableHash[tableName]['dataary'][theIndexId][tempProfileIdPos]=false;
+			TableObj.tableHash[tableName]['dataary'][theIndexId][tempProfileIdPos]=false;
 			//alert ('ta.ctids: renamedataaryindex: thetempid: '+theTempId+', therealid: '+theRealId+', theindexid: '+theIndexId);//xxx
-			tableObj.renameDataAryIndex(theTempId,theRealId,theIndexId);
+			TableObj.renameDataAryIndex(theTempId,theRealId,theIndexId);
 			//alert ('ta.ctids: change id '+theTempId+ ' to '+theRealId);//xxx
 		});
 	},
@@ -1423,7 +1423,7 @@ var tableObject = Class.create({
 				lp=theDataDefCnt;
 			}
 		}
-		tableValue = utilObj.convertString(tableValue);
+		tableValue = UtilObj.convertString(tableValue);
 		tableValue = '<pre>'+tableValue+'</pre>';
 		$(idName).innerHTML=tableValue;
 		//alert (tableValue);//
@@ -1456,7 +1456,7 @@ var tableObject = Class.create({
 		}
 		var dataAry=this.tableHash[this.tableName]['newdataary'];
 		var dataAryLen=dataAry.length;
-		//containerObj.displayAry('dataary',dataAry);//
+		//ContainerObj.displayAry('dataary',dataAry);//
 		var amtTotal=0;
 		if (theDateCol<9999){
 			for (var lp=0;lp<dataAryLen;lp++){
@@ -1465,7 +1465,7 @@ var tableObject = Class.create({
 					//alert ('theamt: '+theAmt+', lp: '+lp);//
 				}
 				catch (err){
-					alert ('tableObj.totalAmountColumns: '+err+', lp: '+lp);
+					alert ('TableObj.totalAmountColumns: '+err+', lp: '+lp);
 				}
 				var amtTotal=Number(amtTotal)+Number(theAmt);
 			}
@@ -1486,7 +1486,7 @@ var tableObject = Class.create({
 				$(updateId).innerHTML=amtTotal;
 			}
 			catch (err){
-				alert ('tableObj.totalAmoutColumns: '+err+', updateid: '+updateId);
+				alert ('TableObj.totalAmoutColumns: '+err+', updateid: '+updateId);
 			}
 		}
 	},
@@ -1500,7 +1500,7 @@ var tableObject = Class.create({
 		var noColsMax=jobParamsAry[3];
 		if (noColsMax == undefined || noColsMax == ''){noColsMax=0;}
 		noColsMax=Number(noColsMax);
-		utilObj.writeLog('debug1id','tableObj.convertarytotable: tablename: '+tableName+', aryname: '+aryName+', savename: '+saveName);//xxxd
+		UtilObj.writeLog('debug1id','TableObj.convertarytotable: tablename: '+tableName+', aryname: '+aryName+', savename: '+saveName);//xxxd
 		this.tableName=tableName;
 		var theAry=this.tableHash[this.tableName][aryName];
 		if (theAry == '' || theAry == undefined){
@@ -1553,7 +1553,7 @@ var tableObject = Class.create({
 		}
 		tableHtml+='</table>'+"\n";
 		this.setEtcValue(saveName,tableHtml);
-		//containerObj.displayHash('etc',this.tableHash[this.tableName]['etc']);//xxxd
+		//ContainerObj.displayHash('etc',this.tableHash[this.tableName]['etc']);//xxxd
 	},
 //=========================================================
 //?@convertAryToCutPaste: function(jobParamsAry)?C
@@ -1562,13 +1562,13 @@ convertAryToCutPaste: function(jobParamsAry){
 		this.tableName=tableName;
 		var aryName=jobParamsAry[1];
 		var saveName=jobParamsAry[2];
-		utilObj.writeLog('debug1id','tableObj.convertarytotable: tablename: '+tableName+', aryname: '+aryName+', savename: '+saveName);//xxxd
+		UtilObj.writeLog('debug1id','TableObj.convertarytotable: tablename: '+tableName+', aryname: '+aryName+', savename: '+saveName);//xxxd
 		this.tableName=tableName;
 		try {
 			var theAry=this.tableHash[this.tableName][aryName];
 		}
 		catch (err){
-			alert ('tableObj.convertAryToCutPast: ('+err+'), tableName: '+tableName);
+			alert ('TableObj.convertAryToCutPast: ('+err+'), tableName: '+tableName);
 		}
 		if (theAry == '' || theAry == undefined){
 			theAry=this.tableHash[this.tableName]['dataary'];
@@ -1595,7 +1595,7 @@ convertAryToCutPaste: function(jobParamsAry){
 		}
 		tableHtml+='</pre>'+"\n";
 		this.setEtcValue(saveName,tableHtml);
-		//containerObj.displayHash('etc',this.tableHash[this.tableName]['etc']);//xxxd
+		//ContainerObj.displayHash('etc',this.tableHash[this.tableName]['etc']);//xxxd
 	},
 //================================= total table fields
 //?@totalTableFields: function(jobParamsAry)
@@ -1609,27 +1609,27 @@ convertAryToCutPaste: function(jobParamsAry){
 //?@- totalsAry {a}?C data structure: save all date keys for sorting and listing
 //?@-- 0/1/2 {n} ... theKey {v}   
 	totalTableFields: function(jobParamsAry){
-		utilObj.writeLog('debug1id','!!tableObj.totalTableFields!!');
-		//containerObj.displayAry('totaltablefields',jobParamsAry);
+		UtilObj.writeLog('debug1id','!!TableObj.totalTableFields!!');
+		//ContainerObj.displayAry('totaltablefields',jobParamsAry);
 		var typeOfTotal_raw=jobParamsAry[0];
-		utilObj.writeLog('debug1id','typeoftotal_raw: '+typeOfTotal_raw);
+		UtilObj.writeLog('debug1id','typeoftotal_raw: '+typeOfTotal_raw);
 //- get type of break by all/year/month/week/day
 		if (typeOfTotal_raw.indexOf('?I',0)>-1){
 			var typeOfTotalAry=typeOfTotal_raw.split('?I');
 			var typeOfTotalRef=typeOfTotalAry[1];
 			var typeOfTotal=$(typeOfTotalRef).value;
-			utilObj.writeLog('debug1id','ref: '+typeOfTotalRef+', is '+typeOfTotal);
+			UtilObj.writeLog('debug1id','ref: '+typeOfTotalRef+', is '+typeOfTotal);
 		}
 //- get breakoutcolname
 		//var breakoutColName=jobParamsAry[3];
 		var breakoutColName_raw=jobParamsAry[3];
-		utilObj.writeLog('debug1id','breakoutcolname_raw: '+breakoutColName_raw);
+		UtilObj.writeLog('debug1id','breakoutcolname_raw: '+breakoutColName_raw);
 		if (breakoutColName_raw.indexOf('?I',0)>-1){
 			var breakoutColNameAry=breakoutColName_raw.split('?I');
 			var breakoutColNameRef=breakoutColNameAry[1];
 			var breakoutColName=$(breakoutColNameRef).value;
 			if (breakoutColName == undefined || breakoutColName == ''){breakoutColName='umpquatype';}
-			utilObj.writeLog('debug1id','ref: '+breakoutColNameRef+', is '+breakoutColName);
+			UtilObj.writeLog('debug1id','ref: '+breakoutColNameRef+', is '+breakoutColName);
 		} else {
 			var breakoutColName=breakoutColName_raw;
 		}
@@ -1651,13 +1651,13 @@ convertAryToCutPaste: function(jobParamsAry){
 			colNoHash.set('colno',colNo);
 			colNoHash.set('oper',theOper);
 			totalFieldsAry[totalFieldsAry.length]=colNoHash;
-			utilObj.writeLog('debug1id',' total field '+lp+', is '+jobParamsAry[lp]+', colno: '+colNo+', oper: '+theOper);
+			UtilObj.writeLog('debug1id',' total field '+lp+', is '+jobParamsAry[lp]+', colno: '+colNo+', oper: '+theOper);
 		}
 		var noTotalFields=totalFieldsAry.length;
 //- get column number for datecolname, breakoutcolname
 		var dateColNo=this.getDataNo(dateColName);
 		var breakoutColNo=this.getDataNo(breakoutColName);
-		//utilObj.writeLog('debug1id',' breakoutcolname: '+breakoutColName+', breakoutcolno: '+breakoutColNo);exit();
+		//UtilObj.writeLog('debug1id',' breakoutcolname: '+breakoutColName+', breakoutcolno: '+breakoutColNo);exit();
 //- get array that is main data input
 		var useAry=this.tableHash[this.tableName]['newdataary'];
 		if (useAry == undefined || useAry == ''){
@@ -1675,17 +1675,17 @@ convertAryToCutPaste: function(jobParamsAry){
 			for (var theLp2=0; theLp2<noTotalFields; theLp2++){
 				//- get colno
 				try {var valueColNo=totalFieldsAry[theLp2].get('colno');}
-				catch (err){alert ('tableObj.totalTableFields: '+err+', theLp2: '+theLp2);}
+				catch (err){alert ('TableObj.totalTableFields: '+err+', theLp2: '+theLp2);}
 				var aRowValue = new Number(theRowAry[valueColNo]);
 				//- get oper
 				try {var theOper=totalFieldsAry[theLp2].get('oper');}
-				catch (err){alert ('tableObj.totalTableFields: '+err+', theLp2: '+theLp2);}
+				catch (err){alert ('TableObj.totalTableFields: '+err+', theLp2: '+theLp2);}
 				var useOper=new Number(theOper);
 				//- get value of row
 				aRowValue *= useOper;
 				theTotalRowValue += aRowValue;
 			}
-			var dateHash=utilObj.convertDateToHash(theDate);
+			var dateHash=UtilObj.convertDateToHash(theDate);
 			var theMonthNo=dateHash.get('monthno');
 			var theDayNo=dateHash.get('dayno');
 			var theYearNo=dateHash.get('yearno');
@@ -1717,10 +1717,10 @@ convertAryToCutPaste: function(jobParamsAry){
 			oldValue= new Number(oldValue_raw);
 			oldValue+=theTotalRowValue;
 			totalsHash[theKey].set(theBreakoutValue,oldValue);
-			utilObj.writeLog('debug1id',theKey+'('+theBreakoutValue+'): '+oldValue);
-			//utilObj.writeLog('debug1id',theLp+') '+theMonthNo+'/'+theDayNo+'/'+theYearNo+', '+theBreakoutValue+', '+theTotalRowValue+', oldvalue: '+oldValue);
+			UtilObj.writeLog('debug1id',theKey+'('+theBreakoutValue+'): '+oldValue);
+			//UtilObj.writeLog('debug1id',theLp+') '+theMonthNo+'/'+theDayNo+'/'+theYearNo+', '+theBreakoutValue+', '+theTotalRowValue+', oldvalue: '+oldValue);
 		}
-		//containerObj.displayHash('totalshash',totalsHash);//xxxf
+		//ContainerObj.displayHash('totalshash',totalsHash);//xxxf
 //--- Create report looking for income and expense fields
 		if (breakoutColName == 'umpquatype' || breakoutColName == 'jefftype'){
 		var theStrg="<table><tr><td>&nbsp;</td><td>income</td><td>expense</td><td>net</td><td>transfer</td></tr>\n";
@@ -1825,8 +1825,8 @@ convertAryToCutPaste: function(jobParamsAry){
 			}
 			theStrg+="</tr>";
 			theStrg+="</table>";
-			//containerObj.displayAry('tabletotalsary',tableTotalsAry);//xxxf
-			//containerObj.displayHash('tableTotals',tableTotals);//xxxf
+			//ContainerObj.displayAry('tabletotalsary',tableTotalsAry);//xxxf
+			//ContainerObj.displayHash('tableTotals',tableTotals);//xxxf
 		}
 		switch (updateIdName){
 		case 'alert': 
@@ -1840,7 +1840,7 @@ convertAryToCutPaste: function(jobParamsAry){
 				$(updateIdName).innerHTML=theStrg;
 			}
 			catch (err){
-				alert ('tableObj.totalTableFields: '+err+', updateidname: '+updateIdName);
+				alert ('TableObj.totalTableFields: '+err+', updateidname: '+updateIdName);
 			}
 		}
 	},
@@ -1870,7 +1870,7 @@ convertAryToCutPaste: function(jobParamsAry){
 		var firstChange=jobParamsAry[2];
 		this.setTableName(tableName);
 		var tableId=this.getEtcValue('tableid');
-		var curChange=userObj.getEtcValue('tablecolumntogglestate');
+		var curChange=UserObj.getEtcValue('tablecolumntogglestate');
 		if (curChange == undefined){curChange=firstChange;}
 		//alert ('curchange: '+curChange+', colno: '+colNo+', tablename: '+tableName+', tableid: '+tableId);//xxxf
 		if (curChange=='hide'){
@@ -1881,7 +1881,7 @@ convertAryToCutPaste: function(jobParamsAry){
 			jQuery('#'+tableId+' td:nth-child('+colNo+')').show();
 			curChange='hide';
 		}
-			userObj.setEtcValue('tablecolumntogglestate',curChange);
+			UserObj.setEtcValue('tablecolumntogglestate',curChange);
 	},
 //======================================= changeTdColClass
 	// there are occasions where this does not work - not sure why?
@@ -1892,7 +1892,7 @@ convertAryToCutPaste: function(jobParamsAry){
 		var secondClass=jobParamsAry[3];
 		if (theCode == 'toggle'){
 			var toggleName=tableId+'_toggle';
-			var theFlag=userObj.getEtcValue(toggleName);
+			var theFlag=UserObj.getEtcValue(toggleName);
 			if (theFlag == undefined || theFlag == 'false'){
 				var fromClass=firstClass;
 				var toClass=secondClass;
@@ -1903,14 +1903,14 @@ convertAryToCutPaste: function(jobParamsAry){
 				var toClass=firstClass;
 				theFlag='false';
 			}
-			userObj.setEtcValue(tableId+'_toggle',theFlag);
+			UserObj.setEtcValue(tableId+'_toggle',theFlag);
 		}
 		else {
 			var fromClass=firstClass;
 			var toClass=secondClass;
 		}
 		try {var tableBase=$(tableId);}
-		catch (err){alert ('tableObj.changeTdClass: '+err+', tableId: '+tableId);}
+		catch (err){alert ('TableObj.changeTdClass: '+err+', tableId: '+tableId);}
 		tableBase.rows[3].cells[3].innerHTML='xxxf';
 		tableBase.rows[3].cells[3].className='ttdnotes';
 		if (tableBase != undefined){

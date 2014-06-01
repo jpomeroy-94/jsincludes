@@ -1,4 +1,4 @@
-var testObject = Class.create({
+var TestObject = Class.create({
 //  
 	initialize: function() {
 		//alert ('init of testObj');

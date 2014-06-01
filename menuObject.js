@@ -1,4 +1,4 @@
-var menuObject = Class.create({
+var MenuObject = Class.create({
 // version: 1.1.1
 //  menuName
 //	menuHash[menuName]['etchash']
@@ -26,30 +26,30 @@ var menuObject = Class.create({
 	},
 //=========================================================
 	  removeDisplay: function(containerName){
-	    containerObj.jsDebug('tableObj.removeDisplay()');
+	    ContainerObj.jsDebug('TableObj.removeDisplay()');
 	    //alert ('set containername to '+containerName);//xxxd
 	    //xxxf - this could be a problem
-	    containerObj.removeDisplay();// remove what is current (subcontainer)
-	    containerObj.setContainerName(containerName);
-	    containerObj.removeDisplay();// remove the main container
+	    ContainerObj.removeDisplay();// remove what is current (subcontainer)
+	    ContainerObj.setContainerName(containerName);
+	    ContainerObj.removeDisplay();// remove the main container
 	 },
 //===================================================
 	initMenu: function(menuName){
-		containerObj.jsDebug('menuObj.initMenu('+menuName+')');
+		ContainerObj.jsDebug('MenuObj.initMenu('+menuName+')');
 		this.menuName=menuName;
-		//userObj.doLog('','ininitmenu this.menuName: '+this.menuName);//xxxf
+		//UserObj.doLog('','ininitmenu this.menuName: '+this.menuName);//xxxf
 		var tst=this.menuHash[menuName];
 		if (tst==undefined){this.menuHash[menuName]=new Hash();}
-		//userObj.doLog('','l43');
+		//UserObj.doLog('','l43');
 		var tst=this.menuHash[menuName]['etchash'];
 		if (tst==undefined){this.menuHash[menuName]['etchash']=new Hash();}
-		//userObj.doLog('','l45');
+		//UserObj.doLog('','l45');
 		var tst=this.menuHash[menuName]['elementsary'];
 		if (tst==undefined){this.menuHash[menuName]['elementsary']=new Array();}
-		//userObj.doLog('','l48');
+		//UserObj.doLog('','l48');
 		var tst=this.menuHash[menuName]['titlesary'];
 		if (tst==undefined){this.menuHash[menuName]['titlesary']=new Array();}
-		//userObj.doLog('','l51');
+		//UserObj.doLog('','l51');
 		var tst=this.menuHash[menuName]['textary'];
 		if (tst==undefined){this.menuHash[menuName]['textary']=new Array();}
 	},
@@ -98,7 +98,7 @@ var menuObject = Class.create({
 		try {
 			$(menuId).style.visibility='hidden';
 		} catch (err){
-			alert ('menuObj.hideMenu: ('+err+') menuname: '+menuName+', menuid: '+menuId);
+			alert ('MenuObj.hideMenu: ('+err+') menuname: '+menuName+', menuid: '+menuId);
 		}
 	},
 //===================================================
@@ -112,13 +112,13 @@ var menuObject = Class.create({
 	},
 //===================================================
 	setSelectedClass: function(deprecatedMenuName,menuElementNo){
-		containerObj.jsDebug('menuObj.setSelectedClass(depr: '+deprecatedMenuName+', menuelementno: '+menuElementNo+')');
+		ContainerObj.jsDebug('MenuObj.setSelectedClass(depr: '+deprecatedMenuName+', menuelementno: '+menuElementNo+')');
 		menuName=this.menuName;
 		//alert ('menuname: '+menuName);//xxx
 		try {var menuSelectedClass=this.menuHash[menuName]['etchash'].get('menuselectedclass');}
 		catch (err){
-			alert ('menuObj.setSelectedClass L57: menuname: '+menuName+'\n'+err);
-			containerObj.displayStack('me.setSelectedClass');
+			alert ('MenuObj.setSelectedClass L57: menuname: '+menuName+'\n'+err);
+			ContainerObj.displayStack('me.setSelectedClass');
 		}
 		if (menuSelectedClass != ''){
 			var menuNonSelectedClass=this.menuHash[menuName]['etchash'].get('menuclass');
@@ -131,7 +131,7 @@ var menuObject = Class.create({
 					elementBase.className=menuSelectedClass;
 				}
 				catch (err){
-					alert ('menuObj.setselectedclass: '+err+', menuId: '+menuId+', elementno: '+menuElementNo);
+					alert ('MenuObj.setselectedclass: '+err+', menuId: '+menuId+', elementno: '+menuElementNo);
 				}
 				if (menuElementNo != lastMenuElementNo && lastMenuElementNo != undefined){
 					try {
@@ -140,7 +140,7 @@ var menuObject = Class.create({
 						elementBase.className=menuNonSelectedClass;
 					}
 					catch (err){
-						alert ('menuObj.setselectedclass: '+err+', menuid: '+menuId+', lastmenuelementno: '+lastMenuElementNo);
+						alert ('MenuObj.setselectedclass: '+err+', menuid: '+menuId+', lastmenuelementno: '+lastMenuElementNo);
 					}
 				}
 			}
@@ -153,7 +153,7 @@ var menuObject = Class.create({
 	},
 //===================================================
 	setAlertClass: function(code){
-		containerObj.jsDebug('menuObj.setAlertClass(code: '+code+')');
+		ContainerObj.jsDebug('MenuObj.setAlertClass(code: '+code+')');
 		var menuName=this.menuName;
 		var parentMenuName=this.parentMenuName;//xxx
 		if (parentMenuName != undefined){var useMenuName=parentMenuName;}
@@ -171,17 +171,17 @@ var menuObject = Class.create({
 				if (elementBase != undefined){elementBase.className=useClass;}
 				else {alert ('elementbase is undefined for menuelementid: '+menuElementId);}
 			}
-			else {alert ('menuObj.setAlertClass: menuelementid is null');}
+			else {alert ('MenuObj.setAlertClass: menuelementid is null');}
 		}
-		else {alert ('menuObj.setAlertClass: alertclass is null');}
+		else {alert ('MenuObj.setAlertClass: alertclass is null');}
 		this.menuName=origMenuName;
 	},
 //===================================================
 	getElementsOther: function(theName){
-		containerObj.jsDebug('menuObj.getElementsOther(theName: '+theName+')');
+		ContainerObj.jsDebug('MenuObj.getElementsOther(theName: '+theName+')');
 		var menuName=this.menuName;
 		//alert ('menuName: '+menuName);//xxx
-		//containerObj.displayAry(this.menuHash[menuName]['etchash']);//xxx
+		//ContainerObj.displayAry(this.menuHash[menuName]['etchash']);//xxx
 		var rtnValue = '';
 		var elementNo=this.menuHash[menuName]['etchash'].get('lastmenuelementno');
 		//alert ('getelementsother: '+menuName+': '+elementNo);//xxx
@@ -193,8 +193,8 @@ var menuObject = Class.create({
 	},
 //===================================================
 	setFixedMenuDisplay: function(jobParamsAry){
-		containerObj.jsDebug('menuObj.setMenuDisplay()');
-		userObj.doLog('init','call setfixedmenudisplay');
+		ContainerObj.jsDebug('MenuObj.setMenuDisplay()');
+		UserObj.doLog('init','call setfixedmenudisplay');
 		//- get variables
 		var fixedMenuName=jobParamsAry[0];
 		var fixedMenuElementNo=jobParamsAry[1];
@@ -202,73 +202,73 @@ var menuObject = Class.create({
 		var callingMenuElementId=jobParamsAry[3];
 		//- get calling menu class and selected class
 		this.menuName=callingMenuName;
-		userObj.doLog('','this.menuName: '+this.menuName+', which was callingmenuname');
-		userObj.doLog('','line 198 - call getetcvalue next');
-		//userObj.displayLog('line 199 just before getetcvalue');//xxxf
+		UserObj.doLog('','this.menuName: '+this.menuName+', which was callingmenuname');
+		UserObj.doLog('','line 198 - call getetcvalue next');
+		//UserObj.displayLog('line 199 just before getetcvalue');//xxxf
 		var callingMenuClass=this.getEtcValue('menuclass');
-		//userObj.displayLog('line 201 after getetcvalue');//xxxf
+		//UserObj.displayLog('line 201 after getetcvalue');//xxxf
 		var callingMenuSelectedClass=this.getEtcValue('menuselectedclass');
-		userObj.doLog('','callingMenuClass: '+callingMenuClass+', callingMenuSelectedClass: '+callingMenuSelectedClass);
+		UserObj.doLog('','callingMenuClass: '+callingMenuClass+', callingMenuSelectedClass: '+callingMenuSelectedClass);
 		//- set calling menu old element to class
 		var lastId=this.getEtcValue('lastid');
-		userObj.doLog('','lastid: '+lastId+' set to callingmenuclass');
-		//userObj.displayLog('l212');//xxxf
-		//userObj.displayLog('line 203');//xxxf
+		UserObj.doLog('','lastid: '+lastId+' set to callingmenuclass');
+		//UserObj.displayLog('l212');//xxxf
+		//UserObj.displayLog('line 203');//xxxf
 		if (lastId != undefined && lastId.length > 0){
-			userObj.doLog('','did the try');
+			UserObj.doLog('','did the try');
 			try {$(lastId).className=callingMenuClass;}
-			catch (err){alert ('menuObj.setFixedMenuDisplay('+err+'): lastid: '+lastId+', callingmenuclass: '+callingMenuClass);}
+			catch (err){alert ('MenuObj.setFixedMenuDisplay('+err+'): lastid: '+lastId+', callingmenuclass: '+callingMenuClass);}
 		}
 		//- set calling menu element to selected class
-		userObj.doLog('','new id: '+callingMenuElementId+' set to callingmenuselectedclass');
+		UserObj.doLog('','new id: '+callingMenuElementId+' set to callingmenuselectedclass');
 		try{$(callingMenuElementId).className=callingMenuSelectedClass;}
-		catch (err){alert ('menuObj.setFixedMenuDisplay('+err+'): callingmenuelementid: '+callingMenuElementId);}
+		catch (err){alert ('MenuObj.setFixedMenuDisplay('+err+'): callingmenuelementid: '+callingMenuElementId);}
 		//- save id of new selected class
 		this.setEtcValue('lastid',callingMenuElementId);
-		//userObj.displayLog();
+		//UserObj.displayLog();
 		//- get new image source and update controlled menu
 		this.menuName=fixedMenuName;
 		//alert (theFixedSrc+', '+theFixedTitle+', '+theFixedText);//xxxf
 		//- get new title and update fixed menu
-		userObj.doLog('','get thefixedtitle from this.menuname: '+this.menuName+', titlesary, fixedmenuelementno: '+fixedMenuElementNo);
-		//userObj.displayLog('l230');//xxxf
+		UserObj.doLog('','get thefixedtitle from this.menuname: '+this.menuName+', titlesary, fixedmenuelementno: '+fixedMenuElementNo);
+		//UserObj.displayLog('l230');//xxxf
 		var theFixedTitle=this.menuHash[this.menuName]['titlesary'][fixedMenuElementNo][0];
 		var theFixedTitleId=this.getEtcValue('menutitleid');
-		userObj.doLog('','thefixedtitleid: '+theFixedTitleId+', thefixedtitle: '+theFixedTitle);
+		UserObj.doLog('','thefixedtitleid: '+theFixedTitleId+', thefixedtitle: '+theFixedTitle);
 		if (theFixedTitleId != undefined && theFixedTitleId != ''){
 			try {$(theFixedTitleId).innerHTML=theFixedTitle;}
-			catch (err){alert ('menuObj.setFixedMenuDisplay('+err+'): fixedtitleid: '+theFixedTitleId);}
+			catch (err){alert ('MenuObj.setFixedMenuDisplay('+err+'): fixedtitleid: '+theFixedTitleId);}
 		}
-		//userObj.displayLog('l237');
+		//UserObj.displayLog('l237');
 		//- get new text and update fixed menu
 		var theFixedText=this.menuHash[this.menuName]['textary'][fixedMenuElementNo][0];
 		var theFixedTextId=this.getEtcValue('menutextid');
 		if (theFixedTextId != undefined && theFixedTextId.length > 0){
 			try {$(theFixedTextId).innerHTML=theFixedText;}
-			catch (err){alert ('menuObj.setFixedMenuDisplay('+err+'): fixedtextid: '+theFixedTextId);}
+			catch (err){alert ('MenuObj.setFixedMenuDisplay('+err+'): fixedtextid: '+theFixedTextId);}
 		}
 		//- get new image src and update fixed menu
 		var theFixedSrc=this.menuHash[this.menuName]['elementsary'][fixedMenuElementNo][0];
 		var theFixedImageId=this.getEtcValue('menuimageid');
 		if (theFixedImageId != undefined && theFixedImageId.length > 0){
 			try {$(theFixedImageId).src=theFixedSrc;}
-			catch (err){alert ('menuObj.setFixedMenuDisplay('+err+'): fixedimageid: '+theFixedImageId);}
+			catch (err){alert ('MenuObj.setFixedMenuDisplay('+err+'): fixedimageid: '+theFixedImageId);}
 		}
 	},
 //==================================================
 	displayEtc: function(){
-		containerObj.displayAry(this.menuHash[this.menuName]['etchash']);
+		ContainerObj.displayAry(this.menuHash[this.menuName]['etchash']);
 	},
 //===================================================
 	loadEtc: function(etcName,etcValue){
-		containerObj.jsDebug('menuObj.loadEtc(etcName: '+etcName+', etcValue: '+etcValue+')');
+		ContainerObj.jsDebug('MenuObj.loadEtc(etcName: '+etcName+', etcValue: '+etcValue+')');
 		var menuName=this.menuName;
 		this.initMenu(menuName);
 		this.menuHash[this.menuName]['etchash'].set(etcName,etcValue);
 	},
 //===================================================
 	retrieveEtc: function(etcName){
-		containerObj.jsDebug('menuObj.retrieveEtc('+etcName+')');
+		ContainerObj.jsDebug('MenuObj.retrieveEtc('+etcName+')');
 		var menuName=this.menuName;
 		this.initMenu(menuName);
 		var theRtnValue=this.menuHash[this.menuName]['etchash'].get(etcName);
@@ -297,16 +297,16 @@ var menuObject = Class.create({
 	},
 //==================================================
 	setEtcValueAjax: function (menuName,etcName,etcValue){
-		containerObj.jsDebug('menuObj.setEtcValueAjax(etcName: '+etcName+', etcValue: '+etcValue+')');
+		ContainerObj.jsDebug('MenuObj.setEtcValueAjax(etcName: '+etcName+', etcValue: '+etcValue+')');
 		this.initMenu(menuName);
 		this.menuHash[menuName]['etchash'].set(etcName,etcValue);
 	},
 //==================================================
 	getEtcValue: function(etcName){
-		//userObj.doLog('','l295 getetvalue call retrieveetc');
-		//userObj.displayLog('in getetcvalue');//xxxf
+		//UserObj.doLog('','l295 getetvalue call retrieveetc');
+		//UserObj.displayLog('in getetcvalue');//xxxf
 		var etcValue=this.retrieveEtc(etcName);
-		//userObj.displayLog('after retrieveetc');//xxxf
+		//UserObj.displayLog('after retrieveetc');//xxxf
 		return etcValue;
 	},
 //===================================================
@@ -317,12 +317,12 @@ var menuObject = Class.create({
 	},
 //===================================================
 	setArrays: function(code,elementNo,theName,theValue){
-		containerObj.jsDebug('menuObj.setArrays(code: '+code+', eleno: '+elementNo+',thename: '+theName+',thevalue: '+theValue+')');
+		ContainerObj.jsDebug('MenuObj.setArrays(code: '+code+', eleno: '+elementNo+',thename: '+theName+',thevalue: '+theValue+')');
 		this.setArraysAjax(this.menuName,code,elementNo,theName,theValue);
 	},
 //===================================================
 	setArraysAjax: function(menuName,code,elementNo,theName,theValue){
-		containerObj.jsDebug('menuObj.setArrays(code: '+code+', eleno: '+elementNo+',thename: '+theName+',thevalue: '+theValue+')');
+		ContainerObj.jsDebug('MenuObj.setArrays(code: '+code+', eleno: '+elementNo+',thename: '+theName+',thevalue: '+theValue+')');
 		var tst=this.menuHash[menuName];
 		if (tst==undefined){this.menuHash[menuName]=new Hash();}
 		var tst=this.menuHash[menuName]['etchash'];
@@ -341,13 +341,13 @@ var menuObject = Class.create({
 				this.menuHash[menuName]['etchash'][elementNo]=new Array();
 				this.menuHash[menuName]['etchash'][elementNo][theName]=[theValue];
 			}
-			else {alert ('menuObj.setArrays: (no elementNo) '+code+', '+elementNo+', '+theName+', '+theValue);}
+			else {alert ('MenuObj.setArrays: (no elementNo) '+code+', '+elementNo+', '+theName+', '+theValue);}
 		break;
 		default:
 			try {theValueAry=theValue.split('~');}
 			catch (err){
-				alert ('menuObj.setArraysAjax: ('+err+')menuname: '+menuName+', code: '+code+', elementno: '+elementNo+', thename: '+theName+', thevalue: '+theValue);
-				containerObj.displayStack();
+				alert ('MenuObj.setArraysAjax: ('+err+')menuname: '+menuName+', code: '+code+', elementno: '+elementNo+', thename: '+theName+', thevalue: '+theValue);
+				ContainerObj.displayStack();
 			}
 			switch (code){
 				case 'elements':
@@ -384,9 +384,9 @@ var menuObject = Class.create({
 	},	
 //===================================================
 	getContainer: function(job,container,loadId,focusId,menuName,menuElementNo){
-		containerObj.jsDebug('menuObj.getContainer('+job+','+container+','+loadId+','+menuName+','+menuElementNo+')');
+		ContainerObj.jsDebug('MenuObj.getContainer('+job+','+container+','+loadId+','+menuName+','+menuElementNo+')');
 		this.initMenu(menuName);
-		containerObj.getContainerFromServer(job,container,'post',loadId,focusId);
+		ContainerObj.getContainerFromServer(job,container,'post',loadId,focusId);
 		//alert ('job: '+job+', container: '+container+', loadid: '+loadId);//xxx
 		//- below should go to mainmenu, but has button menu setup
 		var changedMenuName=this.menuName;
@@ -397,21 +397,21 @@ var menuObject = Class.create({
 	},
 //===================================================
 	writeDbRowsToServer: function(){
-		containerObj.jsDebug('menuObj.writeDbRowsToServer()');
+		ContainerObj.jsDebug('MenuObj.writeDbRowsToServer()');
 		//alert ('writedbrowstoserver');//xxx
-		tableObj.writeDbRowsToServer();
+		TableObj.writeDbRowsToServer();
 		this.setAlertClass('unset');//what if an error? xxxr
 	},
 //===================================================
 	insertRow: function(){
-		containerObj.jsDebug('menuObj.writeDbRowsToServer()');
-		tableObj.insertRow();		
+		ContainerObj.jsDebug('MenuObj.writeDbRowsToServer()');
+		TableObj.insertRow();		
 	},
 //===================================================
 	reset: function(job,container,loadId,menuName,menuElementNo){
 		//alert ('job: '+job+', container: '+container+', loadid: '+loadId+', menuname: '+menuName+', meno: '+menuElementNo);
-		containerObj.jsDebug('menuObj.resetTable()');
-		containerObj.reset();
+		ContainerObj.jsDebug('MenuObj.resetTable()');
+		ContainerObj.reset();
 		this.getContainer(job,container,loadId,menuName,menuElementNo);
 		this.setAlertClass('unset');
 	},
@@ -432,13 +432,13 @@ var menuObject = Class.create({
 		var textId=this.getEtcValue('menutextid');
 		var titleId=this.getEtcValue('menutitleid');
 		try {$(pictureId).src=theSource;}
-		catch (err){alert ('menuObj.displayMappedPicture('+err+') pictureid: '+pictureId+' is invalid');}
+		catch (err){alert ('MenuObj.displayMappedPicture('+err+') pictureid: '+pictureId+' is invalid');}
 		try{$(textId).innerHTML=theText;}
-		catch (err){alert ('menuObj.displayMappedPicture('+err+') textid: '+textId+' is invalid');}
+		catch (err){alert ('MenuObj.displayMappedPicture('+err+') textid: '+textId+' is invalid');}
 		try {$(titleId).innerHTML=theTitle;}
-		catch (err){alert ('menuObj.displayMappedPicture('+err+') titleid: '+titleId+' is invalid');}
+		catch (err){alert ('MenuObj.displayMappedPicture('+err+') titleid: '+titleId+' is invalid');}
 		//var theCaption=this.menuHash[menuName]['']
-		//containerObj.displayAry(this.menuHash[menuName]['elementsary']);//xxxd
+		//ContainerObj.displayAry(this.menuHash[menuName]['elementsary']);//xxxd
 	},
 //===================================================
 	autoRotateImage: function(menuName){
@@ -451,7 +451,7 @@ var menuObject = Class.create({
 			if (menuName=='homedisplay'){var usePos=0;}
 			else {var usePos=2;}
 			this.writeToErr(usePos, 'tst: '+tst+', sleep to check menuname: '+menuName);
-			sessionId=setTimeout("menuObj.autoRotateImage('"+menuName+"')",1);
+			sessionId=setTimeout("MenuObj.autoRotateImage('"+menuName+"')",1);
 		}
 		else {
 //--- menu is current setup
@@ -537,7 +537,7 @@ var menuObject = Class.create({
 			catch (err) {
 				quickExit=true;
 				if (showError){
-					alert ('menuObj.autoRotateImage: ('+err+') menuname: '+this.menuName+', theid: '+menuImageId+', opacity_use: '+opacity_use);
+					alert ('MenuObj.autoRotateImage: ('+err+') menuname: '+this.menuName+', theid: '+menuImageId+', opacity_use: '+opacity_use);
 				}
 			}
 //--- set current opacity
@@ -549,7 +549,7 @@ var menuObject = Class.create({
 				if (!quickExit){
 					if (menuName=='homedisplay'){var usePos=1;}
 					else {var usePos=3;}
-					var sessionId=setTimeout("menuObj.autoRotateImageGetNext('"+menuName+"','loweropacity')",1);
+					var sessionId=setTimeout("MenuObj.autoRotateImageGetNext('"+menuName+"','loweropacity')",1);
 					this.writeToErr(usePos,'lower opacity '+theOpacity+'('+theIncrement+'), sessionid: '+sessionId);
 					this.setTmpValue('sessionid',sessionId);
 					//alert ('settimeout: '+sessionId);
@@ -583,7 +583,7 @@ var menuObject = Class.create({
 				}
 				if (!quickExit){
 //--- set timeout to start raising the opacity
-					var sessionId=setTimeout("menuObj.autoRotateImageGetNext('"+menuName+"','raiseopacity')",1);
+					var sessionId=setTimeout("MenuObj.autoRotateImageGetNext('"+menuName+"','raiseopacity')",1);
 					this.setTmpValue('sessionid',sessionId);
 					if (menuName=='homedisplay'){var usePos=1;}
 					else {var usePos=3;}
@@ -617,7 +617,7 @@ var menuObject = Class.create({
 			catch (err) {
 				quickExit=true;
 				if (showError){
-					alert ('menuObj.autoRotateImage: ('+err+') theid: '+menuImageId+', opacity_use: '+opacity_use);
+					alert ('MenuObj.autoRotateImage: ('+err+') theid: '+menuImageId+', opacity_use: '+opacity_use);
 				}
 			}
 //--- save the calculated opacity
@@ -625,7 +625,7 @@ var menuObject = Class.create({
 			if (doContinue){
 				if (!quickExit){
 //--- set timeout to continue raising the opacity
-					var sessionId=setTimeout("menuObj.autoRotateImageGetNext('"+menuName+"','raiseopacity')",1);
+					var sessionId=setTimeout("MenuObj.autoRotateImageGetNext('"+menuName+"','raiseopacity')",1);
 					this.setTmpValue('sessionid',sessionId);
 					if (menuName=='homedisplay'){var usePos=1;}
 					else {var usePos=3;}
@@ -636,7 +636,7 @@ var menuObject = Class.create({
 			else {
 				if (!quickExit){
 //--- set timeout to start lowering the opacity
-					var sessionId=setTimeout("menuObj.autoRotateImageGetNext('"+menuName+"','loweropacity')",1);
+					var sessionId=setTimeout("MenuObj.autoRotateImageGetNext('"+menuName+"','loweropacity')",1);
 					this.setTmpValue('sessionid',sessionId);
 					if (menuName=='homedisplay'){var usePos=1;}
 					else {var usePos=3;}
@@ -663,10 +663,10 @@ runBatchV2: function(batchString_raw){
 		batchAry_length=batchAry.length;
 		var chk=batchAry[0].substring(0,3);
 		if (chk != 'w' && chk != 'yui'){
-			utilObj.writeLog('debug2id','- entered runbatchv2 going to fornext batch string: '+batchAry[0]);
+			UtilObj.writeLog('debug2id','- entered runbatchv2 going to fornext batch string: '+batchAry[0]);
 		}
 		for (var batchLp=0;batchLp<batchAry_length;batchLp++){
-			//utilObj.writeLog('debug2id','- in fornext with runBatchV2 batchLp: '+batchLp);
+			//UtilObj.writeLog('debug2id','- in fornext with runBatchV2 batchLp: '+batchLp);
 			this.setEtcValue('batchlp',batchLp);
 			var jobAry=batchAry[batchLp].split('?:');
 			var jobAryLength=jobAry.length;
@@ -685,7 +685,7 @@ runBatchV2: function(batchString_raw){
 			this.doRunBatch(jobName, jobParamsAry_length, batchAry_length, jobParamsAry, batchAry, 'new');
 			var batchLp=Number(this.getEtcValue('batchlp'));
 		}
-		//utilObj.writeLog('debug2id','!!!!exit out of runBatchV2');
+		//UtilObj.writeLog('debug2id','!!!!exit out of runBatchV2');
 	},
 //=================================================== old with a change made
 	preBatch: function(preBatchString){
@@ -717,7 +717,7 @@ runBatchV2: function(batchString_raw){
 		if (this.jobCtr == undefined){this.jobCtr=0;};
 		if (this.lastJobName == undefined){this.lastJobName='unknown';}
 		if (jobName != this.lastJobName){
-			utilObj.writeLog('debug3id','menuObj.doRunBatch: '+jobName+' <- '+this.lastJobName+'('+this.jobCtr+')');
+			UtilObj.writeLog('debug3id','MenuObj.doRunBatch: '+jobName+' <- '+this.lastJobName+'('+this.jobCtr+')');
 			this.jobCtr=0;
 		}
 		this.jobCtr++;
@@ -733,14 +733,14 @@ runBatchV2: function(batchString_raw){
 			switch (jobName){
 //@ w,w,wait until ajax ends(local)
 			case 'w':
-				var ajaxIsRunning=containerObj.isAjaxRunning();
+				var ajaxIsRunning=ContainerObj.isAjaxRunning();
 				var wCnt=this.wCnt;
 				if (wCnt==undefined){wCnt=0;}
 				wCnt++;
 				this.wCnt=wCnt;
 				if (wCnt>1000){
 					alert ("wcnt is > 1000, so unsetting isajaxrunning");
-					containerObj.setAjaxIsDone();
+					ContainerObj.setAjaxIsDone();
 				}
 				if (ajaxIsRunning){
 					var batchAryLeft=new Array();
@@ -750,8 +750,8 @@ runBatchV2: function(batchString_raw){
 					}
 					if (theVersion == 'old'){batchStringLeft=batchAryLeft.join('|');}
 					else {batchStringLeft=batchAryLeft.join('??');}
-					if (theVersion == 'old'){sessionId=setTimeout("menuObj.runBatch('"+batchStringLeft+"')",100);}
-					else {sessionId=setTimeout("menuObj.runBatchV2('"+batchStringLeft+"')",100);}
+					if (theVersion == 'old'){sessionId=setTimeout("MenuObj.runBatch('"+batchStringLeft+"')",100);}
+					else {sessionId=setTimeout("MenuObj.runBatchV2('"+batchStringLeft+"')",100);}
 					batchLp=batchAry_length;
 					this.setEtcValue('batchlp',batchLp);
 				}
@@ -766,7 +766,7 @@ runBatchV2: function(batchString_raw){
 				var chk=this.menuHash[menuName];
 				if (chk == undefined){
 					//var vl=prompt('chk: '+batchLp,'x');if (vl=='x'){exit();}
-					sessionId=setTimeout("menuObj.runBatch('"+batchString+"')",1);
+					sessionId=setTimeout("MenuObj.runBatch('"+batchString+"')",1);
 					batchLp=batchAry_length;
 				}
 				break;;
@@ -779,8 +779,8 @@ runBatchV2: function(batchString_raw){
 				this.oldMenuName=this.menuName;
 				this.setMenuName(menuName);
 				//alert ('this.menuname: '+this.menuName);//xxxd
-				//containerObj.displayAry(this.menuHash[menuName]['etchash']);//xxxd
-				//containerObj.displayAry(this.menuHash['mainmenu']['etchash']);//xxxd
+				//ContainerObj.displayAry(this.menuHash[menuName]['etchash']);//xxxd
+				//ContainerObj.displayAry(this.menuHash['mainmenu']['etchash']);//xxxd
 				//alert ('setsleectclass: '+menuElementNo);//xxx
 				this.setSelectedClass('', menuElementNo);
 				this.setMenuName(this.oldMenuName);
@@ -793,20 +793,20 @@ runBatchV2: function(batchString_raw){
 						$(loadId).style.visibility='visible';
 					}
 					catch (err){
-						alert ('menuObj.runBatch(ses): '+err+', loadid: '+loadId);
+						alert ('MenuObj.runBatch(ses): '+err+', loadid: '+loadId);
 					}
 				}				
 				break;;
 //@ hdec,hdec?:loadid1?!loadid2?!loadid3,hide conditional elements (local)
 			case 'hdec':
-				var doIHide = userObj.doIHide();
+				var doIHide = UserObj.doIHide();
 				if (doIHide === false) {
 					for ( var batchLp2 = 0; batchLp2 < jobParamsAry_length; batchLp2++) {
 						var loadId = jobParamsAry[batchLp2];
 						try {
 							$(loadId).style.visibility = 'hidden';
 						} catch (err) {
-							alert('menuObj.runBatch(hde): ' + err + ', loadid: ' + loadId);
+							alert('MenuObj.runBatch(hde): ' + err + ', loadid: ' + loadId);
 						}
 					}
 				} 
@@ -819,21 +819,21 @@ runBatchV2: function(batchString_raw){
 						$(loadId).style.visibility='hidden';
 					}
 					catch (err){
-						alert ('menuObj.runBatch(hde): '+err+', loadid: '+loadId);
+						alert ('MenuObj.runBatch(hde): '+err+', loadid: '+loadId);
 					}
 				}
 				break;;
 //@ srd,srd?:tablename?!fromdateid?!todateid?!tabledatecolumnname,select rows date (tableObl.selectRowsDate)
 			case 'srd':
-				tableObj.selectRowsDate(jobParamsAry);
+				TableObj.selectRowsDate(jobParamsAry);
 				break;;
-//@ srl,srl?:tablename?!selectstring?!columnname deprecate soon select rows by value(tableObj.selectRowsValue)				... 
+//@ srl,srl?:tablename?!selectstring?!columnname deprecate soon select rows by value(TableObj.selectRowsValue)				... 
 			case 'srl':
-				tableObj.selectRowsValue(jobParamsAry);
+				TableObj.selectRowsValue(jobParamsAry);
 				break;;
-//@ srv,srv:tablename!columnname!selectstring,select rows by value(tableObj.selectRowsValue)
+//@ srv,srv:tablename!columnname!selectstring,select rows by value(TableObj.selectRowsValue)
 			case 'srv':
-				tableObj.selectRowsValue(jobParamsAry);
+				TableObj.selectRowsValue(jobParamsAry);
 				break;;
 //@ dit,dit:menuName,display menu title(local)
 			case 'dit':
@@ -847,7 +847,7 @@ runBatchV2: function(batchString_raw){
 						$(menuTitleId).innerHTML=menuTitle;
 					}
 					catch (err){
-						containerObj.displayAry(this.menuHash[this.menuName]['etchash']);
+						ContainerObj.displayAry(this.menuHash[this.menuName]['etchash']);
 						alert ('menuobj.runBatch(dit): '+err+', menutitleid: '+menuTitleId);
 					}
 				}
@@ -890,70 +890,70 @@ runBatchV2: function(batchString_raw){
 			case 'sps':					
 				this.setImageSize(jobParamsAry);
 				break;;
-//@ wfs,wfs:job!form!formno{optional},write form to server v2(formObj.writeFormToServerV2)
+//@ wfs,wfs:job!form!formno{optional},write form to server v2(FormObj.writeFormToServerV2)
 			case 'wfs':
-				//formObj.writeFormToServerV2(jobParamsAry[0],jobParamsAry[1]);
-				formObj.writeFormToServerV2(jobParamsAry);
+				//FormObj.writeFormToServerV2(jobParamsAry[0],jobParamsAry[1]);
+				FormObj.writeFormToServerV2(jobParamsAry);
 				break;
-//@ wfsa,wfsa:job!form,write all changed table rows as forms to server v2(formObj.writeMultFormsToServer)
+//@ wfsa,wfsa:job!form,write all changed table rows as forms to server v2(FormObj.writeMultFormsToServer)
 			case 'wfsa':
-				formObj.writeMultFormsToServer(jobParamsAry);
+				FormObj.writeMultFormsToServer(jobParamsAry);
 				break;
-//@ dtrs,dtrs:job!table!keyid,delete table row from server(tableObj.deleteTableRowServer)
+//@ dtrs,dtrs:job!table!keyid,delete table row from server(TableObj.deleteTableRowServer)
 			case 'dtrs':	
-				tableObj.deleteTableRowServer(jobParamsAry[0],jobParamsAry[1],jobParamsAry[2]);//xxxd
+				TableObj.deleteTableRowServer(jobParamsAry[0],jobParamsAry[1],jobParamsAry[2]);//xxxd
 				break;
-//@ rfds,rfds:job!form!keyid,retrieve form data from server(formObj.retrieveFormDbFromServer)
+//@ rfds,rfds:job!form!keyid,retrieve form data from server(FormObj.retrieveFormDbFromServer)
 			case 'rfds':
-				formObj.retrieveFormDbFromServer(jobParamsAry[0],jobParamsAry[1],jobParamsAry[2]);
+				FormObj.retrieveFormDbFromServer(jobParamsAry[0],jobParamsAry[1],jobParamsAry[2]);
 				break;;
 //@ cff,cff:formname,clear form fields but not hidden ones					... cff:formname
 			case 'cff':
-				formObj.clearFormFields(jobParamsAry[0]);
+				FormObj.clearFormFields(jobParamsAry[0]);
 				break;;
 //@ rtds,rtds...,deprecated due to extreme complexity
 			case 'rtds':
-				tableObj.retrieveTableDbFromServer(jobParamsAry[0],jobParamsAry[1],jobParamsAry[2]);
+				TableObj.retrieveTableDbFromServer(jobParamsAry[0],jobParamsAry[1],jobParamsAry[2]);
 				break;;
 //@ gcfss,gcfss:job!container_selectname_selectvalue!loadid!sessionname,get container from server simple 	... 
 			case 'gcfss':
-				containerObj.getContainerFromServerSimple(jobParamsAry[0],jobParamsAry[1],'forcepost',jobParamsAry[2],'');
+				ContainerObj.getContainerFromServerSimple(jobParamsAry[0],jobParamsAry[1],'forcepost',jobParamsAry[2],'');
 				break;;
-//@ gcfssv2,gcfssv2?: job?! container_formname?! loadid?! sessionname?! formname?! operation?! varname?! varvalue?! ...,get container from server simple v2(containerObj.getContainerFromServerSimpleV2)
+//@ gcfssv2,gcfssv2?: job?! container_formname?! loadid?! sessionname?! formname?! operation?! varname?! varvalue?! ...,get container from server simple v2(ContainerObj.getContainerFromServerSimpleV2)
 			case 'gcfssv2':
-				//containerObj.displayAry('meonuobj.gcfssv2',jobParamsAry);
-				containerObj.getContainerFromServerSimpleV2(jobParamsAry);
+				//ContainerObj.displayAry('meonuobj.gcfssv2',jobParamsAry);
+				ContainerObj.getContainerFromServerSimpleV2(jobParamsAry);
 				break;;
-//@ gcfsj,gcfsj?: job?! container?! loadid?! sessionname?! formname?! operation?! selectname?! selectvalue?! varname?! varvalue?! ...,get container from server simple v2(containerObj.getContainerFromServerJson)
+//@ gcfsj,gcfsj?: job?! container?! loadid?! sessionname?! formname?! operation?! selectname?! selectvalue?! varname?! varvalue?! ...,get container from server simple v2(ContainerObj.getContainerFromServerJson)
 			case 'gcfsj':
-				containerObj.getContainerFromServerJson(jobParamsAry);
+				ContainerObj.getContainerFromServerJson(jobParamsAry);
 				break;;
-//@ gcfss,gcfss:job!container!loadid!sessionname,get container from server simple maybe(containerObj.getContainerFromServerSimple)
+//@ gcfss,gcfss:job!container!loadid!sessionname,get container from server simple maybe(ContainerObj.getContainerFromServerSimple)
 			case 'gcfssm':
-				//alert ('menuObj.runbatch(gcfss): '+jobParamsAry[0]+', '+jobParamsAry[1]);//xxxf
-				containerObj.getContainerFromServerSimple(jobParamsAry[0],jobParamsAry[1],'post',jobParamsAry[2],'');
-				//containerObj.getContainerFromServerSimple(jobParamsAry);
+				//alert ('MenuObj.runbatch(gcfss): '+jobParamsAry[0]+', '+jobParamsAry[1]);//xxxf
+				ContainerObj.getContainerFromServerSimple(jobParamsAry[0],jobParamsAry[1],'post',jobParamsAry[2],'');
+				//ContainerObj.getContainerFromServerSimple(jobParamsAry);
 				break;;				
-//@ dp,dp,display table page(tableObj.displayPage)
+//@ dp,dp,display table page(TableObj.displayPage)
 			case 'dp':
-				tableObj.displayPage();
+				TableObj.displayPage();
 				break;;
-//@ tpprev,tpprev,previous table page(tableObj.pagePrevious)
+//@ tpprev,tpprev,previous table page(TableObj.pagePrevious)
 			case 'tpprev':
-				tableObj.pagePrevious(jobParamsAry[0]);
+				TableObj.pagePrevious(jobParamsAry[0]);
 				break;
-//@ tpnext,tpnext,next table page(tableObj.pageNext)
+//@ tpnext,tpnext,next table page(TableObj.pageNext)
 			case 'tpnext':
-				tableObj.pageNext(jobParamsAry[0]);
+				TableObj.pageNext(jobParamsAry[0]);
 				break;
-//@ rfo,rfo:job!form,run form operation id->value(formObj.runOperation)
+//@ rfo,rfo:job!form,run form operation id->value(FormObj.runOperation)
 			case 'rfo':
 				//alert ('rfo: 0: '+jobParamsAry[0]+', '+jobParamsAry[1]);//xxxf
-				formObj.runOperation(jobParamsAry[0],jobParamsAry[1]);
+				FormObj.runOperation(jobParamsAry[0],jobParamsAry[1]);
 				break;;
-//@ rfo2,rfo2:job!form,run form operation name->value(formObj.runOperationV2)
+//@ rfo2,rfo2:job!form,run form operation name->value(FormObj.runOperationV2)
 			case 'rfo2':
-				formObj.runOperationV2(jobParamsAry[0],jobParamsAry[1]);
+				FormObj.runOperationV2(jobParamsAry[0],jobParamsAry[1]);
 				break;;
 //@ rmo,rmo:job!operation!name1!value!name2!value2,run menu operation(this.runOperation)
 			case 'rmo':
@@ -963,12 +963,12 @@ runBatchV2: function(batchString_raw){
 			case 'rmo2':
 				this.runOperationV2(jobParamsAry);
 				break;;
-//@ lvfid,lvfid:formElementId!formElementValue,load value into form id(userObj.getEtcValue) 
+//@ lvfid,lvfid:formElementId!formElementValue,load value into form id(UserObj.getEtcValue) 
 			case 'lvfid':
 				var theId=jobParamsAry[0];
 				var theValue=jobParamsAry[1];
 				if (theValue == 'uservalue'){
-					theValue=userObj.getEtcValue(theId);
+					theValue=UserObj.getEtcValue(theId);
 				}
 				try {$(theId).value=theValue;}
 				catch (err){alert ('runbatch(lvid): '+err+' theid: '+theId+', value: '+theValue);}
@@ -982,17 +982,17 @@ runBatchV2: function(batchString_raw){
 					$(toId).innerHTML=$(fromId).value;
 				}
 				catch (err){
-					alert ('menuObj.batch trnvih: '+err);
+					alert ('MenuObj.batch trnvih: '+err);
 				}
 				break;
-//@ lvfid,lvfid:formElementId!formElementValue,load string into image source(imageObj.loadImageSource)
+//@ lvfid,lvfid:formElementId!formElementValue,load string into image source(ImageObj.loadImageSource)
 			case 'ldimgsrc':
 				//alert (jobParamsAry);//xxxd
-				imageObj.loadImageSource(jobParamsAry);
+				ImageObj.loadImageSource(jobParamsAry);
 				break;;
-//@ tbsel,tbsel:tablename!getid(has string in it),select table rows(tableObj.preSelRows)
+//@ tbsel,tbsel:tablename!getid(has string in it),select table rows(TableObj.preSelRows)
 			case 'tbsel':
-				tableObj.preSelRows(jobParamsAry);				
+				TableObj.preSelRows(jobParamsAry);				
 				break;
 //@ strhtml,strhtml:{id}!{store name},store innerhtml(alert?)
 			case 'strhtml':
@@ -1007,64 +1007,64 @@ runBatchV2: function(batchString_raw){
 				var theId=jobParamsAry[0];
 				var theValue=jobParamsAry[1];
 				if (theValue == 'uservalue'){
-					theValue=userObj.getEtcValue(theId);
+					theValue=UserObj.getEtcValue(theId);
 				}
 				try {$(theId).innerHTML=theValue;}
 				catch (err){alert ('runbatch(ldv): '+err+' theid: '+theId+', value: '+theValue);}
 				//alert ('loaded value: '+theValue+' into '+theId);//xxxd
 				break;
-//@ ldts,ldts:{tablename}!{rowid}!{id}!{columnname},load table field string into innerHTML of id(tableObj.loadTableValue)
+//@ ldts,ldts:{tablename}!{rowid}!{id}!{columnname},load table field string into innerHTML of id(TableObj.loadTableValue)
 			case 'ldts':
-				tableObj.loadTableValue(jobParamsAry);
+				TableObj.loadTableValue(jobParamsAry);
 				break;
-//@ chgimgsz,chgimgsz:imageid!colno!rowno,increment/decrement an image size(utilObj.changeImageSize)
+//@ chgimgsz,chgimgsz:imageid!colno!rowno,increment/decrement an image size(UtilObj.changeImageSize)
 			case 'chgimgsz':
-				utilObj.changeImageSize(jobParamsAry);
+				UtilObj.changeImageSize(jobParamsAry);
 				break;
-//@ tglimgsiz,tglimgsiz:imageid!colno1!colno2,toggle image size(imageObj.toggleImageSize)
+//@ tglimgsiz,tglimgsiz:imageid!colno1!colno2,toggle image size(ImageObj.toggleImageSize)
 			case 'tglimgsiz':
-				imageObj.toggleImageSize(jobParamsAry);
+				ImageObj.toggleImageSize(jobParamsAry);
 				break;
-//@ setimgsz,???,src for an image,load in width, height, (utilObj.setImageSize)
+//@ setimgsz,???,src for an image,load in width, height, (UtilObj.setImageSize)
 			case 'setimgsz':
-				utilObj.setImageSize(jobParamsAry);
+				UtilObj.setImageSize(jobParamsAry);
 				break;
-//@ stimgdtl,stimgdtl:{imgname}!{imgsrc}!{width}!{height}!rawwidth%!%rawheight%!,store image detail(imageObj.storeImageDetail)
+//@ stimgdtl,stimgdtl:{imgname}!{imgsrc}!{width}!{height}!rawwidth%!%rawheight%!,store image detail(ImageObj.storeImageDetail)
 			case 'stimgdtl':
-				imageObj.storeImageDetail(jobParamsAry);
+				ImageObj.storeImageDetail(jobParamsAry);
 				break;
-//@ ldiid,ldiid:{id}!{etcvalue}!{id}!{etcvalue},load image value(imageObj.loadImageId)
+//@ ldiid,ldiid:{id}!{etcvalue}!{id}!{etcvalue},load image value(ImageObj.loadImageId)
 			case 'ldiid':
-				imageObj.loadImageId(jobParamsAry);
+				ImageObj.loadImageId(jobParamsAry);
 				break;
-//@ ldimgdta,ldimgdta:{imgname}!{field code}!{field value},load image field(imageObj.loadImageData)
+//@ ldimgdta,ldimgdta:{imgname}!{field code}!{field value},load image field(ImageObj.loadImageData)
 //@						field code: src, w, rw, h, rh
 			case 'ldimgdta':
-				imageObj.loadImageData(jobParamsAry);
+				ImageObj.loadImageData(jobParamsAry);
 				break;
-//@ shimg,shimg:{imgname},show image(imageObj.showImage)
+//@ shimg,shimg:{imgname},show image(ImageObj.showImage)
 			case 'shimg':
-				imageObj.showImage(jobParamsAry);
+				ImageObj.showImage(jobParamsAry);
 				break;
-//@ cip,cip:{imagename}!{w/h}!{fieldid},change image percent(imageObj.changeImagePercent)
+//@ cip,cip:{imagename}!{w/h}!{fieldid},change image percent(ImageObj.changeImagePercent)
 			case 'cip':
-				imageObj.changeImagePercent(jobParamsAry);
+				ImageObj.changeImagePercent(jobParamsAry);
 				break;
-//@ lu,lu:{userprofile colname}!{userprofile colname2},load user value to value(id) (userObj.loadUserValue)
+//@ lu,lu:{userprofile colname}!{userprofile colname2},load user value to value(id) (UserObj.loadUserValue)
 			case 'lu':
-				userObj.loadUserValue(jobParamsAry);
+				UserObj.loadUserValue(jobParamsAry);
 				break;
-//@ su,su:savename!savevalue!savename2!savevalue2,save user value(userObj.saveUserValue)
+//@ su,su:savename!savevalue!savename2!savevalue2,save user value(UserObj.saveUserValue)
 			case 'su':
-				userObj.saveUserValue(jobParamsAry);
+				UserObj.saveUserValue(jobParamsAry);
 				break;
-//@ luid,luid:{userprofile colname}!{loadid}! ...,load user value to valueid(userObj.loadUserValueToId)
+//@ luid,luid:{userprofile colname}!{loadid}! ...,load user value to valueid(UserObj.loadUserValueToId)
 			case 'luid':
-				userObj.loadUserValueToId(jobParamsAry);
+				UserObj.loadUserValueToId(jobParamsAry);
 				break;
-//@ scl,scl:id!class,set the class(utilObj.setClass)
+//@ scl,scl:id!class,set the class(UtilObj.setClass)
 			case 'scl':
-				utilObj.setClass(jobParamsAry[0],jobParamsAry[1]);
+				UtilObj.setClass(jobParamsAry[0],jobParamsAry[1]);
 				break;
 //@ sfmd,sfmd:callingmenuname!callingmenueleno!fixedmenuname!fixedmenuid,set menu display(this.setFixedMenuDisplay)
 			case 'sfmd':
@@ -1078,13 +1078,13 @@ runBatchV2: function(batchString_raw){
 			case 'dmp':
 				this.displayMappedPicture(jobParamsAry);
 				break;
-//@ nmth,nmth:calendarName,next month(calendarObj.nextMonth)
+//@ nmth,nmth:calendarName,next month(CalendarObj.nextMonth)
 			case 'nmth':
-				calendarObj.nextMonth(jobParamsAry[0]);
+				CalendarObj.nextMonth(jobParamsAry[0]);
 				break;
-//@ pmth,pmth?calendarName,previous month(calendarObj.prevMonth)
+//@ pmth,pmth?calendarName,previous month(CalendarObj.prevMonth)
 			case 'pmth':
-				calendarObj.prevMonth(jobParamsAry[0]);
+				CalendarObj.prevMonth(jobParamsAry[0]);
 				break;
 //@ prvvmp,prvvmp:menuname,previous page for vertical menu(this.previousPageVM)
 			case 'prvvmp':
@@ -1098,70 +1098,70 @@ runBatchV2: function(batchString_raw){
 			case 'dpvm':
 				this.displayPageVM(jobParamsAry);
 				break;
-//@ spd,spd:albumName,pictureNo,imageId,imageTitleId,imageCaptionId,set picture display(albumObj.setPictureDisplay)
+//@ spd,spd:albumName,pictureNo,imageId,imageTitleId,imageCaptionId,set picture display(AlbumObj.setPictureDisplay)
 			case 'spd':
-				albumObj.setPictureDisplay(jobParamsAry);
+				AlbumObj.setPictureDisplay(jobParamsAry);
 				break;
-//@ ???,???,???(menuObj.setPictureDisplayV2)
+//@ ???,???,???(MenuObj.setPictureDisplayV2)
 			case 'spd2':
-				menuObj.setPictureDisplayV2(jobParamsAry);
+				MenuObj.setPictureDisplayV2(jobParamsAry);
 				break;
-//@ spd3,spd3:menuname:pictureno,set picture display 3(menuObj.setPictureDisplayV3)
+//@ spd3,spd3:menuname:pictureno,set picture display 3(MenuObj.setPictureDisplayV3)
 			case 'spd3':
-				menuObj.setPictureDisplayV3(jobParamsAry);
+				MenuObj.setPictureDisplayV3(jobParamsAry);
 				break;
-//@ dav,dav:menuname,disable fixed menu video(menuObj.disableVideo)
+//@ dav,dav:menuname,disable fixed menu video(MenuObj.disableVideo)
 			case 'dav':
-				menuObj.disableVideo(jobParamsAry);
+				MenuObj.disableVideo(jobParamsAry);
 				break;
-//@ hdens,hdens:namedlist,hide using a named string for ids(utilObj.hideIdsViaList)
+//@ hdens,hdens:namedlist,hide using a named string for ids(UtilObj.hideIdsViaList)
 			case 'hdens':
-				utilObj.hideIdsViaList(jobParamsAry);
+				UtilObj.hideIdsViaList(jobParamsAry);
 				break;
-//@ cnf,cnf:formfieldid,convert %cr% to crlf in form field(formObj.convertField)
+//@ cnf,cnf:formfieldid,convert %cr% to crlf in form field(FormObj.convertField)
 			case 'cnv':
-				formObj.convertField(jobParamsAry);
+				FormObj.convertField(jobParamsAry);
 				break;
 //@ yui,yui:{changedid},run yui(utiObj.setupDrag)
 			case 'yui':
 				var dmy=1;
 				dmy=2;
-				if (utilObj.canIUseYui()){
+				if (UtilObj.canIUseYui()){
 					var containerId=jobParamsAry[0];
-					yuiObj.setupDrag(containerId);
+					YuiObj.setupDrag(containerId);
 				}
 				break;
-//@ mvi,mvi:{imagename}!{imagename}!{imagename},run move images(imageObj.moveImages)
+//@ mvi,mvi:{imagename}!{imagename}!{imagename},run move images(ImageObj.moveImages)
 			case 'mvi':
-				imageObj.moveImages(jobParamsAry);
+				ImageObj.moveImages(jobParamsAry);
 				break;
-//@ amttot,amttot:tablename!columnname!updateid?!c(currency)/n(number)?!{no of dec places},total amount fields and display total(tableObj.totalAmountColumns)
+//@ amttot,amttot:tablename!columnname!updateid?!c(currency)/n(number)?!{no of dec places},total amount fields and display total(TableObj.totalAmountColumns)
 			case 'amttot':
-				tableObj.totalAmountColumns(jobParamsAry);
+				TableObj.totalAmountColumns(jobParamsAry);
 				break;
-//@ htmltbl,htmltbl:tablename!arrayname!formfieldid,conv tableObj arys to html string in /etc(tableObj.convertAryToTable)
+//@ htmltbl,htmltbl:tablename!arrayname!formfieldid,conv TableObj arys to html string in /etc(TableObj.convertAryToTable)
 			case 'htmltbl':
-				tableObj.convertAryToTable(jobParamsAry);
+				TableObj.convertAryToTable(jobParamsAry);
 				break;
-//@ htmlcp,htmlcp:tablename!arrayname!saveName,conv tableObj arys to html cut/paste string in /etc(tableObj.convertAryToCutPaste)
+//@ htmlcp,htmlcp:tablename!arrayname!saveName,conv TableObj arys to html cut/paste string in /etc(TableObj.convertAryToCutPaste)
 			case 'htmlcp':
-				tableObj.convertAryToCutPaste(jobParamsAry);
+				TableObj.convertAryToCutPaste(jobParamsAry);
 				break;
-//@ savtockie,savtockie:type(table/id)!objectname(unused with id)!filename!cookiename,save {object}{objectname}etc/string(utilObj.setCookieValue)
+//@ savtockie,savtockie:type(table/id)!objectname(unused with id)!filename!cookiename,save {object}{objectname}etc/string(UtilObj.setCookieValue)
 			case 'savtockie':
-				utilObj.setCookieValue(jobParamsAry);
+				UtilObj.setCookieValue(jobParamsAry);
 				break;
-//@ winopn,winopnwinopn?:theUrl?!theObjType(table/innerhtml)?!(theObjName/innerhtmlId)?!theHtmlCodeFileName/null,open a new window(utilObj.windowOpen)
+//@ winopn,winopnwinopn?:theUrl?!theObjType(table/innerhtml)?!(theObjName/innerhtmlId)?!theHtmlCodeFileName/null,open a new window(UtilObj.windowOpen)
 			case 'winopn':
-				utilObj.windowOpen(jobParamsAry);
+				UtilObj.windowOpen(jobParamsAry);
 				break;
-//@ cllg,cllg:debug1/debug2/....,clear log file(utilObj.clearLog)
+//@ cllg,cllg:debug1/debug2/....,clear log file(UtilObj.clearLog)
 			case 'cllg':
-				utilObj.clearLog(jobParamsAry);
+				UtilObj.clearLog(jobParamsAry);
 				break;
-//@ zi,zi?:containerid?!{no},set z-index of an id(utilObj.setZIndex)
+//@ zi,zi?:containerid?!{no},set z-index of an id(UtilObj.setZIndex)
 			case 'zi':
-				utilObj.setZIndex(jobParamsAry);
+				UtilObj.setZIndex(jobParamsAry);
 				break;
 //@ sev,sev?:{t(table)/f(form)/c(container)/...}?!{objname}?!{etcname}?!{etcvalue},set etc value(<objs>.setEtcValue)
 			case 'sev':
@@ -1169,40 +1169,40 @@ runBatchV2: function(batchString_raw){
 				var theObjName=jobParamsAry[1];
 				var etcName=jobParamsAry[2];
 				var etcValue=jobParamsAry[3];
-				utilObj.writeLog('debug1id','thecode: '+theCode+', theobjname: '+theObjName+', etcName: '+etcName+', etcValue: '+etcValue);//xxxd22
+				UtilObj.writeLog('debug1id','thecode: '+theCode+', theobjname: '+theObjName+', etcName: '+etcName+', etcValue: '+etcValue);//xxxd22
 				switch (theCode){
 					case 't':
-						tableObj.setName(theObjName);
-						tableObj.setEtcValue(etcName,etcValue);
+						TableObj.setName(theObjName);
+						TableObj.setEtcValue(etcName,etcValue);
 						break;
 					case 'c':
-						containerObj.setName(theObjName);
-						containerObj.setEtcValue(etcName,etcValue);
+						ContainerObj.setName(theObjName);
+						ContainerObj.setEtcValue(etcName,etcValue);
 						break;
 					case 'f':
-						formObj.setName(theObjName);
-						formObj.setEtcValue(etcName,etcValue);
+						FormObj.setName(theObjName);
+						FormObj.setEtcValue(etcName,etcValue);
 						break;
 					case 'm':
-						menuObj.setName(theObjName);
-						menuObj.setEtcValue(etcName,etcValue);
+						MenuObj.setName(theObjName);
+						MenuObj.setEtcValue(etcName,etcValue);
 						break;
 				}
-				//containerObj.displayEtc();//xxxd
+				//ContainerObj.displayEtc();//xxxd
 				break;
-//@ tbltot,tbltot?: typeofdatebreakout?! tablename?! datecolname?! breakoutname?! updateid?! columnvaluename1?! columnvaluename2 (tableObj.totalTableFields)
+//@ tbltot,tbltot?: typeofdatebreakout?! tablename?! datecolname?! breakoutname?! updateid?! columnvaluename1?! columnvaluename2 (TableObj.totalTableFields)
 			case 'tbltot':
-				tableObj.totalTableFields(jobParamsAry);
+				TableObj.totalTableFields(jobParamsAry);
 				break;
-//@ imgchgsrc,imgchgsrc?:busy?!{img name}?!reg?!?D{code name}?D,change image source(imageObj.changeSource)
+//@ imgchgsrc,imgchgsrc?:busy?!{img name}?!reg?!?D{code name}?D,change image source(ImageObj.changeSource)
 			case 'imgchgsrc':
-				imageObj.changeSource(jobParamsAry);
+				ImageObj.changeSource(jobParamsAry);
 				break;
-//@ chgtdcls,chgtdcls?:code?!tableid?!fromclass?!toclass, change class of table td(tableObj.changeTdClass)
+//@ chgtdcls,chgtdcls?:code?!tableid?!fromclass?!toclass, change class of table td(TableObj.changeTdClass)
 			case 'chgtdcls':
-				tableObj.changeTdClass(jobParamsAry);
+				TableObj.changeTdClass(jobParamsAry);
 				break;
-//@ imgexp,imgexp?:id, explode an image(menuObj.runBatchV2(imgexp))
+//@ imgexp,imgexp?:id, explode an image(MenuObj.runBatchV2(imgexp))
 			case 'imgexp':
 				var id=jobParamsAry[0];
 				var pieces=jobParamsAry[1];
@@ -1211,18 +1211,18 @@ runBatchV2: function(batchString_raw){
 				//alert (options);//xxxf
 				jQuery("#"+id).hide( "explode",options,1000);
 				break;
-//@ autorot,autorot?:albumname, autorotate images in an album(albumObj.autoRotate(albumName)
+//@ autorot,autorot?:albumname, autorotate images in an album(AlbumObj.autoRotate(albumName)
 			case 'autorot':
-				albumObj.autoRotate(jobParamsAry);
+				AlbumObj.autoRotate(jobParamsAry);
 				break;
-//@ stpar,stpar?:albumname, stop autorotate(albumObj.stopDisplayNextImageForever(albumName)
+//@ stpar,stpar?:albumname, stop autorotate(AlbumObj.stopDisplayNextImageForever(albumName)
 			case 'stpar':
 				var albumName=jobParamsAry[0];
-				albumObj.stopDisplayNextImageForever(albumName);
+				AlbumObj.stopDisplayNextImageForever(albumName);
 				break;
-//@ shtc,shtc?:tablename?!columnno?!'hide', show hide table column(tableObj.showHideTableColumn(jobParamsAry))
+//@ shtc,shtc?:tablename?!columnno?!'hide', show hide table column(TableObj.showHideTableColumn(jobParamsAry))
 			case 'shtc':
-				tableObj.showHideTableColumn(jobParamsAry);
+				TableObj.showHideTableColumn(jobParamsAry);
 				break;
 //@ dnld,dnld?:fileName
 			case 'dnld':
@@ -1233,8 +1233,8 @@ runBatchV2: function(batchString_raw){
 //- default error
 			default:
 				alert ('menuobj.runbatch invalid jobname: '+jobName+', theversion: '+theVersion);
-				containerObj.displayAry('jobparamsary',jobParamsAry);
-				containerObj.displayAry('batchary',batchAry);
+				ContainerObj.displayAry('jobparamsary',jobParamsAry);
+				ContainerObj.displayAry('batchary',batchAry);
 			}
 	},
 //====================================
@@ -1244,11 +1244,11 @@ runBatchV2: function(batchString_raw){
 		var loadId=jobParamsAry[2];
 		if (theWidth>0){
 			try {$(loadId).style.width=theWidth;}
-			catch (err){alert ('menuObj.setImageSize: '+err+': width: '+theWidth+', id: '+loadId);}
+			catch (err){alert ('MenuObj.setImageSize: '+err+': width: '+theWidth+', id: '+loadId);}
 		}
 		if (theHeight>0){
 			try {$(loadId).style.height=theHeight;}
-			catch (err){alert ('menuObj.setImageSize: '+err+': height: '+theHeight+', id: '+loadId);}
+			catch (err){alert ('MenuObj.setImageSize: '+err+': height: '+theHeight+', id: '+loadId);}
 		}
 	},
 //====================================
@@ -1286,7 +1286,7 @@ runBatchV2: function(batchString_raw){
 		var theCaption=captionStringAry[menuElementNo];
 //- update html fields
 		try {$(imageId).src=imageSource;}
-		catch (err){alert ('menuObj.loadMainPicture: '+err+', imageid: '+imageId);}
+		catch (err){alert ('MenuObj.loadMainPicture: '+err+', imageid: '+imageId);}
 		//alert ('titleid: '+titleId+', .value: '+$(titleId).value+', .innerHTML: '+$(titleId).innerHTML+', .type: '+$(titleId).type+', .stuff: '+$(titleId).value);//xxxd
 		var testObj=$(formId);
 		testObj.elements[titleElementNo].value=theTitle;
@@ -1294,7 +1294,7 @@ runBatchV2: function(batchString_raw){
 		testObj.elements[captionElementNo].value=theCaption;
 		testObj.elements[captionElementNo].disabled=true;
 		try {$(containerId).style.visibility='visible';}
-		catch (err){alert ('menuObj.loadMainPicture: '+err+', containerid: '+containerId);}
+		catch (err){alert ('MenuObj.loadMainPicture: '+err+', containerid: '+containerId);}
 		//alert (containerId+', '+imageId+', '+nameId+', '+priceId);
 	},
 //====================================
@@ -1340,7 +1340,7 @@ runBatchV2: function(batchString_raw){
 			this.menuHash[this.menuName]['albumshash'][albumName]=new Hash();
 			//alert ('xxxd1: '+this.menuHash[this.menuName]['albumshash'][albumName]);//xxxd
 //- src
-			//containerObj.displayAry(this.menuHash[this.menuName]['etchash']);//xxxd
+			//ContainerObj.displayAry(this.menuHash[this.menuName]['etchash']);//xxxd
 			var albumNameSrc = albumName + '_src';
 			//alert (albumNameSrc);//xxxd
 			var theSrc=this.getEtcValue(albumNameSrc);
@@ -1384,11 +1384,11 @@ runBatchV2: function(batchString_raw){
 				$(updateId).src=newSrc;
 			}
 			catch (err) {
-				alert ('menuObj.displayAlbumPage('+err+') imagemenuId: '+menuImageId+', updateid: '+updateId);
+				alert ('MenuObj.displayAlbumPage('+err+') imagemenuId: '+menuImageId+', updateid: '+updateId);
 			}
 			//alert (lp+': pictureno: '+pictureNo+', pageno: '+pageNo+', albumcnt: '+albumCnt);
 		}
-		//containerObj.displayAry(this.menuHash[this.menuName]['etchash']);//xxxd
+		//ContainerObj.displayAry(this.menuHash[this.menuName]['etchash']);//xxxd
 	},
 //==================================== picture paging 
 	nextPicture: function(menuName){
@@ -1446,14 +1446,14 @@ runBatchV2: function(batchString_raw){
 				$(menuTitleId).innerHTML=menuTitle;
 			}
 			catch (err){
-				alert ('menuObj.displayPictureMenu('+err+') menutitleid: '+menuTitleId);
+				alert ('MenuObj.displayPictureMenu('+err+') menutitleid: '+menuTitleId);
 			}
 			if (menuDisplayType == 'titlecaptionelsewhere' || menuDisplayType == 'titlecaption'){
 				try {
 					$(menuTextId).innerHTML=menuText;
 				}
 				catch (err){
-					alert ('menuObj.displayPictureMenu('+err+') menutextid: '+menuTextId);
+					alert ('MenuObj.displayPictureMenu('+err+') menutextid: '+menuTextId);
 				}
 			}
 		}
@@ -1465,7 +1465,7 @@ runBatchV2: function(batchString_raw){
 	},
 //==========================================================
 	runOperation: function(jobParamsAry){
-		utilObj.writeLog('debug1id','!!menuObj.runOperation!!');
+		UtilObj.writeLog('debug1id','!!MenuObj.runOperation!!');
 		var jobName=jobParamsAry[0];
 		var operationName=jobParamsAry[1];
 		//alert ('run operation(rmo): '+jobName+', '+operationName);//xxxd
@@ -1481,13 +1481,13 @@ runBatchV2: function(batchString_raw){
 			else {
 				var theValue=jobParamsAry[lp];
 				if (theValue == 'uservalue'){
-					theValue=userObj.getEtcValue(theName);
+					theValue=UserObj.getEtcValue(theName);
 				}
 				sendDataAry[sendDataAry.length]=theName+'|'+theValue;
 				nameFlg=true;
 			}
 		}
-		ajaxObj.postAjaxSimple(formName,jobName,operationName,dbTableName,sendDataAry);
+		AjaxObj.postAjaxSimple(formName,jobName,operationName,dbTableName,sendDataAry);
 	},
 //==========================================================
 	runOperationV2: function(jobParamsAry){
@@ -1502,14 +1502,14 @@ runBatchV2: function(batchString_raw){
 		var paramNames='';
 		var paramValues='';
 		var delim='';
-		//containerObj.displayAry('jobp',jobParamsAry);//xxxf
+		//ContainerObj.displayAry('jobp',jobParamsAry);//xxxf
 		//xxxd22 - need to get sessionname and put in
 		for (var lp=2;lp<noJobParams;lp++){
 			if (nameFlg==true){var theName=jobParamsAry[lp];nameFlg=false;}
 			else {
 				var theValue=jobParamsAry[lp];
 				if (theValue == 'uservalue'){
-					theValue=userObj.getEtcValue(theName);
+					theValue=UserObj.getEtcValue(theName);
 				}
 				//sendDataAry[sendDataAry.length]=theName+'|'+theValue;
 				paramNames+=delim+theName;
@@ -1522,8 +1522,8 @@ runBatchV2: function(batchString_raw){
 		//alert ('senddataary: '+sendDataAry);
 		sendDataAry[sendDataAry.length]='paramnames|'+paramNames;
 		sendDataAry[sendDataAry.length]='paramvalues|'+paramValues;
-		//alert ('xxxd0: menuObj.runOperationV2 before postajaxsimple call');
-		ajaxObj.postAjaxSimple(formName,jobName,operationName,dbTableName,sendDataAry);
+		//alert ('xxxd0: MenuObj.runOperationV2 before postajaxsimple call');
+		AjaxObj.postAjaxSimple(formName,jobName,operationName,dbTableName,sendDataAry);
 	},
 //===================================================
 	toggleMenuDisplay: function(jobParamsAry){
@@ -1559,7 +1559,7 @@ runBatchV2: function(batchString_raw){
 		this.menuHash[menuName]['mediaary']=$A(jsonAry['mediaary']);
 		this.menuHash[menuName]['videoary']=$A(jsonAry['videoary']);
 		this.menuHash[menuName]['etchash']=$H(jsonAry['etchash']);
-		//containerObj.displayHash('etc',this.menuHash[menuName]['etchash']);
+		//ContainerObj.displayHash('etc',this.menuHash[menuName]['etchash']);
 	},
 //=============================================================
 	previousPageVM: function(jobParamsAry){
@@ -1684,28 +1684,28 @@ runBatchV2: function(batchString_raw){
 //========================================================xxxd22
 	setPictureDisplayV2: function(jobParamsAry){
 			//(albumName,pictureNo,allId,imageId,imageTitleId,imageCaptionId,menuName){
-		//containerObj.displayAry(this.menuHash['servicesoffered']['etchash']);//xxxd
+		//ContainerObj.displayAry(this.menuHash['servicesoffered']['etchash']);//xxxd
 		var menuName=jobParamsAry[0];
 		var pictureNo=jobParamsAry[1];
-		menuObj.setMenuName(menuName);
+		MenuObj.setMenuName(menuName);
 //- get image and other ids
-		var menuId=menuObj.getEtcValue('menuid');
-		var menuImageId=menuObj.getEtcValue('menuimageid');
+		var menuId=MenuObj.getEtcValue('menuid');
+		var menuImageId=MenuObj.getEtcValue('menuimageid');
 		var menuImageIdDiv=menuImageId+'div';
-		var menuTitleId=menuObj.getEtcValue('menutitleid');
-		var menuTextId=menuObj.getEtcValue('menutextid');
+		var menuTitleId=MenuObj.getEtcValue('menutitleid');
+		var menuTextId=MenuObj.getEtcValue('menutextid');
 //- get object ids
-		//containerObj.displayAry(this.menuHash[this.menuName]['etchash']);//xxxd
-		var menuObjectId=menuObj.getEtcValue('menuobjectid');
-		var menuObjectIdDiv=menuObjectId+'div';
-		var menuLocalObjectId=menuObj.getEtcValue('menulocalobjectid');
+		//ContainerObj.displayAry(this.menuHash[this.menuName]['etchash']);//xxxd
+		var MenuObjectId=MenuObj.getEtcValue('menuobjectid');
+		var MenuObjectIdDiv=MenuObjectId+'div';
+		var menuLocalObjectId=MenuObj.getEtcValue('menulocalobjectid');
 		var menuLocalObjectIdDiv=menuLocalObjectId+'div';
-		var menuParamId=menuObj.getEtcValue('menuparamid');
-		var menuLocalParamId=menuObj.getEtcValue('menulocalparamid');
-		var menuEmbedId=menuObj.getEtcValue('menuembedid');
-		var menuLocalEmbedId=menuObj.getEtcValue('menulocalembedid');
+		var menuParamId=MenuObj.getEtcValue('menuparamid');
+		var menuLocalParamId=MenuObj.getEtcValue('menulocalparamid');
+		var menuEmbedId=MenuObj.getEtcValue('menuembedid');
+		var menuLocalEmbedId=MenuObj.getEtcValue('menulocalembedid');
 //- get source, title, caption, mediatype
-		var pictureChangeHash=menuObj.getImageStuff(pictureNo);
+		var pictureChangeHash=MenuObj.getImageStuff(pictureNo);
 		var mediaType=pictureChangeHash.get('mediatype');
 		if (mediaType == ''){mediaType='image';}
 		var videoId=pictureChangeHash.get('videoid');//new
@@ -1714,30 +1714,30 @@ runBatchV2: function(batchString_raw){
 		var imageCaption=pictureChangeHash.get('text');
 		//- make the menu visible xxxd - not sure if we should do this
 		//try {$(menuId).style.visibility='visible';}
-		//catch (err){alert ('menuObj.setPictureDisplayV2: ('+err+') '+menuId+' is an invalid id');}
+		//catch (err){alert ('MenuObj.setPictureDisplayV2: ('+err+') '+menuId+' is an invalid id');}
 		if (mediaType == 'image'){
 //--------- image
 //- hide other stuff
-			try {$(menuObjectIdDiv).style.visibility='hidden';}
-			catch (err){alert ('menuObj.setPictureDisplayV2 ('+err+') menuobjectiddiv: '+menuObjectIdDiv);}
+			try {$(MenuObjectIdDiv).style.visibility='hidden';}
+			catch (err){alert ('MenuObj.setPictureDisplayV2 ('+err+') menuobjectiddiv: '+MenuObjectIdDiv);}
 			try {$(menuLocalObjectIdDiv).style.visibility='hidden';}
-			catch (err){alert ('menuObj.setPictureDisplayV2 ('+err+') menulocalobjectiddiv: '+menuLocalObjectIdDiv);}
+			catch (err){alert ('MenuObj.setPictureDisplayV2 ('+err+') menulocalobjectiddiv: '+menuLocalObjectIdDiv);}
 //- unhide picture
 			try {$(menuImageIdDiv).style.visibility='visible';}
-			catch (err){alert ('menuObj.setPictureDisplayV2 ('+err+') menuImageIddiv: '+menuImageIdDiv);}
+			catch (err){alert ('MenuObj.setPictureDisplayV2 ('+err+') menuImageIddiv: '+menuImageIdDiv);}
 //- load in picture source xxxd
 			try {$(menuImageId).src=imageSrc;}
-			catch (err){alert ('menuObj.setPictureDisplayV2: ('+err+') menuImageId: '+menuImageId);}
+			catch (err){alert ('MenuObj.setPictureDisplayV2: ('+err+') menuImageId: '+menuImageId);}
 		}
 		else if (mediaType == 'youtube') {
 //--------- youtube
-			try {$(menuObjectIdDiv).style.visibility='visible';}
-			catch (err){alert ('menuobjectidDiv: '+menuObjectIdDiv+' is invalid');}
+			try {$(MenuObjectIdDiv).style.visibility='visible';}
+			catch (err){alert ('menuobjectidDiv: '+MenuObjectIdDiv+' is invalid');}
 //- hide other stuff
 			try {$(menuImageIdDiv).style.visibility='hidden';}
 			catch (err) {alert (err);}
 			try {$(menuLocalObjectIdDiv).style.visibility='hidden';}
-			catch (err){alert ('menuObj.setPictureDisplayV2 ('+err+') menulocalobjectiddiv: '+menuLocalObjectIdDiv);}
+			catch (err){alert ('MenuObj.setPictureDisplayV2 ('+err+') menulocalobjectiddiv: '+menuLocalObjectIdDiv);}
 //- set url
 			var videoWidth=this.getEtcValue('videowidth');
 			var videoHeight=this.getEtcValue('videoheight');
@@ -1761,7 +1761,7 @@ runBatchV2: function(batchString_raw){
 			//-xxxd below still takes up space that is unwanted
 			try {$(menuImageIdDiv).style.visibility='hidden';}
 			catch (err) {alert (err);}
-			try {$(menuObjectIdDiv).style.visibility='hidden';}
+			try {$(MenuObjectIdDiv).style.visibility='hidden';}
 			catch (err) {alert (err);}
 			try {$(menuLocalObjectIdDiv).style.visibility='visible';}
 			catch (err){alert (err);}
@@ -1800,33 +1800,33 @@ runBatchV2: function(batchString_raw){
 		setPictureDisplayV3: function(jobParamsAry){
 			var menuName=jobParamsAry[0];
 			var pictureNo=jobParamsAry[1];
-			menuObj.setMenuName(menuName);
+			MenuObj.setMenuName(menuName);
 //- get height/width
-			var videoHeight=menuObj.getEtcValue('videoheight');
-			var videoWidth=menuObj.getEtcValue('videowidth');
+			var videoHeight=MenuObj.getEtcValue('videoheight');
+			var videoWidth=MenuObj.getEtcValue('videowidth');
 //- get main ids
-			var menuId=menuObj.getEtcValue('menuid');
-			var menuTitleId=menuObj.getEtcValue('menutitleid');
-			var menuTextId=menuObj.getEtcValue('menutextid');
+			var menuId=MenuObj.getEtcValue('menuid');
+			var menuTitleId=MenuObj.getEtcValue('menutitleid');
+			var menuTextId=MenuObj.getEtcValue('menutextid');
 //- get image id and class
-			var menuImageClass=menuObj.getEtcValue('menuimageclass');
-			var menuImageId=menuObj.getEtcValue('menuimageid');
+			var menuImageClass=MenuObj.getEtcValue('menuimageclass');
+			var menuImageId=MenuObj.getEtcValue('menuimageid');
 //- get youtube ids/classes
-			var menuObjectId=menuObj.getEtcValue('menuobjectid');
-			var menuParamId=menuObj.getEtcValue('menuparamid');
-			var menuEmbedId=menuObj.getEtcValue('menuembedid');
-			var menuEmbedClass=menuObj.getEtcValue('menuembedclass');
+			var MenuObjectId=MenuObj.getEtcValue('menuobjectid');
+			var menuParamId=MenuObj.getEtcValue('menuparamid');
+			var menuEmbedId=MenuObj.getEtcValue('menuembedid');
+			var menuEmbedClass=MenuObj.getEtcValue('menuembedclass');
 //- get local ids/classes
-			var menuLocalObjectId=menuObj.getEtcValue('menulocalobjectid');
-			var menuLocalParamId=menuObj.getEtcValue('menulocalparamid');
-			var menuLocalEmbedId=menuObj.getEtcValue('menulocalembedid');
-			var menuLocalEmbedClass=menuObj.getEtcValue('menulocalembedclass');
+			var menuLocalObjectId=MenuObj.getEtcValue('menulocalobjectid');
+			var menuLocalParamId=MenuObj.getEtcValue('menulocalparamid');
+			var menuLocalEmbedId=MenuObj.getEtcValue('menulocalembedid');
+			var menuLocalEmbedClass=MenuObj.getEtcValue('menulocalembedclass');
 //- get division ids
 			var menuImageIdDiv=menuImageId+'div';
-			var menuObjectIdDiv=menuObjectId+'div';
+			var MenuObjectIdDiv=MenuObjectId+'div';
 			var menuLocalObjectIdDiv=menuLocalObjectId+'div';
 //- get source, title, caption, mediatype
-			var pictureChangeHash=menuObj.getImageStuff(pictureNo);
+			var pictureChangeHash=MenuObj.getImageStuff(pictureNo);
 			var mediaType=pictureChangeHash.get('mediatype');
 			if (mediaType == ''){mediaType='image';}
 			var videoId=pictureChangeHash.get('videoid');//new
@@ -1845,7 +1845,7 @@ runBatchV2: function(batchString_raw){
 				var urlLocation1='http://www.youtube.com/v/';
 				var urlLocation2='?rel=1&color1=0x2b405b&color2=0x6b8ab6&border=1&fs=1';
 				var urlLocation=urlLocation1 + videoId + urlLocation2;
-				var htmlStrg='<object  id="'+menuObjectId+'">'+"\n";
+				var htmlStrg='<object  id="'+MenuObjectId+'">'+"\n";
 				htmlStrg+='<param name="movie" id="'+menuParamId+'" value="'+urlLocation+'"/>'+"\n";
 				htmlStrg+='<embed src="'+urlLocation+'" height="'+videoHeight+'" width="'+videoWidth+'"/>'+"\n";
 				htmlStrg+='</object>'+"\n";
@@ -1906,21 +1906,21 @@ runBatchV2: function(batchString_raw){
 //===================================================xxxd22
 	disableVideo: function(jobParamsAry){
 			var menuName=jobParamsAry[0];
-			menuObj.setMenuName(menuName);
-			var menuImageId=menuObj.getEtcValue('menuimageid');
+			MenuObj.setMenuName(menuName);
+			var menuImageId=MenuObj.getEtcValue('menuimageid');
 //------------------ disable youtube
-			var menuObjectId=menuObj.getEtcValue('menuobjectid');
-			var menuParamId=menuObj.getEtcValue('menuparamid');
-			var menuEmbedId=menuObj.getEtcValue('menuembedid');
+			var MenuObjectId=MenuObj.getEtcValue('menuobjectid');
+			var menuParamId=MenuObj.getEtcValue('menuparamid');
+			var menuEmbedId=MenuObj.getEtcValue('menuembedid');
 //- shutdown
 			try {$(menuEmbedId).width=0;} catch (err) {alert (err);}
 			try {$(menuEmbedId).height=0;} catch (err) {alert (err);}
-			try {$(menuObjectId).width=0;} catch (err) {alert (err);}
-			try {$(menuObjectId).height=0;} catch (err) {alert (err);}
+			try {$(MenuObjectId).width=0;} catch (err) {alert (err);}
+			try {$(MenuObjectId).height=0;} catch (err) {alert (err);}
 //------------------ disable local
-			var menuLocalObjectId=menuObj.getEtcValue('menulocalobjectid');
-			var menuLocalEmbedId=menuObj.getEtcValue('menulocalembedid');
-			var menuLocalParamId=menuObj.getEtcValue('menulocalparamid');
+			var menuLocalObjectId=MenuObj.getEtcValue('menulocalobjectid');
+			var menuLocalEmbedId=MenuObj.getEtcValue('menulocalembedid');
+			var menuLocalParamId=MenuObj.getEtcValue('menulocalparamid');
 //- embed shutdown
 			try {$(menuLocalEmbedId).width=0;} catch (err) {alert (err);}
 			try {$(menuLocalEmbedId).height=0;} catch (err) {alert (err);}
@@ -1929,8 +1929,8 @@ runBatchV2: function(batchString_raw){
 			try {$(menuLocalObjectId).width=0;} catch (err) {alert (err);}
 			try {$(menuLocalObjectId).height=0;} catch (err) {alert (err);}
 //- hide stuff where visibility was screwed with in setPictureDisplayV2
-			var menuObjectIdDiv=menuObjectId+'div';
-			try {$(menuObjectIdDiv).style.visibility='hidden';} catch (err) {alert (err);}
+			var MenuObjectIdDiv=MenuObjectId+'div';
+			try {$(MenuObjectIdDiv).style.visibility='hidden';} catch (err) {alert (err);}
 			//xxxd - below caused problems
 			//try {$(menuLocalObjectId).style.visibility='hidden';} catch (err) {alert (err);}
 			//try {$(menuLocalEmbedId).style.visibility='hidden';} catch (err) {alert (err);}
@@ -1943,7 +1943,7 @@ runBatchV2: function(batchString_raw){
 			//xxxd - doesnt matter: try {$(menuLocalEmbedId).autoplay='false';} catch (err) {alert (err);}
 			//xxxd - doesnt matter: try {$(menuLocalEmbedId).controller='false';} catch (err) {alert (err);}
 //- test
-			//try {$(menuObjectId).style.visibility='hidden';} catch (err) {alert (err);}
+			//try {$(MenuObjectId).style.visibility='hidden';} catch (err) {alert (err);}
 		},
 //===================================================//xxxf99
 	getImageStuff: function(pictureNo){
@@ -1952,18 +1952,18 @@ runBatchV2: function(batchString_raw){
 			//alert ('menuname: '+this.menuName);//xxxd
 			var errorStrg='';
 			try {var imageSrc=this.menuHash[this.menuName]['elementsary'][0][pictureNo];}
-			catch (err){errorStrg+='menuObj.getImageStuff: '+err+"\n";}
+			catch (err){errorStrg+='MenuObj.getImageStuff: '+err+"\n";}
 			try {var imageTitle=this.menuHash[this.menuName]['titlesary'][0][pictureNo];}
-			catch (err){errorStrg+='menuObj.getImageStuff: '+err+"\n";}
+			catch (err){errorStrg+='MenuObj.getImageStuff: '+err+"\n";}
 			try {var imageCaption=this.menuHash[this.menuName]['textary'][0][pictureNo];}
-			catch (err){errorStrg+='menuObj.getImageStuff: '+err+"\n";}
+			catch (err){errorStrg+='MenuObj.getImageStuff: '+err+"\n";}
 			try {var mediaType=this.menuHash[this.menuName]['mediaary'][0][pictureNo];}
-			catch (err){errorStrg+='menuObj.getImageStuff: '+err+"\n";}
+			catch (err){errorStrg+='MenuObj.getImageStuff: '+err+"\n";}
 			try {var videoId=this.menuHash[this.menuName]['videoary'][0][pictureNo];}
-			catch (err){errorStrg+='menuObj.getImageStuff: '+err+"\n";}
+			catch (err){errorStrg+='MenuObj.getImageStuff: '+err+"\n";}
 			if (errorStrg.length>0){
 				alert ('xxxf1');
-				containerObj.displayHash('menuObj.getImageStuff: menuname: '+this.menuName,this.menuHash[this.menuName]['etchash']);
+				ContainerObj.displayHash('MenuObj.getImageStuff: menuname: '+this.menuName,this.menuHash[this.menuName]['etchash']);
 				alert ('xxxf2');
 				alert (errorStrg);
 				this.stopBatch();
@@ -1984,7 +1984,7 @@ runBatchV2: function(batchString_raw){
 	},
 //===================================================
 	doAlert: function(dmyMsg){
-		containerObj.jsDebug('');
+		ContainerObj.jsDebug('');
 		alert (dmyMsg);
 	} 
 });

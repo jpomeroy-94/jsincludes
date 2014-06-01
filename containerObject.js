@@ -1,4 +1,4 @@
-var containerObject = Class.create({
+var ContainerObject = Class.create({
 // 2/1/13 fixed ?D delimitting in getServerSimpleV2
 //	containerName
 //	this.containerName
@@ -114,7 +114,7 @@ var containerObject = Class.create({
 //==========================================================
 	//?@setContainerName: function(containerName)?C
 	setContainerName: function(containerName){
-		containerObj.jsDebug('containerObj.setContainerName');
+		ContainerObj.jsDebug('ContainerObj.setContainerName');
 		//alert ('set container name: '+containerName);//xxx
 		this.containerName=containerName;
 		tst=this.containerHash[containerName];
@@ -135,19 +135,19 @@ var containerObject = Class.create({
 //==========================================================
 	//?@loadEtc: function(etcName,etcValue)?C
 	loadEtc: function (etcName,etcValue){
-		containerObj.jsDebug('containerObj.loadEtc');
+		ContainerObj.jsDebug('ContainerObj.loadEtc');
 		this.loadEtcAjax(this.containerName, etcName, etcValue);
 	},
 //==========================================================
 	//?@loadEtcAjax: function(containerName,etcName,etcValue)?C
 	loadEtcAjax: function (containerName,etcName,etcValue){
-		containerObj.jsDebug('containerObj.loadEtc');
+		ContainerObj.jsDebug('ContainerObj.loadEtc');
 		this.containerHash[containerName]['etc'].set(etcName,etcValue);
 	},
 //==========================================================
 	//?@loadInnerHtml: function(theInnerHtml)?C
 	loadInnerHtml: function (theInnerHtml){
-		containerObj.jsDebug('containerObj.loadInnerHtml');
+		ContainerObj.jsDebug('ContainerObj.loadInnerHtml');
 		this.loadInnerHtmlAjax(this.containerName,theInnerHtml);
 	},
 //==========================================================
@@ -168,14 +168,14 @@ var containerObject = Class.create({
 				}
 		}
 		catch (err){
-			alert ('containerObj.loadInnerHtmlAjax ('+err+'), loadid: '+loadId+', containername: '+containerName);
+			alert ('ContainerObj.loadInnerHtmlAjax ('+err+'), loadid: '+loadId+', containername: '+containerName);
 		}
 		this.containerHash[containerName]['etc'].set('inprocess',true);
 	},
 //==========================================================
 	//?@inProcess: function()?C
 	inProcess: function(){
-		containerObj.jsDebug('containerObj.inProcess');
+		ContainerObj.jsDebug('ContainerObj.inProcess');
 		var inProcess=false;
 		chk=this.containerName;
 		if (chk != undefined){
@@ -194,7 +194,7 @@ var containerObject = Class.create({
 //==========================================================
 	//?@getContainerFromServer: function(jobName,containerName,theMethod,loadId, focusId)?C
 	getContainerFromServer: function(jobName,containerName,theMethod,loadId, focusId) {
-		containerObj.jsDebug('containerObj.getContainerFromServer');
+		ContainerObj.jsDebug('ContainerObj.getContainerFromServer');
 //- if container[containername] exists and is inprocess then remove it
 		//alert ('job: '+jobName+', container: '+containerName+', method: '+theMethod+', loadid: '+loadId);//xxx
 		tst=this.containerHash[containerName];
@@ -221,7 +221,7 @@ var containerObject = Class.create({
 //- focus id is actual container name
 			this.loadEtc('focusid', focusId);
 			//alert ('jobname: '+jobName+', containername: '+containerName+', method: '+theMethod);//xxxd
-			ajaxObj.getContainerViaAjax(jobName,containerName,theMethod);
+			AjaxObj.getContainerViaAjax(jobName,containerName,theMethod);
 //error			var theLen=loadId.length;
 //error			var cutLen=Number(theLen)-2;
 //error			var loadClass=loadId.substring(0,cutLen); 
@@ -236,8 +236,8 @@ var containerObject = Class.create({
 	//?@getContainerFromServerSimpleV2: function(jobParamsAry)?C
 	getContainerFromServerSimpleV2: function(jobParamsAry){
 		//alert (jobParamsAry);//xxxf
-		utilObj.writeLog('debug2id','!!containerObj.getContainerFromServerSimpleV2!!');
-		//containerObj.displayAry('jobparamsary',jobParamsAry);//xxxf
+		UtilObj.writeLog('debug2id','!!ContainerObj.getContainerFromServerSimpleV2!!');
+		//ContainerObj.displayAry('jobparamsary',jobParamsAry);//xxxf
 		var theLen=jobParamsAry.length;
 		var debugStrg='senddataary('+theLen+'):<br>';
 		for (var lp=0;lp<theLen;lp+=1){
@@ -248,7 +248,7 @@ var containerObject = Class.create({
 				if (pos>-1){
 					theValueAry=theValue.split('?D');
 					theValueRef=theValueAry[1];
-					var theValueNew=userObj.getEtcValue(theValueRef);
+					var theValueNew=UserObj.getEtcValue(theValueRef);
 					theValueAry[1]=theValueNew;
 					theValue=theValueAry.join('');
 					jobParamsAry[lp]=theValue;
@@ -274,25 +274,25 @@ var containerObject = Class.create({
 		//xxxf99 why do I have to do the below
 		if (fedSessionName == '!'){fedSessionName='';}
 		//alert (fedSessionName);//xxxf
-		//containerObj.displayAry('jobp',jobParamsAry);//xxxf
+		//ContainerObj.displayAry('jobp',jobParamsAry);//xxxf
 		var formName=jobParamsAry[4];
 		var operName=jobParamsAry[5];
-		utilObj.writeLog('debug1id','jobname: '+jobName+', containername: '+containerName+', themethod: '+theMethod+', theloadid: '+theLoadId+', sessionname: '+sessionName+', formname: '+formName+', opername: '+operName);
+		UtilObj.writeLog('debug1id','jobname: '+jobName+', containername: '+containerName+', themethod: '+theMethod+', theloadid: '+theLoadId+', sessionname: '+sessionName+', formname: '+formName+', opername: '+operName);
 		var sendDataAry = new Array();
 		var paramNamesMore='';
 		var paramValuesMore='';
-		utilObj.writeLog('debug1id','loop through params thelen: '+theLen);
+		UtilObj.writeLog('debug1id','loop through params thelen: '+theLen);
 		var delim='~';
 		for (var lp=6; lp<theLen; lp+=2){
 			var theName=jobParamsAry[lp];
 			var theValue=jobParamsAry[lp+1];
-			utilObj.writeLog('debug1id','loop thru vars thename: '+theName+', theValue: '+theValue);
+			UtilObj.writeLog('debug1id','loop thru vars thename: '+theName+', theValue: '+theValue);
 			try {
 				var pos=theValue.indexOf('?D');
 				if (pos>-1){
 					theValueAry=theValue.split('?D');
 					theValueRef=theValueAry[1];
-					theValue=userObj.getEtcValue(theValueRef);
+					theValue=UserObj.getEtcValue(theValueRef);
 				}
 				var pos=theName.indexOf('?p');
 				if (pos>-1){
@@ -300,7 +300,7 @@ var containerObject = Class.create({
 					theName=theNameAry[1];
 					paramNamesMore+=delim+theName;
 					paramValuesMore+=delim+theValue;
-					utilObj.writeLog('debug1id','did lower p: thename: '+theName+', thevalue: '+theValue);
+					UtilObj.writeLog('debug1id','did lower p: thename: '+theName+', thevalue: '+theValue);
 				}
 				else {
 					sendDataAry[sendDataAry.length]=theName+'|'+theValue;
@@ -311,23 +311,23 @@ var containerObject = Class.create({
 				//null
 			}
 		}
-		utilObj.writeLog('debug1id','end loop, debugstrg: '+debugStrg);
+		UtilObj.writeLog('debug1id','end loop, debugstrg: '+debugStrg);
 		if (formName != '' && formName != undefined){var getForm=true;}
 		else {var getForm=false;}
-//- get jobname from userObj if coded to do that
+//- get jobname from UserObj if coded to do that
 		var jobNameAry=jobName.split('_');
 		if (jobNameAry[0]=='user'){
 			var fieldName=jobNameAry[1];
-			jobName=userObj.getEtcValue(fieldName);
+			jobName=UserObj.getEtcValue(fieldName);
 		}
-//- get containername from userObj if coded to do that
+//- get containername from UserObj if coded to do that
 		var containerNameAry=containerName.split('_');
 //xxxd - below should be deprecated
 		if (containerNameAry[0]=='user'){
 			var fieldName=containerNameAry[1];
-			containerName=userObj.getEtcValue(fieldName);
+			containerName=UserObj.getEtcValue(fieldName);
 		}
-//- get selection value from userObj if coded to do that
+//- get selection value from UserObj if coded to do that
 		var containerNameAry=containerName.split('_');
 		var theContainerNameLen=containerNameAry.length;
 		if (theContainerNameLen>1){
@@ -336,7 +336,7 @@ var containerObject = Class.create({
 			if (pos>-1){
 				checkContainerNameAry=checkContainerName_raw.split('?D');
 				var checkContainerName=checkContainerNameAry[2];
-				var useContainerName=userObj.getEtcValue(checkContainerName);
+				var useContainerName=UserObj.getEtcValue(checkContainerName);
 			}
 			else {
 				var useContainerName=checkContainerName_raw;
@@ -344,7 +344,7 @@ var containerObject = Class.create({
 			var containerNameFieldId=containerNameAry[1];
 			var containerNameFieldValue=containerNameAry[2];
 			if (containerNameFieldValue == 'uservalue'){
-				containerNameFieldValue=userObj.getEtcValue(containerNameFieldId);
+				containerNameFieldValue=UserObj.getEtcValue(containerNameFieldId);
 			}
 				containerName=useContainerName+'_'+containerNameFieldId+'_'+containerNameFieldValue;
 				if (theContainerNameLen>3){
@@ -385,10 +385,10 @@ var containerObject = Class.create({
 				delim='~';
 			}
 			//else {
-				//alert ('containerObj.getContainerFromServerSimpleV2 error: containermissing: '+useContainerName);
+				//alert ('ContainerObj.getContainerFromServerSimpleV2 error: containermissing: '+useContainerName);
 			//}
-			var domainName=userObj.getEtcValue('domainname');
-			var companyProfileId=userObj.getEtcValue('companyprofileid');
+			var domainName=UserObj.getEtcValue('domainname');
+			var companyProfileId=UserObj.getEtcValue('companyprofileid');
 //- domainname
 			if (domainName != undefined){
 				paramNames+=delim+'dbname';
@@ -409,7 +409,7 @@ var containerObject = Class.create({
 			}
 //- see if this is a form based get container request?
 			if (getForm === true){
-				formData=formObj.getFormData(formName);
+				formData=FormObj.getFormData(formName);
 				var ctr=0;
 				formData.each(function(pairs){
 					var keyName=pairs.key;
@@ -429,10 +429,10 @@ var containerObject = Class.create({
 			sendDataAry[sendDataAry.length]='paramvalues|'+paramValues;
 			if (jobName == '' || containerName == ''){alert ('error in jobname or container name: jobName: '+jobName+', containerName: '+containerName);}
 			else {
-				//containerObj.displayAry('jobparamsary',jobParamsAry);//xxxf
-				//containerObj.displayAry('senddataary',sendDataAry);//xxxf
-				utilObj.writeLog('debug1id','call getContainerViaAjaxSimple');
-				ajaxObj.getContainerViaAjaxSimple(jobName,containerName,theMethod,sendDataAry);
+				//ContainerObj.displayAry('jobparamsary',jobParamsAry);//xxxf
+				//ContainerObj.displayAry('senddataary',sendDataAry);//xxxf
+				UtilObj.writeLog('debug1id','call getContainerViaAjaxSimple');
+				AjaxObj.getContainerViaAjaxSimple(jobName,containerName,theMethod,sendDataAry);
 			}
 		}
 		//this.displayAry(this.containerHash[containerName]['etc']);//xxx
@@ -440,20 +440,20 @@ var containerObject = Class.create({
 //==========================================================xxxd
 	//?@getContainerFromServerSimple: function(jobName,containerName,theMethod,loadId, sessionName)?C
 	getContainerFromServerSimple: function(jobName,containerName,theMethod,loadId, sessionName) {
-		containerObj.jsDebug('containerObj.getContainerFromServerMulti');
-//- get from userObj if coded to do that
+		ContainerObj.jsDebug('ContainerObj.getContainerFromServerMulti');
+//- get from UserObj if coded to do that
 		var jobNameAry=jobName.split('_');
 		if (jobNameAry[0]=='user'){
 			var fieldName=jobNameAry[1];
-			jobName=userObj.getEtcValue(fieldName);
+			jobName=UserObj.getEtcValue(fieldName);
 			//alert ('jobname: '+jobName);//xxxd
 		}
 		var containerNameAry=containerName.split('_');
 		if (containerNameAry[0]=='user'){
 			var fieldName=containerNameAry[1];
-			containerName=userObj.getEtcValue(fieldName);
+			containerName=UserObj.getEtcValue(fieldName);
 			//alert ('container name: '+containerName+', fieldname: '+fieldName);//xxxf
-			//userObj.displayUser();//xxxf
+			//UserObj.displayUser();//xxxf
 		}
 		//alert ('job: '+jobName+', container: '+containerName+', method: '+theMethod+', loadid: '+loadId);//xxxd
 //- split out containerNameAry
@@ -464,7 +464,7 @@ var containerObject = Class.create({
 			var containerNameFieldId=containerNameAry[1];
 			var containerNameFieldValue=containerNameAry[2];
 			if (containerNameFieldValue == 'uservalue'){
-				containerNameFieldValue=userObj.getEtcValue(containerNameFieldId);
+				containerNameFieldValue=UserObj.getEtcValue(containerNameFieldId);
 				containerName=useContainerName+'_'+containerNameFieldId+'_'+containerNameFieldValue;
 				//alert ('containername: '+containerName);//xxxd
 			}
@@ -487,8 +487,8 @@ var containerObject = Class.create({
 			}
 			var paramNames='sessionname';
 			var paramValues=sessionName;
-			var domainName=userObj.getEtcValue('domainname');
-			var companyProfileId=userObj.getEtcValue('companyprofileid');
+			var domainName=UserObj.getEtcValue('domainname');
+			var companyProfileId=UserObj.getEtcValue('companyprofileid');
 			//alert ('companyprofileid from userobj: '+companyProfileId);//xxxd
 			//alert ('xxxd1');
 			var sendDataAry = new Array();
@@ -507,7 +507,7 @@ var containerObject = Class.create({
 			sendDataAry[sendDataAry.length]='paramvalues|'+paramValues;
 			//alert ('senddata: '+sendDataAry);//xxxd
 			if (jobName == '' || containerName == ''){alert ('error in jobname or container name: jobName: '+jobName+', containerName: '+containerName);}
-			else {ajaxObj.getContainerViaAjaxSimple(jobName,containerName,theMethod,sendDataAry);}
+			else {AjaxObj.getContainerViaAjaxSimple(jobName,containerName,theMethod,sendDataAry);}
 			//- ajax has loaded up loadid stuff
 		}
 		//this.displayAry(this.containerHash[containerName]['etc']);//xxx
@@ -521,7 +521,7 @@ var containerObject = Class.create({
 			$(loadId).innerHTML=containerHtml;
 		}
 		catch (err){
-			alert ('containerObj.reloadContainerHtml err in loadid: '+loadId+', containername: '+containerName+', html: '+containerHtml);
+			alert ('ContainerObj.reloadContainerHtml err in loadid: '+loadId+', containername: '+containerName+', html: '+containerHtml);
 			this.displayStack();
 		}
 	},
@@ -537,11 +537,11 @@ var containerObject = Class.create({
 		this.setContainerName(containerName);
 		//this.displayAry(this.containerHash[containerName]['etc']);//xxx
 		tableName=this.getEtcValue('tablename');
-		if (tableName != undefined){tableObj.setTableName(tableName);}
+		if (tableName != undefined){TableObj.setTableName(tableName);}
 		formName=this.getEtcValue('formname');
-		if (formName != undefined){formObj.setFormName(formName);}
+		if (formName != undefined){FormObj.setFormName(formName);}
 		menuName=this.getEtcValue('menuname');
-		if (menuName != undefined){menuObj.setMenuName(menuName);}
+		if (menuName != undefined){MenuObj.setMenuName(menuName);}
 		calendarName=this.getEtcValue('calendarname');
 		if (calendarName != undefined){calendObj.setCalendarName(calendarName);}
 		this.loadCss();
@@ -551,14 +551,14 @@ var containerObject = Class.create({
 			$(loadId).style.visibility='visible';
 		}
 		catch (err){
-			alert ('containerObj.setupContainer err in loadid: '+loadId+', containername: '+containerName);
+			alert ('ContainerObj.setupContainer err in loadid: '+loadId+', containername: '+containerName);
 			this.displayStack();
 		}
 		//- below doesnt work - can operate buttons afterward
 		//var focusId=this.getEtcValue('focusid');
 		//$(focusId).style.visibility='visible';
 		this.setContainerFocus(9);
-		//containerObj.displayAry(this.containerHash[this.containerName]['etc']);//xxx
+		//ContainerObj.displayAry(this.containerHash[this.containerName]['etc']);//xxx
 		}
 		else {
 			this.justHidden=false;
@@ -567,7 +567,7 @@ var containerObject = Class.create({
 //==========================================================
 	//?@goToContainer: function(containerName)?C
 	goToContainer: function(containerName){
-		containerObj.jsDebug('containerObj.goToNewContainer');
+		ContainerObj.jsDebug('ContainerObj.goToNewContainer');
 		//- if container[containername] exists and is inprocess then remove it
 		//alert ('job: '+jobName+', container: '+containerName+', method: '+theMethod+', loadid: '+loadId);//xxx
 		tst=this.containerHash[containerName];
@@ -580,24 +580,24 @@ var containerObject = Class.create({
 			this.setContainerName(containerName);
 			//this.displayAry(this.containerHash[containerName]['etc']);//xxx
 			tableName=this.getEtcValue('tablename');
-			if (tableName != undefined){tableObj.setTableName(tableName);}
+			if (tableName != undefined){TableObj.setTableName(tableName);}
 			formName=this.getEtcValue('formname');
-			if (formName != undefined){formObj.setFormName(formName);}
+			if (formName != undefined){FormObj.setFormName(formName);}
 			menuName=this.getEtcValue('menuname');
-			if (menuName != undefined){menuObj.setMenuName(menuName);}
+			if (menuName != undefined){MenuObj.setMenuName(menuName);}
 			calendarName=this.getEtcValue('calendarname');
 			if (calendarName != undefined){calendObj.setCalendarName(calendarName);}
 			this.loadCss();
 			this.containerName=containerName;
 			//$(loadId).style.visibility='visible';
 			this.setContainerFocus(9);
-			//containerObj.displayAry(this.containerHash[this.containerName]['etc']);//xxx
+			//ContainerObj.displayAry(this.containerHash[this.containerName]['etc']);//xxx
 		}		
 	},
 //==========================================================
 	//?@removeDisplay: function()?C
 	removeDisplay: function(){
-		containerObj.jsDebug('containerObj.removeDisplay');
+		ContainerObj.jsDebug('ContainerObj.removeDisplay');
 		//alert ('227: remove display for '+this.containerName);//xxxd
 		var loadId=this.containerHash[this.containerName]['etc'].get('loadid');
 		var currentInnerHtml=$(loadId).innerHTML;
@@ -655,7 +655,7 @@ var containerObject = Class.create({
 	//?@displayAry: function(theTitle,theAry)?C
 	displayAry: function(theTitle,theAry){
 		//alert ('xxxd0');
-		containerObj.jsDebug('');
+		ContainerObj.jsDebug('');
 		var theDisplay = $H(theAry);
 		var theString='--- '+theTitle+" ---\n";
 		var ctr;
@@ -677,7 +677,7 @@ var containerObject = Class.create({
 //==========================================================
 	//?@displayHash: function(theTitle, theHash)?C
 	displayHash: function(theTitle, theHash){
-		containerObj.jsDebug('');
+		ContainerObj.jsDebug('');
 		var theDisplay = theHash;
 		var theString='--- '+theTitle+" ---\n";
 		var ctr;
@@ -727,10 +727,10 @@ var containerObject = Class.create({
 	setFocus: function(theId,theLevel){
 		//alert ('set '+theId+' to '+theLevel);//xxxd
 		if (theLevel==undefined){
-			containerObj.displayStack();
+			ContainerObj.displayStack();
 		}
 		//xxxd - debug
-		//vl=prompt('theId: '+theLevel,'x');if (vl=='x'){utilObj.debugDocument();}
+		//vl=prompt('theId: '+theLevel,'x');if (vl=='x'){UtilObj.debugDocument();}
 		$(theId).style.zIndex=theLevel;
 	},
 //===========================================================
@@ -769,17 +769,17 @@ var containerObject = Class.create({
 		//- actually called a few times at the beginning, then not called
 		//- has cross through it
 		//document.onmousedown='';
-		document.onmousemove=containerObj.moveImage;
+		document.onmousemove=ContainerObj.moveImage;
 		document.onmouseup=this.mouseUp;
 		document.onmouseout=this.mouseOut;
-		var pagenoid=tableObj.getEtcValue('pagenoid');
+		var pagenoid=TableObj.getEtcValue('pagenoid');
 		$(pagenoid).innerHTML='mouse down';
 		return false;
 	},
 //==========================================================
 	//?@mouseOut: function(e)?C
 	mouseOut: function(e){
-		var pagenoid=tableObj.getEtcValue('pagenoid');
+		var pagenoid=TableObj.getEtcValue('pagenoid');
 		$(pagenoid).innerHTML='mouse out';
 		return false;
 	},
@@ -788,16 +788,16 @@ var containerObject = Class.create({
 	moveImage: function(e){
 		if (e == null){e = window.event;}
 		//var mousePos=e.mouseCoords;
-		//var newLeft=containerObj.oldContainerXPos+e.clientX-containerObj.oldMouseXPos;
+		//var newLeft=ContainerObj.oldContainerXPos+e.clientX-ContainerObj.oldMouseXPos;
 		var newLeft=e.clientX;
 		//var newLeft=mousePos(e).x-10;
-		//alert ('pleft: '+containerObj.pleft+', e.clientx: '+e.clientX+', co.xcoor: '+containerObj.xcoor+', newleft: '+newLeft);//xxxd
-		$(containerObj.loadId).style.left=newLeft+'px';
-		//var newTop=containerObj.oldContainerYPos+e.clientY-containerObj.oldMouseYPos;
+		//alert ('pleft: '+ContainerObj.pleft+', e.clientx: '+e.clientX+', co.xcoor: '+ContainerObj.xcoor+', newleft: '+newLeft);//xxxd
+		$(ContainerObj.loadId).style.left=newLeft+'px';
+		//var newTop=ContainerObj.oldContainerYPos+e.clientY-ContainerObj.oldMouseYPos;
 		var newTop=e.clientY;
 		//var newTop=mousePos.y-10;
-		$(containerObj.loadId).style.top=newTop+'px';
-		var pagenoid=tableObj.getEtcValue('pagenoid');
+		$(ContainerObj.loadId).style.top=newTop+'px';
+		var pagenoid=TableObj.getEtcValue('pagenoid');
 		$(pagenoid).innerHTML=newLeft+':'+newTop;
 		return false;
 	},
@@ -806,7 +806,7 @@ var containerObject = Class.create({
 	mouseUp: function(e){
 		document.onmousemove='';
 		document.onmouseup='';
-		var pagenoid=tableObj.getEtcValue('pagenoid');
+		var pagenoid=TableObj.getEtcValue('pagenoid');
 		$(pagenoid).innerHTML='mouse up';
 		return false;
 	},
@@ -834,32 +834,32 @@ var containerObject = Class.create({
 //- check if do add
 			try {var doAdd=base.addRule;}
 			catch (addErr){var doAdd=false;}
-			utilObj.writeLog('debug9id','doinsert: '+doInsert+'('+insertErr+'), doAdd: '+doAdd+'('+addErr+')');
+			UtilObj.writeLog('debug9id','doinsert: '+doInsert+'('+insertErr+'), doAdd: '+doAdd+'('+addErr+')');
 			var theLen=this.containerHash[containerName]['css'].length;
-			utilObj.writeLog('debug9id','update length: '+theLen);
+			UtilObj.writeLog('debug9id','update length: '+theLen);
 			for (var updLp=0;updLp<theLen;updLp++){
 				var cssHash=this.containerHash[containerName]['css'][updLp];
 				var cssGroupName=cssHash.get('cssgroupname');
 				var paramStrg=cssHash.get('params');
-				utilObj.writeLog('debug9id','cssgroupname: '+cssGroupName+', paramstrg: '+paramStrg);
+				UtilObj.writeLog('debug9id','cssgroupname: '+cssGroupName+', paramstrg: '+paramStrg);
 				if (doInsert){
-					utilObj.writeLog('debug9id','doinsert');
+					UtilObj.writeLog('debug9id','doinsert');
 					try {var totalRules=base.cssRules? base.cssRules.length : base.rules.length;}
-					catch (err){alert ('containerObj.loadCssAjax('+err+')');}
-					utilObj.writeLog('debug9id','totalrules: '+totalRules);
+					catch (err){alert ('ContainerObj.loadCssAjax('+err+')');}
+					UtilObj.writeLog('debug9id','totalrules: '+totalRules);
 				  	var cssUpdateLine=cssGroupName+'{'+paramStrg+'}';
 				  	if (totalRules>0){var useTotalRules=totalRules-1;}
 				  	else {var useTotalRules=totalRules;}
-				  	utilObj.writeLog('debug9id','cssupdateline: '+cssUpdateLine+', usetotalrules: '+useTotalRules);
+				  	UtilObj.writeLog('debug9id','cssupdateline: '+cssUpdateLine+', usetotalrules: '+useTotalRules);
 		  			base.insertRule(cssUpdateLine, useTotalRules);
 				}
 				else if (doAdd){
-					utilObj.writeLog('debug9id','doinsert: '+doInsert+', doAdd: '+doAdd+', cssgroupname: '+cssGroupName+', paramstrg: '+paramStrg);
+					UtilObj.writeLog('debug9id','doinsert: '+doInsert+', doAdd: '+doAdd+', cssgroupname: '+cssGroupName+', paramstrg: '+paramStrg);
 		  			base.addRule(cssGroupName, paramStrg);
 				}
 			}
 		}
-		utilObj.writeLog('debug9id','containerObj.loadcssajax: end of update css');
+		UtilObj.writeLog('debug9id','ContainerObj.loadcssajax: end of update css');
 		*/
 	},
 //==========================================================
@@ -868,7 +868,7 @@ var containerObject = Class.create({
 		tst=this.containerHash[containerName]['css'];
 		if (tst != undefined){
 			var theLen=this.containerHash[containerName]['css'].length;
-			utilObj.writeLog('debug9id','containerObj.loadCssAjaxV2: update length: '+theLen);
+			UtilObj.writeLog('debug9id','ContainerObj.loadCssAjaxV2: update length: '+theLen);
 			var that=this;
 			jQuery(document).ready(function(){
 				var theLen=that.containerHash[containerName]['css'].length;
@@ -881,16 +881,16 @@ var containerObject = Class.create({
 				var paramStrgAry=paramStrg.split(';');
 				var paramNo=paramStrgAry.length;
 				paramNo--;
-				utilObj.writeLog('debug9id','cssgroupname: '+cssGroupName+', paramstrg: '+paramStrg+'<br>');
-				utilObj.writeLog('debug9id','containerObj.loadCssAjaxV2: paramNo: '+paramNo);
+				UtilObj.writeLog('debug9id','cssgroupname: '+cssGroupName+', paramstrg: '+paramStrg+'<br>');
+				UtilObj.writeLog('debug9id','ContainerObj.loadCssAjaxV2: paramNo: '+paramNo);
 				for (var paramLp=0;paramLp<paramNo;paramLp++){
 					var aParam=paramStrgAry[paramLp];
 					var aParamAry=aParam.split(':');
 					var theProperty=aParamAry[0];
 					var theValue=aParamAry[1];
-					utilObj.writeLog('debug9id','theproperty: '+theProperty+', value: '+theValue);
+					UtilObj.writeLog('debug9id','theproperty: '+theProperty+', value: '+theValue);
 					try {jQuery(cssGroupName).css(theProperty,theValue);}
-					catch (err){alert ('containerObj.loadcssajaxv2('+err+') cssgroupname: '+cssGroupName+', property: '+theProperty+', value: '+theValue);}
+					catch (err){alert ('ContainerObj.loadcssajaxv2('+err+') cssgroupname: '+cssGroupName+', property: '+theProperty+', value: '+theValue);}
 				}
 			}
 			});
@@ -914,7 +914,7 @@ var containerObject = Class.create({
 //===========================================================
 	//?@saveCssAjax: function (containerName,responseLine)?C
 	saveCssAjax: function (containerName,responseLine){
-		//alert ('containerObj.savecssajax l572 containerName: '+containerName);//xxxd
+		//alert ('ContainerObj.savecssajax l572 containerName: '+containerName);//xxxd
 		var classOrIdSepar='.';
 		if (actionCode=='id'){classOrIdSepar='#';}
 		var classOrId=responseLineAry[1];
@@ -934,7 +934,7 @@ var containerObject = Class.create({
 		  paramSepar=';';
 		}
 		paramStrg+=';';
-		//alert ('containerObj.saveCssAjax l592 containerName: '+containerName);
+		//alert ('ContainerObj.saveCssAjax l592 containerName: '+containerName);
 		tst=this.containerHash[containerName]['css'];
 		if (tst==undefined){this.containerHash[containerName]['css']=new Array();}
 		cssHash=new Hash();
@@ -948,8 +948,8 @@ var containerObject = Class.create({
 	reset:	function(){
 		containerName=this.containerName;
 		this.containerHash[containerName]['etc'].set('reset',true);
-		//alert ('containerObj.reset xxxd: doing tableobj.reset');//xxxd
-		tableObj.reset();
+		//alert ('ContainerObj.reset xxxd: doing tableobj.reset');//xxxd
+		TableObj.reset();
 	},
 //==========================================================
 	//?@getEtcValue: function(etcName)?C
@@ -998,20 +998,20 @@ var containerObject = Class.create({
 	//?@setupContainerViaAjaxJson: function(containerName,loadId,jsonStrg)?C
 	setupContainerViaAjaxJson: function(containerName,loadId,jsonStrg){
 		var dmy=this.containerHash[containerName];
-		utilObj.writeLog('debug1id','!!containerObj.setupContainerViaAjaxJson!!');
+		UtilObj.writeLog('debug1id','!!ContainerObj.setupContainerViaAjaxJson!!');
 		if (dmy==undefined){
 			this.setContainerName(containerName);
 			try {
 				var jsonHash=jsonStrg.evalJSON(false);
 			}
 			catch (err){
-				utilObj.writeLog('debug1id','error: containerobj.setupContainerViaajaxjson('+err+') container: '+containerName);
+				UtilObj.writeLog('debug1id','error: containerobj.setupContainerViaajaxjson('+err+') container: '+containerName);
 				exit();
 			}
 			var workHash=$H(jsonHash);
 			var htmlLine=workHash.get('htmlline');
 			//xxxd! need to convert pipeconvert to '|'
-			//containerObj.displayHtml(htmlLine);//xxxd
+			//ContainerObj.displayHtml(htmlLine);//xxxd
 			this.setEtcValue('htmlline', htmlLine);
 			var containerPropertiesHash=$H(jsonHash['containerary']);
 			var that=this;
@@ -1027,7 +1027,7 @@ var containerObject = Class.create({
 			document.body.appendChild(newNode);
 		}
 		else {
-			utilObj.writeLog('debug1id','container name '+containerName+' is already present so dont create it!');
+			UtilObj.writeLog('debug1id','container name '+containerName+' is already present so dont create it!');
 		}
 	},
 //==========================================================
@@ -1052,14 +1052,14 @@ var containerObject = Class.create({
 	getContainerFromServerJson: function(jobParamsAry){
 //- jobParamsAry[0]job[1]container[2]loadid[3]sessionName[4]formname[5]operationname[6]selname[7]selvalue
 //- 	[8]varname1[9]varvalue1[10]varname2[11]varvalue2
-		utilObj.writeLog('debug1id','!!containerObj.getContainerFromServerSimpleV2!!');
+		UtilObj.writeLog('debug1id','!!ContainerObj.getContainerFromServerSimpleV2!!');
 //- fix all references to userobj/etc fields
 		for (var lp=0; lp<8; lp++){
 			var theField=jobParams[lp];
 			var theFieldAry=theField.split('?D');
 			if (theFieldAry.length>1){
 				var theFieldRef=theFieldAry[1];
-				theField=userObj.getEtcValue(theFieldRef);
+				theField=UserObj.getEtcValue(theFieldRef);
 				jobParams[lp]=theField;
 			}
 		}
@@ -1078,7 +1078,7 @@ var containerObject = Class.create({
 		for (var lp=8;lp<jobParamsAry.length;lp++){
 			
 		}
-		utilObj.writeLog('debug1id','jobname: '+jobName+', containername: '+containerName+', themethod: '+theMethod+', theloadid: '+theLoadId+', sessionname: '+sessionName+', formname: '+formName+', opername: '+operName);
+		UtilObj.writeLog('debug1id','jobname: '+jobName+', containername: '+containerName+', themethod: '+theMethod+', theloadid: '+theLoadId+', sessionname: '+sessionName+', formname: '+formName+', opername: '+operName);
 		var theLen=jobParamsAry.length;
 		var debugStrg='senddataary:<br>';
 		for (var lp=6; lp<theLen; lp+=2){
@@ -1092,24 +1092,24 @@ var containerObject = Class.create({
 				//null
 			}
 		}
-		utilObj.writeLog('debug1id',debugStrg);
+		UtilObj.writeLog('debug1id',debugStrg);
 		//alert(jobParamsAry);//xxxd
 		if (formName != '' && formName != undefined){var getForm=true;}
 		else {var getForm=false;}
-//- get jobname from userObj if coded to do that
+//- get jobname from UserObj if coded to do that
 		var jobNameAry=jobName.split('_');
 		if (jobNameAry[0]=='user'){
 			var fieldName=jobNameAry[1];
-			jobName=userObj.getEtcValue(fieldName);
+			jobName=UserObj.getEtcValue(fieldName);
 		}
-//- get containername from userObj if coded to do that
+//- get containername from UserObj if coded to do that
 		var containerNameAry=containerName.split('_');
 //xxxd - below should be deprecated
 		if (containerNameAry[0]=='user'){
 			var fieldName=containerNameAry[1];
-			containerName=userObj.getEtcValue(fieldName);
+			containerName=UserObj.getEtcValue(fieldName);
 		}
-//- get selection value from userObj if coded to do that
+//- get selection value from UserObj if coded to do that
 		var containerNameAry=containerName.split('_');
 		var theContainerNameLen=containerNameAry.length;
 		if (theContainerNameLen>1){
@@ -1118,7 +1118,7 @@ var containerObject = Class.create({
 			if (pos>-1){
 				checkContainerNameAry=checkContainerName_raw.split('?D');
 				var checkContainerName=checkContainerNameAry[2];
-				var useContainerName=userObj.getEtcValue(checkContainerName);
+				var useContainerName=UserObj.getEtcValue(checkContainerName);
 			}
 			else {
 				var useContainerName=checkContainerName_raw;
@@ -1126,8 +1126,8 @@ var containerObject = Class.create({
 			var containerNameFieldId=containerNameAry[1];
 			var containerNameFieldValue=containerNameAry[2];
 			if (containerNameFieldValue == 'uservalue'){
-				containerNameFieldValue=userObj.getEtcValue(containerNameFieldId);
-				//userObj.displayUser();//xxxd
+				containerNameFieldValue=UserObj.getEtcValue(containerNameFieldId);
+				//UserObj.displayUser();//xxxd
 				//alert ('containernamefieldid: '+containerNameFieldId+', containernamefieldvalue: '+containerNameFieldValue);//xxxd
 			}
 				containerName=useContainerName+'_'+containerNameFieldId+'_'+containerNameFieldValue;
@@ -1158,10 +1158,10 @@ var containerObject = Class.create({
 				}
 			}
 			//else {
-				//alert ('containerObj.getContainerFromServerSimpleV2 error: containermissing: '+useContainerName);
+				//alert ('ContainerObj.getContainerFromServerSimpleV2 error: containermissing: '+useContainerName);
 			//}
-			var domainName=userObj.getEtcValue('domainname');
-			var companyProfileId=userObj.getEtcValue('companyprofileid');
+			var domainName=UserObj.getEtcValue('domainname');
+			var companyProfileId=UserObj.getEtcValue('companyprofileid');
 //- domainname
 			if (domainName != undefined){
 				paramNames+=delim+'dbname';
@@ -1182,7 +1182,7 @@ var containerObject = Class.create({
 			}
 //- see if this is a form based get container request?
 			if (getForm === true){
-				formData=formObj.getFormData(formName);
+				formData=FormObj.getFormData(formName);
 				var ctr=0;
 				formData.each(function(pairs){
 					var keyName=pairs.key;
@@ -1199,8 +1199,8 @@ var containerObject = Class.create({
 			sendDataAry[sendDataAry.length]='paramvalues|'+paramValues;
 			if (jobName == '' || containerName == ''){alert ('error in jobname or container name: jobName: '+jobName+', containerName: '+containerName);}
 			else {
-				//containerObj.displayAry('senddataary',sendDataAry);//xxxd
-				ajaxObj.getContainerViaAjaxSimple(jobName,containerName,theMethod,sendDataAry);
+				//ContainerObj.displayAry('senddataary',sendDataAry);//xxxd
+				AjaxObj.getContainerViaAjaxSimple(jobName,containerName,theMethod,sendDataAry);
 			}
 		}
 		//this.displayAry(this.containerHash[containerName]['etc']);//xxx

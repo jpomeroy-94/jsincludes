@@ -1,4 +1,4 @@
-var containerObject = Class
+var ContainerObject = Class
 		.create( {
 			// containerName
 			// this.containerName
@@ -111,7 +111,7 @@ var containerObject = Class
 			},
 			// ==========================================================
 			setContainerName : function(containerName) {
-				containerObj.jsDebug('containerObj.setContainerName');
+				ContainerObj.jsDebug('ContainerObj.setContainerName');
 				// alert ('set container name: '+containerName);//xxx
 				this.containerName = containerName;
 				tst = this.containerHash[containerName];
@@ -134,17 +134,17 @@ var containerObject = Class
 			},
 			// ==========================================================
 			loadEtc : function(etcName, etcValue) {
-				containerObj.jsDebug('containerObj.loadEtc');
+				ContainerObj.jsDebug('ContainerObj.loadEtc');
 				this.loadEtcAjax(this.containerName, etcName, etcValue);
 			},
 			// ==========================================================
 			loadEtcAjax : function(containerName, etcName, etcValue) {
-				containerObj.jsDebug('containerObj.loadEtc');
+				ContainerObj.jsDebug('ContainerObj.loadEtc');
 				this.containerHash[containerName]['etc'].set(etcName, etcValue);
 			},
 			// ==========================================================
 			loadInnerHtml : function(innerHtml) {
-				containerObj.jsDebug('containerObj.loadInnerHtml');
+				ContainerObj.jsDebug('ContainerObj.loadInnerHtml');
 				this.loadInnerHtmlAjax(this.containerName, innerHtml);
 			},
 			// ==========================================================
@@ -158,7 +158,7 @@ var containerObject = Class
 					var oldHtml = $(loadId).innerHTML;
 					$(loadId).innerHTML = innerHtml;
 				} catch (err) {
-					alert('containerObj.loadInnerHtmlAjax (' + err
+					alert('ContainerObj.loadInnerHtmlAjax (' + err
 							+ '), loadid: ' + loadId + ', containername: '
 							+ containerName);
 				}
@@ -166,7 +166,7 @@ var containerObject = Class
 			},
 			// ==========================================================
 			inProcess : function() {
-				containerObj.jsDebug('containerObj.inProcess');
+				ContainerObj.jsDebug('ContainerObj.inProcess');
 				var inProcess = false;
 				chk = this.containerName;
 				if (chk != undefined) {
@@ -186,7 +186,7 @@ var containerObject = Class
 			// ==========================================================
 			getContainerFromServer : function(jobName, containerName,
 					theMethod, loadId, focusId) {
-				containerObj.jsDebug('containerObj.getContainerFromServer');
+				ContainerObj.jsDebug('ContainerObj.getContainerFromServer');
 				// - if container[containername] exists and is inprocess then
 				// remove it
 				// alert ('job: '+jobName+', container: '+containerName+',
@@ -236,8 +236,8 @@ var containerObject = Class
 			},
 			// ============================================================
 			getContainerFromServerSimpleV2 : function(jobParamsAry) {
-				utilObj.writeLog('debug1id',
-						'!!containerObj.getContainerFromServerSimpleV2!!');
+				UtilObj.writeLog('debug1id',
+						'!!ContainerObj.getContainerFromServerSimpleV2!!');
 				var jobName = jobParamsAry[0];
 				var containerName = jobParamsAry[1];
 				var theMethod = 'forcepost';
@@ -245,7 +245,7 @@ var containerObject = Class
 				var sessionName = jobParamsAry[3];
 				var formName = jobParamsAry[4];
 				var operName = jobParamsAry[5];
-				utilObj.writeLog('debug1id', 'jobname: ' + jobName
+				UtilObj.writeLog('debug1id', 'jobname: ' + jobName
 						+ ', containername: ' + containerName + ', themethod: '
 						+ theMethod + ', theloadid: ' + theLoadId
 						+ ', sessionname: ' + sessionName + ', formname: '
@@ -265,27 +265,27 @@ var containerObject = Class
 						// null
 					}
 				}
-				utilObj.writeLog('debug1id', debugStrg);
+				UtilObj.writeLog('debug1id', debugStrg);
 				// alert(jobParamsAry);//xxxd
 				if (formName != '' && formName != undefined) {
 					var getForm = true;
 				} else {
 					var getForm = false;
 				}
-				// - get jobname from userObj if coded to do that
+				// - get jobname from UserObj if coded to do that
 				var jobNameAry = jobName.split('_');
 				if (jobNameAry[0] == 'user') {
 					var fieldName = jobNameAry[1];
-					jobName = userObj.getEtcValue(fieldName);
+					jobName = UserObj.getEtcValue(fieldName);
 				}
-				// - get containername from userObj if coded to do that
+				// - get containername from UserObj if coded to do that
 				var containerNameAry = containerName.split('_');
 				// xxxd - below should be deprecated
 				if (containerNameAry[0] == 'user') {
 					var fieldName = containerNameAry[1];
-					containerName = userObj.getEtcValue(fieldName);
+					containerName = UserObj.getEtcValue(fieldName);
 				}
-				// - get selection value from userObj if coded to do that
+				// - get selection value from UserObj if coded to do that
 				var containerNameAry = containerName.split('_');
 				var theContainerNameLen = containerNameAry.length;
 				if (theContainerNameLen > 1) {
@@ -295,7 +295,7 @@ var containerObject = Class
 						checkContainerNameAry = checkContainerName_raw
 								.split('?D');
 						var checkContainerName = checkContainerNameAry[2];
-						var useContainerName = userObj
+						var useContainerName = UserObj
 								.getEtcValue(checkContainerName);
 					} else {
 						var useContainerName = checkContainerName_raw;
@@ -303,9 +303,9 @@ var containerObject = Class
 					var containerNameFieldId = containerNameAry[1];
 					var containerNameFieldValue = containerNameAry[2];
 					if (containerNameFieldValue == 'uservalue') {
-						containerNameFieldValue = userObj
+						containerNameFieldValue = UserObj
 								.getEtcValue(containerNameFieldId);
-						// userObj.displayUser();//xxxd
+						// UserObj.displayUser();//xxxd
 						// alert ('containernamefieldid:
 						// '+containerNameFieldId+', containernamefieldvalue:
 						// '+containerNameFieldValue);//xxxd
@@ -320,7 +320,7 @@ var containerObject = Class
 						checkContainerNameAry = checkContainerName_raw
 								.split('?D');
 						var checkContainerName = checkContainerNameAry[2];
-						var useContainerName = userObj
+						var useContainerName = UserObj
 								.getEtcValue(checkContainerName);
 					} else {
 						var useContainerName = checkContainerName_raw;
@@ -356,11 +356,11 @@ var containerObject = Class
 							}
 						}
 						// else {
-						// alert ('containerObj.getContainerFromServerSimpleV2
+						// alert ('ContainerObj.getContainerFromServerSimpleV2
 						// error: containermissing: '+useContainerName);
 						// }
-						var domainName = userObj.getEtcValue('domainname');
-						var companyProfileId = userObj
+						var domainName = UserObj.getEtcValue('domainname');
+						var companyProfileId = UserObj
 								.getEtcValue('companyprofileid');
 						// - domainname
 						if (domainName != undefined) {
@@ -382,7 +382,7 @@ var containerObject = Class
 						}
 						// - see if this is a form based get container request?
 						if (getForm === true) {
-							formData = formObj.getFormData(formName);
+							formData = FormObj.getFormData(formName);
 							var ctr = 0;
 							formData.each(function(pairs) {
 								var keyName = pairs.key;
@@ -404,7 +404,7 @@ var containerObject = Class
 									+ ', containerName: '
 									+ containerName);
 						} else {
-							// containerObj.displayAry('senddataary',sendDataAry);//xxxd
+							// ContainerObj.displayAry('senddataary',sendDataAry);//xxxd
 							getContainerViaAjaxSimple(jobName, containerName,
 									theMethod, sendDataAry);
 						}
@@ -415,19 +415,19 @@ var containerObject = Class
 			// ==========================================================xxxd
 			getContainerFromServerSimple : function(jobName, containerName,
 					theMethod, loadId, sessionName) {
-				containerObj
-						.jsDebug('containerObj.getContainerFromServerMulti');
-				// - get from userObj if coded to do that
+				ContainerObj
+						.jsDebug('ContainerObj.getContainerFromServerMulti');
+				// - get from UserObj if coded to do that
 				var jobNameAry = jobName.split('_');
 				if (jobNameAry[0] == 'user') {
 					var fieldName = jobNameAry[1];
-					jobName = userObj.getEtcValue(fieldName);
+					jobName = UserObj.getEtcValue(fieldName);
 					// alert ('jobname: '+jobName);//xxxd
 				}
 				var containerNameAry = containerName.split('_');
 				if (containerNameAry[0] == 'user') {
 					var fieldName = containerNameAry[1];
-					containerName = userObj.getEtcValue(fieldName);
+					containerName = UserObj.getEtcValue(fieldName);
 					// alert ('container name: '+containerName+', fieldname:
 					// '+fieldName);//xxxd
 				}
@@ -441,7 +441,7 @@ var containerObject = Class
 					var containerNameFieldId = containerNameAry[1];
 					var containerNameFieldValue = containerNameAry[2];
 					if (containerNameFieldValue == 'uservalue') {
-						containerNameFieldValue = userObj
+						containerNameFieldValue = UserObj
 								.getEtcValue(containerNameFieldId);
 						containerName = useContainerName + '_'
 								+ containerNameFieldId + '_'
@@ -468,8 +468,8 @@ var containerObject = Class
 					}
 					var paramNames = 'sessionname';
 					var paramValues = sessionName;
-					var domainName = userObj.getEtcValue('domainname');
-					var companyProfileId = userObj
+					var domainName = UserObj.getEtcValue('domainname');
+					var companyProfileId = UserObj
 							.getEtcValue('companyprofileid');
 					// alert ('companyprofileid from userobj:
 					// '+companyProfileId);//xxxd
@@ -508,7 +508,7 @@ var containerObject = Class
 				try {
 					$(loadId).innerHTML = containerHtml;
 				} catch (err) {
-					alert('containerObj.reloadContainerHtml err in loadid: '
+					alert('ContainerObj.reloadContainerHtml err in loadid: '
 							+ loadId + ', containername: ' + containerName
 							+ ', html: ' + containerHtml);
 					this.displayStack();
@@ -527,15 +527,15 @@ var containerObject = Class
 					// this.displayAry(this.containerHash[containerName]['etc']);//xxx
 					tableName = this.getEtcValue('tablename');
 					if (tableName != undefined) {
-						tableObj.setTableName(tableName);
+						TableObj.setTableName(tableName);
 					}
 					formName = this.getEtcValue('formname');
 					if (formName != undefined) {
-						formObj.setFormName(formName);
+						FormObj.setFormName(formName);
 					}
 					menuName = this.getEtcValue('menuname');
 					if (menuName != undefined) {
-						menuObj.setMenuName(menuName);
+						MenuObj.setMenuName(menuName);
 					}
 					calendarName = this.getEtcValue('calendarname');
 					if (calendarName != undefined) {
@@ -547,7 +547,7 @@ var containerObject = Class
 					try {
 						$(loadId).style.visibility = 'visible';
 					} catch (err) {
-						alert('containerObj.setupContainer err in loadid: '
+						alert('ContainerObj.setupContainer err in loadid: '
 								+ loadId + ', containername: ' + containerName);
 						this.displayStack();
 					}
@@ -555,14 +555,14 @@ var containerObject = Class
 					// var focusId=this.getEtcValue('focusid');
 					// $(focusId).style.visibility='visible';
 					this.setContainerFocus(9);
-					// containerObj.displayAry(this.containerHash[this.containerName]['etc']);//xxx
+					// ContainerObj.displayAry(this.containerHash[this.containerName]['etc']);//xxx
 				} else {
 					this.justHidden = false;
 				}
 			},
 			// ==========================================================
 			goToContainer : function(containerName) {
-				containerObj.jsDebug('containerObj.goToNewContainer');
+				ContainerObj.jsDebug('ContainerObj.goToNewContainer');
 				// - if container[containername] exists and is inprocess then
 				// remove it
 				// alert ('job: '+jobName+', container: '+containerName+',
@@ -580,15 +580,15 @@ var containerObject = Class
 					// this.displayAry(this.containerHash[containerName]['etc']);//xxx
 					tableName = this.getEtcValue('tablename');
 					if (tableName != undefined) {
-						tableObj.setTableName(tableName);
+						TableObj.setTableName(tableName);
 					}
 					formName = this.getEtcValue('formname');
 					if (formName != undefined) {
-						formObj.setFormName(formName);
+						FormObj.setFormName(formName);
 					}
 					menuName = this.getEtcValue('menuname');
 					if (menuName != undefined) {
-						menuObj.setMenuName(menuName);
+						MenuObj.setMenuName(menuName);
 					}
 					calendarName = this.getEtcValue('calendarname');
 					if (calendarName != undefined) {
@@ -598,12 +598,12 @@ var containerObject = Class
 					this.containerName = containerName;
 					// $(loadId).style.visibility='visible';
 					this.setContainerFocus(9);
-					// containerObj.displayAry(this.containerHash[this.containerName]['etc']);//xxx
+					// ContainerObj.displayAry(this.containerHash[this.containerName]['etc']);//xxx
 				}
 			},
 			// ==========================================================
 			removeDisplay : function() {
-				containerObj.jsDebug('containerObj.removeDisplay');
+				ContainerObj.jsDebug('ContainerObj.removeDisplay');
 				// alert ('227: remove display for '+this.containerName);//xxxd
 				var loadId = this.containerHash[this.containerName]['etc']
 						.get('loadid');
@@ -662,7 +662,7 @@ var containerObject = Class
 			// ==========================================================
 			displayAry : function(theTitle, theAry) {
 				// alert ('xxxd0');
-				containerObj.jsDebug('');
+				ContainerObj.jsDebug('');
 				var theDisplay = $H(theAry);
 				var theString = '--- ' + theTitle + " ---\n";
 				var ctr;
@@ -684,7 +684,7 @@ var containerObject = Class
 			},
 			// ==========================================================
 			displayHash : function(theTitle, theHash) {
-				containerObj.jsDebug('');
+				ContainerObj.jsDebug('');
 				var theDisplay = theHash;
 				var theString = '--- ' + theTitle + " ---\n";
 				var ctr;
@@ -729,11 +729,11 @@ var containerObject = Class
 			setFocus : function(theId, theLevel) {
 				// alert ('set '+theId+' to '+theLevel);//xxxd
 				if (theLevel == undefined) {
-					containerObj.displayStack();
+					ContainerObj.displayStack();
 				}
 				// xxxd - debug
 				// vl=prompt('theId: '+theLevel,'x');if
-				// (vl=='x'){utilObj.debugDocument();}
+				// (vl=='x'){UtilObj.debugDocument();}
 				$(theId).style.zIndex = theLevel;
 			},
 			// ===========================================================
@@ -784,16 +784,16 @@ var containerObject = Class
 				// called
 				// - has cross through it
 				// document.onmousedown='';
-				document.onmousemove = containerObj.moveImage;
+				document.onmousemove = ContainerObj.moveImage;
 				document.onmouseup = this.mouseUp;
 				document.onmouseout = this.mouseOut;
-				var pagenoid = tableObj.getEtcValue('pagenoid');
+				var pagenoid = TableObj.getEtcValue('pagenoid');
 				$(pagenoid).innerHTML = 'mouse down';
 				return false;
 			},
 			// ==========================================================
 			mouseOut : function(e) {
-				var pagenoid = tableObj.getEtcValue('pagenoid');
+				var pagenoid = TableObj.getEtcValue('pagenoid');
 				$(pagenoid).innerHTML = 'mouse out';
 				return false;
 			},
@@ -804,19 +804,19 @@ var containerObject = Class
 				}
 				// var mousePos=e.mouseCoords;
 				// var
-				// newLeft=containerObj.oldContainerXPos+e.clientX-containerObj.oldMouseXPos;
+				// newLeft=ContainerObj.oldContainerXPos+e.clientX-ContainerObj.oldMouseXPos;
 				var newLeft = e.clientX;
 				// var newLeft=mousePos(e).x-10;
-				// alert ('pleft: '+containerObj.pleft+', e.clientx:
-				// '+e.clientX+', co.xcoor: '+containerObj.xcoor+', newleft:
+				// alert ('pleft: '+ContainerObj.pleft+', e.clientx:
+				// '+e.clientX+', co.xcoor: '+ContainerObj.xcoor+', newleft:
 				// '+newLeft);//xxxd
-				$(containerObj.loadId).style.left = newLeft + 'px';
+				$(ContainerObj.loadId).style.left = newLeft + 'px';
 				// var
-				// newTop=containerObj.oldContainerYPos+e.clientY-containerObj.oldMouseYPos;
+				// newTop=ContainerObj.oldContainerYPos+e.clientY-ContainerObj.oldMouseYPos;
 				var newTop = e.clientY;
 				// var newTop=mousePos.y-10;
-				$(containerObj.loadId).style.top = newTop + 'px';
-				var pagenoid = tableObj.getEtcValue('pagenoid');
+				$(ContainerObj.loadId).style.top = newTop + 'px';
+				var pagenoid = TableObj.getEtcValue('pagenoid');
 				$(pagenoid).innerHTML = newLeft + ':' + newTop;
 				return false;
 			},
@@ -824,7 +824,7 @@ var containerObject = Class
 			mouseUp : function(e) {
 				document.onmousemove = '';
 				document.onmouseup = '';
-				var pagenoid = tableObj.getEtcValue('pagenoid');
+				var pagenoid = TableObj.getEtcValue('pagenoid');
 				$(pagenoid).innerHTML = 'mouse up';
 				return false;
 			},
@@ -874,7 +874,7 @@ var containerObject = Class
 			},
 			// ===========================================================
 			saveCssAjax : function(containerName, responseLine) {
-				// alert ('containerObj.savecssajax l572 containerName:
+				// alert ('ContainerObj.savecssajax l572 containerName:
 				// '+containerName);//xxxd
 				var classOrIdSepar = '.';
 				if (actionCode == 'id') {
@@ -903,7 +903,7 @@ var containerObject = Class
 					paramSepar = ';';
 				}
 				paramStrg += ';';
-				// alert ('containerObj.saveCssAjax l592 containerName:
+				// alert ('ContainerObj.saveCssAjax l592 containerName:
 				// '+containerName);
 				tst = this.containerHash[containerName]['css'];
 				if (tst == undefined) {
@@ -919,9 +919,9 @@ var containerObject = Class
 			reset : function() {
 				containerName = this.containerName;
 				this.containerHash[containerName]['etc'].set('reset', true);
-				// alert ('containerObj.reset xxxd: doing
+				// alert ('ContainerObj.reset xxxd: doing
 				// tableobj.reset');//xxxd
-				tableObj.reset();
+				TableObj.reset();
 			},
 			// ==========================================================
 			getEtcValue : function(etcName) {
@@ -980,7 +980,7 @@ var containerObject = Class
 					var workHash = $H(jsonHash);
 					var htmlLine = workHash.get('htmlline');
 					//xxxd! need to convert pipeconvert to '|'
-					//containerObj.displayHtml(htmlLine);//xxxd
+					//ContainerObj.displayHtml(htmlLine);//xxxd
 					this.setEtcValue('htmlline', htmlLine);
 					//alert ('htmlline: '+htmlLine);
 					var containerPropertiesHash = $H(jsonHash['containerary']);

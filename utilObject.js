@@ -1,4 +1,4 @@
-var utilObject = Class.create({
+var UtilObject = Class.create({
 //2/4/13 winopn made body have mainbody class and added margin style to it, also change hidden; to visible; if in body - hard coded
 //--- initialize
 	initialize: function() {
@@ -49,7 +49,7 @@ var utilObject = Class.create({
 //========================================================================
 	convertDateToHash: function(theDate){
 		if (theDate==undefined){
-			containerObj.displayStack('ut.convertDateToHash');
+			ContainerObj.displayStack('ut.convertDateToHash');
 			exit();
 		}
 		pos=theDate.indexOf('-');
@@ -182,7 +182,7 @@ var utilObject = Class.create({
 				theBase.deleteRow(startRow);		
 			}
 		} catch (err){
-			alert ('utilObj.deleteTableRows: '+err+' calendarmenuid: '+calendarMenuId);
+			alert ('UtilObj.deleteTableRows: '+err+' calendarmenuid: '+calendarMenuId);
 		}
 	},
 //==========================================================================
@@ -226,9 +226,9 @@ var utilObject = Class.create({
 	},
 //======================
 	mouseMoveContainer: function(theEvent){
-		//var theContainerName=containerObj.containerName;
-		//containerObj.displayAry(containerObj.containerHash[theContainerName]['etc']);xxxd
-		var loadId=containerObj.getEtcValue('loadid');
+		//var theContainerName=ContainerObj.containerName;
+		//ContainerObj.displayAry(ContainerObj.containerHash[theContainerName]['etc']);xxxd
+		var loadId=ContainerObj.getEtcValue('loadid');
 //- mouse
 		var theClientX=theEvent.clientX;
 		var theClientY=theEvent.clientY;
@@ -267,7 +267,7 @@ var utilObject = Class.create({
 		try {
 			$(elementId).style.visibility=theValue;
 		} catch (err){
-			alert('utilObj.changeVisibility: ('+err+') elementid: '+elementId+', value: '+theValue);
+			alert('UtilObj.changeVisibility: ('+err+') elementid: '+elementId+', value: '+theValue);
 		}
 	},
 //=================================
@@ -275,7 +275,7 @@ var utilObject = Class.create({
 		var opacity;
 		if (direction=='up'){opacity_use=0;}
 		else {opacity_use=1;}
-		setTimeout("utilObj.doTheOpacityChange('"+opacity_use+"','"+direction+"','"+theId+"')",1);
+		setTimeout("UtilObj.doTheOpacityChange('"+opacity_use+"','"+direction+"','"+theId+"')",1);
 	},
 //========================================
 	doTheOpacityChange: function(opacity_fed, direction, theId){
@@ -290,12 +290,12 @@ var utilObject = Class.create({
 		if (opacity_wrk > 1000){doContinue=false;}
 		var opacity_use = opacity_wrk / 1000;
 		try {$(theId).style.opacity=opacity_use;}
-		catch (err) {alert ('menuObj.autoRotateImage: ('+err+') theid: '+theId+', opacity_use: '+opacity_use);}
+		catch (err) {alert ('MenuObj.autoRotateImage: ('+err+') theid: '+theId+', opacity_use: '+opacity_use);}
 		if (doContinue){
-			setTimeout("utilObj.doTheOpacityChange('"+opacity_use+"','"+direction+"','"+theId+"')",1);
+			setTimeout("UtilObj.doTheOpacityChange('"+opacity_use+"','"+direction+"','"+theId+"')",1);
 		}
 		else {
-			menuObj.setEtcValue('iamdone','alldone');
+			MenuObj.setEtcValue('iamdone','alldone');
 		}
 	},
 //=========================================
@@ -329,20 +329,20 @@ var utilObject = Class.create({
 	setClass: function(elementBase,className){
 		if (className != ''){
 			try {$(elementBase).className=className;}
-			catch (err){alert ('utilObj.setClass: '+err+', elementbase: '+elementBase+', classname: '+className);}
+			catch (err){alert ('UtilObj.setClass: '+err+', elementbase: '+elementBase+', classname: '+className);}
 		}
 	},
 //==============================================================
 	hideIdsViaList: function(jobParamsAry){
 		var theName=jobParamsAry[0];
 		//alert ('thename: '+theName);
-		var theIdList=userObj.getNamedString(theName);
+		var theIdList=UserObj.getNamedString(theName);
 		var theIdListAry=theIdList.split('~');
 		var theCnt=theIdListAry.length;
 		for (var theLp=0;theLp<theCnt;theLp++){
 			var theId=theIdListAry[theLp];
 			try {$(theId).style.visibility='hidden';}
-			catch (err){alert ('utilObj.hideIdsViaList: ('+err+') id: '+theId);}
+			catch (err){alert ('UtilObj.hideIdsViaList: ('+err+') id: '+theId);}
 		}
 	},
 //==================================================================
@@ -414,7 +414,7 @@ var utilObject = Class.create({
 	},
 //==========================================
 	setCookieValue: function(jobParamsAry){
-		//alert ('savtockie: utilObj.setCookieValue objtype: '+jobParamsAry[0]+', objectname: '+jobParamsAry[1]+', filename: '+jobParamsAry[2]+', cookiename: '+jobParamsAry[3]);
+		//alert ('savtockie: UtilObj.setCookieValue objtype: '+jobParamsAry[0]+', objectname: '+jobParamsAry[1]+', filename: '+jobParamsAry[2]+', cookiename: '+jobParamsAry[3]);
 		var objectType=jobParamsAry[0];
 		var objectName=jobParamsAry[1];
 		var fileName=jobParamsAry[2];
@@ -423,7 +423,7 @@ var utilObject = Class.create({
 		case 'id':
 			break;
 		case 'table':
-			var cookieValue=tableObj.getEtcValue(fileName);
+			var cookieValue=TableObj.getEtcValue(fileName);
 			alert (cookieValue.length);
 			// there can be no semicolons, commas, or white space
 			document.cookie = cookieName + "=" + cookieValue;
@@ -431,7 +431,7 @@ var utilObject = Class.create({
 			alert (tst.length);
 			break;
 		default:
-			alert ('utilObject.setCookieValue invalid objecttype: '+objectType);
+			alert ('UtilObject.setCookieValue invalid objecttype: '+objectType);
 		}
 	},
 //==========================================
@@ -443,9 +443,9 @@ var utilObject = Class.create({
 		case 'table':
 			var theObjName=jobParamsAry[2];
 			var theHtmlName=jobParamsAry[3];
-			tableObj.setTableName(theObjName);
-			//containerObj.displayHash('xxxf',tableObj.tableHash[theObjName]['etc']);
-			var htmlString=tableObj.getEtcValue(theHtmlName);
+			TableObj.setTableName(theObjName);
+			//ContainerObj.displayHash('xxxf',TableObj.tableHash[theObjName]['etc']);
+			var htmlString=TableObj.getEtcValue(theHtmlName);
 			if (htmlString == undefined){
 				var htmlString='error';
 			}
@@ -490,7 +490,7 @@ var utilObject = Class.create({
 					$(debugNameId).innerHTML=oldMsg;
 				}
 				catch (err){
-						//alert ("utilObj.writeLog: "+err+", debugnameid: "+debugNameId);
+						//alert ("UtilObj.writeLog: "+err+", debugnameid: "+debugNameId);
 				}
 			}
 		}
@@ -504,7 +504,7 @@ var utilObject = Class.create({
 				$(theLogNameId).innerHTML='';
 			}
 			catch (err){
-				alert ('utilObj.clearLog: '+err+' debugnameid: '+debugNameId);
+				alert ('UtilObj.clearLog: '+err+' debugnameid: '+debugNameId);
 			}
 		}
 	},

@@ -1,4 +1,4 @@
-var userObject = Class.create({
+var UserObject = Class.create({
 //--- data structures
 //this.userHash['etchash']['username']    ... <database table name>
 //									['userpassword']  ... col1~col2~col3
@@ -64,7 +64,7 @@ var userObject = Class.create({
 	},
 //==============================================================
 	displayUser: function(){
-		containerObj.displayHash('userobj etc',this.userHash['etchash']);
+		ContainerObj.displayHash('userobj etc',this.userHash['etchash']);
 	},
 //==============================================================
 	loadUserValue: function(jobParamsAry){
@@ -74,7 +74,7 @@ var userObject = Class.create({
 			var theNameId=theName+'id';
 			var theValue=this.getEtcValue(theName);
 			//alert ('name: '+theName+', thevalue: '+theValue);
-			//containerObj.displayAry(this.userHash['etchash']);//xxxf
+			//ContainerObj.displayAry(this.userHash['etchash']);//xxxf
 			try {$(theNameId).innerHTML=theValue;}
 			catch (err){alert ('userobj.loaduservalue '+err+' thename: '+theName+', thevalue: '+theValue);}
 		}

@@ -1,10 +1,10 @@
-var ajaxObject = Class.create({
+var AjaxObject = Class.create({
 //- 4/28/13 added class.create to whole file 
 //- 
 //========================================================
 getContainerViaAjax: function(jobName, containerName, theMethod) {
 // version: 1.1.1
-	containerObj.jsDebug('getContainerViaAjax');
+	ContainerObj.jsDebug('getContainerViaAjax');
 	// !!! - this assumes that only one container is being retrieved
 	// simultaneously
 	var ajaxDelim = '~';
@@ -39,7 +39,7 @@ getContainerViaAjax: function(jobName, containerName, theMethod) {
 	var tst=0;
 	//alert ('ready to start ajax');//xxxd
 	//alert (url);//xxxd
-	containerObj.setAjaxIsRunning();
+	ContainerObj.setAjaxIsRunning();
 	new Ajax.Request(url, {
 	   method: 'post',
 	   onSuccess: function(transport){
@@ -93,37 +93,37 @@ getContainerViaAjax: function(jobName, containerName, theMethod) {
 	   	  		else if (atTables){
 	   	  		//vl=prompt(actionCode+': '+actionValue,'x');if (vl=='x'){exit();}
 	   	  			if (actionCode=='tablename'){
-	   	  				tableObj.setTableName(actionValue);
+	   	  				TableObj.setTableName(actionValue);
 	   	  			}
 	   	  			else if (actionCode=='displayary'){
-	   	  				tableObj.loadDisplay(actionValue);
+	   	  				TableObj.loadDisplay(actionValue);
 	   	  			}
 	   	  			else if (actionCode=='selectary'){
-						tableObj.loadSelect(actionValue);
+						TableObj.loadSelect(actionValue);
    	  			}
 	   	  			else if (actionCode=='dataary'){
 	   	  				//vl=prompt(actionCode+': '+actionValue,'x');if (vl=='x'){exit();}
-	   	  				tableObj.loadData(actionValue);
+	   	  				TableObj.loadData(actionValue);
 	   	  			}
 	   	  			else if (actionCode=='etc'){
-	   	  				tableObj.loadEtc(actionValue,actionValue2);
+	   	  				TableObj.loadEtc(actionValue,actionValue2);
 	   	  			}
 	   	  			else if (actionCode=='keyindex'){
-	   	  				tableObj.loadKeyIndex(actionValue);
+	   	  				TableObj.loadKeyIndex(actionValue);
 	   	  			}
 	   	  			else {
-	   	  				tableObj.setError('44: invalid action code: '+actionCode);
+	   	  				TableObj.setError('44: invalid action code: '+actionCode);
 	   	  			}
 	   	  		}
 //-------- forms
 	   	  		else if (atForms){
 		   	  		//document.write (mainLp+'/'+mainCnt+': '+responseLine);//xxx
 	   	  			if (actionCode=='formname'){
-	   	  				formObj.setFormName(actionValue);
+	   	  				FormObj.setFormName(actionValue);
 	   	  			}
 	   	  			//- below for names,nameids,regexs,keymaps,errormsgs
 	   	  			else if (actionCode=='loadetc'){
-	   	  				formObj.loadEtc(actionValue,actionValue2);
+	   	  				FormObj.loadEtc(actionValue,actionValue2);
 	   	  			}
 	   	  		}
 //-------- menus - I think that I need to redo this	   	
@@ -132,29 +132,29 @@ getContainerViaAjax: function(jobName, containerName, theMethod) {
 					if (actionCode=='initmenu'){
 						//- this better be the first one!!!
 						var menuName=responseLineAry[1];
-						menuObj.initMenu(menuName);
+						MenuObj.initMenu(menuName);
 					}
 	   	  			if (actionCode=='setetchash'){
-	   	  				menuObj.setEtcValueAjax(menuName,responseLineAry[1],responseLineAry[2]);
+	   	  				MenuObj.setEtcValueAjax(menuName,responseLineAry[1],responseLineAry[2]);
 	   	  			}
 					if (actionCode=='initsetary'){
 						var theCode=responseLineAry[1];
 						var elementNo=responseLineAry[2];
 						var theValue=responseLineAry[3];
 						var theName='dmy';
-						menuObj.setArraysAjax(menuName,theCode,elementNo,theName,theValue);
+						MenuObj.setArraysAjax(menuName,theCode,elementNo,theName,theValue);
 					}
 					if (actionCode=='initsethash'){
 						var theCode=responseLineAry[1];
 						var elementNo=responseLineAry[2];
 						var theName=responseLineAry[3];
 						var theValue=responseLineAry[4];
-						menuObj.setArraysAjax(menuName,theCode,elementNo,theName,theValue);
+						MenuObj.setArraysAjax(menuName,theCode,elementNo,theName,theValue);
 					}
 	   	  		}
 //------- style
 	   	  		else if (atCss){
-	   	  			containerObj.saveCssAjax(containerName,responseLine);
+	   	  			ContainerObj.saveCssAjax(containerName,responseLine);
 	   	  			//alert ('save css for containername: '+containerName+' progress: '+mainLp+'/'+mainCnt);//xxxd
 	   	  		}
 //------- calendar
@@ -162,16 +162,16 @@ getContainerViaAjax: function(jobName, containerName, theMethod) {
 				//xxxd
 					//var vl=prompt(actionCode,'exit');if (vl=='exit'){exit();}
 					if (actionCode=='calendarname'){
-						calendarObj.setName(actionValue);
+						CalendarObj.setName(actionValue);
 					}
 					else if (actionCode=='loadetc'){
-						calendarObj.loadEtc(actionValue,actionValue2);
+						CalendarObj.loadEtc(actionValue,actionValue2);
 					}
 					else if (actionCode=='desc'){
-						calendarObj.loadDesc(actionValue,actionValue2);
+						CalendarObj.loadDesc(actionValue,actionValue2);
 					}
 					else if (actionCode=='event'){
-						calendarObj.loadEventData(actionValue,actionValue2,actionValue3,actionValue4);
+						CalendarObj.loadEventData(actionValue,actionValue2,actionValue3,actionValue4);
 					}
 					else {
 						var vl=prompt(actionCode+': '+actionValue+', '+actionValue2+', '+responseLine,'exit');
@@ -182,7 +182,7 @@ getContainerViaAjax: function(jobName, containerName, theMethod) {
 	   	  		else if (atWholeMenus){atWholeMenusAry.push(responseLine);}
 //------- copy a table into the calendar	   	  		
 	   	  		else if (atCopyToCalendar){
-	   	  			calendarObj.copyInTable(actionValue);
+	   	  			CalendarObj.copyInTable(actionValue);
 	   	  			var reDisplayCalendar=true;
 	   	  		}
 //------- get container information	   	  		
@@ -190,21 +190,21 @@ getContainerViaAjax: function(jobName, containerName, theMethod) {
 	   	  			//alert (actionCode+', '+actionValue+', '+actionValue2);//xxx
 	   	  			if (actionCode=='containername'){
 	   	  				var containerName = actionValue;
-	   	  				containerObj.setContainerName(containerName);
+	   	  				ContainerObj.setContainerName(containerName);
 	   	  			}
 	   	  			else if (actionCode=='loadetc'){
 	   	  				//alert ('load etc: '+actionValue+', '+actionValue2);//xxx
-	   	  				containerObj.loadEtcAjax(containerName,actionValue,actionValue2);
+	   	  				ContainerObj.loadEtcAjax(containerName,actionValue,actionValue2);
 	   	  			}
 	   	  		}
 	   	  		else if (atImage){
-	   	  			if (actionCode == 'setname'){imageObj.setImageName(actionValue);}
-	   	  			else if (actionCode == 'loadetc'){imageObj.setEtcValue(actionValue,actionValue2);}
+	   	  			if (actionCode == 'setname'){ImageObj.setImageName(actionValue);}
+	   	  			else if (actionCode == 'loadetc'){ImageObj.setEtcValue(actionValue,actionValue2);}
 	   	  			else {alert ('10: invalid action code: '+actionCode+' '+actionValue+' '+actionValue2);}
 	   	  		}
 	   	  		else if (atParagraph){
 	   	  			if (actionCode == 'savenamedstring'){
-	   	  				userObj.saveNamedString(actionValue,actionValue2);
+	   	  				UserObj.saveNamedString(actionValue,actionValue2);
 	   	  			}
 	   	  			else {
 	   	  				alert ('invalid for atParagraph: '+actionCode+', '+actionValue);
@@ -221,22 +221,22 @@ getContainerViaAjax: function(jobName, containerName, theMethod) {
 			 alert (response_raw);
 		 }
 		 else {
-			 containerObj.loadCssAjax(containerName);
-			 containerObj.loadInnerHtmlAjax(containerName,insertHtml);
+			 ContainerObj.loadCssAjax(containerName);
+			 ContainerObj.loadInnerHtmlAjax(containerName,insertHtml);
 		 }
-		 if (reDisplayCalendar){this.calendarObj.reDisplayCalendar();}
-		 containerObj.setAjaxIsDone();
+		 if (reDisplayCalendar){this.CalendarObj.reDisplayCalendar();}
+		 ContainerObj.setAjaxIsDone();
 	},
-	   onFailure: function(){ alert('Something went wrong...'); containerObj.setAjaxIsDone(); }
+	   onFailure: function(){ alert('Something went wrong...'); ContainerObj.setAjaxIsDone(); }
 	});
 },
 //=====================================================================
 getContainerViaAjaxSimple: function(jobName,containerName,theMethod,sendDataAry){
-	utilObj.writeLog('debug1id','!!ajax/getContainerViaAjaxSimple!!');
-	utilObj.writeLog('debug1id','setajaxisrunning');
-	containerObj.setAjaxIsRunning();
-	utilObj.writeLog('debug1id','done with setajaxisrunning');
-	containerObj.jsDebug('getContainerViaAjax');
+	UtilObj.writeLog('debug1id','!!ajax/getContainerViaAjaxSimple!!');
+	UtilObj.writeLog('debug1id','setajaxisrunning');
+	ContainerObj.setAjaxIsRunning();
+	UtilObj.writeLog('debug1id','done with setajaxisrunning');
+	ContainerObj.jsDebug('getContainerViaAjax');
 	//- !!! this assumses that multi containers are being retrieved at the sime time
 	//- the containers dont have to worry about focus, etc
 	var sendDataLen=sendDataAry.length;
@@ -280,7 +280,7 @@ getContainerViaAjaxSimple: function(jobName,containerName,theMethod,sendDataAry)
 	var baseUrl=baseUrlHost+baseUrlPath;
 	var url='http://'+baseUrl+'?job='+jobName+'&container='+containerName+insertUrl+'&nowsecs='+secs;
 	//alert (url+', '+sendData);//xxxf
-	utilObj.writeLog('debug1id','contact server with url: '+url);
+	UtilObj.writeLog('debug1id','contact server with url: '+url);
 	var tst=0;
 	new Ajax.Request(url, {
 		method: 'post',
@@ -306,7 +306,7 @@ getContainerViaAjaxSimple: function(jobName,containerName,theMethod,sendDataAry)
 		var responseAry=response_raw.split(String.fromCharCode(10));
 		var mainCnt=responseAry.length;
 		//alert ('maincnt: '+mainCnt);//xxxf
-		utilObj.writeLog('debug1id','start processing results mainCnt: '+mainCnt);
+		UtilObj.writeLog('debug1id','start processing results mainCnt: '+mainCnt);
 		var reDisplayCalendar=false;
 		var pattern1=new RegExp("^!!");
 		var pattern2=new RegExp("!!$");
@@ -321,7 +321,7 @@ getContainerViaAjaxSimple: function(jobName,containerName,theMethod,sendDataAry)
 		for (var mainLp=0;mainLp<mainCnt;mainLp++){
 			statusCtr++;
 			if (statusCtr>200){
-				utilObj.writeLog('debug9id','processing results mainLp: '+mainLp+'/'+mainCnt);
+				UtilObj.writeLog('debug9id','processing results mainLp: '+mainLp+'/'+mainCnt);
 				statusCtr=0;
 			}
 			responseLine=responseAry[mainLp];
@@ -384,31 +384,31 @@ getContainerViaAjaxSimple: function(jobName,containerName,theMethod,sendDataAry)
 						if (actionCode=='tablename'){
 							//alert ('tablename: '+actionValue);//xxxd
 							//alert ('ajax: calling tableobj.resetxxxd: tablename: '+actionValue);
-							tableObj.setTableName(actionValue);
-							tableObj.reset(showHtml);
+							TableObj.setTableName(actionValue);
+							TableObj.reset(showHtml);
 						}
 						else if (actionCode=='displayary'){
-							tableObj.loadDisplay(actionValue);
+							TableObj.loadDisplay(actionValue);
 						}
 						else if (actionCode=='selectary'){
-							tableObj.loadSelect(actionValue);
+							TableObj.loadSelect(actionValue);
 						}
 						else if (actionCode=='dataary'){
 							//xxxd
 							//vl=prompt(actionCode+': '+actionValue,'x');if (vl=='x'){exit();}
-							tableObj.loadData(actionValue);
+							TableObj.loadData(actionValue);
 						}
 						else if (actionCode=='etc'){
-							tableObj.loadEtc(actionValue,actionValue2);
+							TableObj.loadEtc(actionValue,actionValue2);
 						}
 						else if (actionCode=='keyindex'){
-							tableObj.loadKeyIndex(actionValue);
+							TableObj.loadKeyIndex(actionValue);
 						}
 						else {
 							actionCode = actionCode.substring(0,10);
 							alert ('action code: '+actionCode+', mainlp/maincnt: '+mainLp+'/'+mainCnt);
 							exit();
-							tableObj.setError('ajax.js: L 376: invalid action code: '+actionCode);
+							TableObj.setError('ajax.js: L 376: invalid action code: '+actionCode);
 							alert ('action code: '+actionCode+', mainlp/maincnt: '+mainLp+'/'+mainCnt);
 							alert (response_raw);//xxxd
 							var line1No=mainLp-1;
@@ -430,11 +430,11 @@ getContainerViaAjaxSimple: function(jobName,containerName,theMethod,sendDataAry)
 						//xxxd - !!!! this stuff can run at the same time with another ajax screwing it up
 						if (actionCode=='formname'){
 							var formName=actionCode;//xxxd
-							formObj.setFormName(actionValue);
+							FormObj.setFormName(actionValue);
 						}
 						//- below for names,nameids,regexs,keymaps,errormsgs
 						else if (actionCode=='loadetc'){
-							formObj.loadEtc(actionValue,actionValue2);
+							FormObj.loadEtc(actionValue,actionValue2);
 						}
 					}
 //					-------- menus - I think that I need to redo this	   	
@@ -443,27 +443,27 @@ getContainerViaAjaxSimple: function(jobName,containerName,theMethod,sendDataAry)
 						if (actionCode=='initmenu'){
 							//- this better be the first one!!!
 							var menuName=responseLineAry[1];
-							menuObj.initMenu(menuName);
+							MenuObj.initMenu(menuName);
 						}
 						if (actionCode=='setetchash'){
-							menuObj.setEtcValueAjax(menuName,responseLineAry[1],responseLineAry[2]);
+							MenuObj.setEtcValueAjax(menuName,responseLineAry[1],responseLineAry[2]);
 						}
 						if (actionCode=='initsetary'){
 							var theCode=responseLineAry[1];
 							var elementNo=responseLineAry[2];
 							var theValue=responseLineAry[3];
 							var theName='dmy';
-							menuObj.setArraysAjax(menuName,theCode,elementNo,theName,theValue);
+							MenuObj.setArraysAjax(menuName,theCode,elementNo,theName,theValue);
 						}
 						if (actionCode=='initsethash'){
 							var theCode=responseLineAry[1];
 							var elementNo=responseLineAry[2];
 							var theName=responseLineAry[3];
 							var theValue=responseLineAry[4];
-							menuObj.setArraysAjax(menuName,theCode,elementNo,theName,theValue);
+							MenuObj.setArraysAjax(menuName,theCode,elementNo,theName,theValue);
 						}
 						if (actionCode=='loadjson'){
-							menuObj.loadJson(responseLineAry[1],responseLineAry[2]);
+							MenuObj.loadJson(responseLineAry[1],responseLineAry[2]);
 						}
 					}
 //					------- style
@@ -471,7 +471,7 @@ getContainerViaAjaxSimple: function(jobName,containerName,theMethod,sendDataAry)
 						//xxxd
 						//alert ('xxxd1');
 						//var dmy=prompt(responseLine,'x');if (dmy=='x'){exit();}
-						containerObj.saveCssAjax(containerName,responseLine);
+						ContainerObj.saveCssAjax(containerName,responseLine);
 						//alert ('save css for containername: '+containerName+' progress: '+mainLp+'/'+mainCnt);//xxxd
 					}
 //					------- calendar
@@ -480,19 +480,19 @@ getContainerViaAjaxSimple: function(jobName,containerName,theMethod,sendDataAry)
 						//var vl=prompt(actionCode,'exit');if (vl=='exit'){exit();}
 						//xxxd - !!!!! this stuff can run at the same time as another ajax screwing things up
 						if (actionCode=='calendarname'){
-							calendarObj.setName(actionValue);
+							CalendarObj.setName(actionValue);
 						}
 						else if (actionCode=='loadetc'){
-							calendarObj.loadEtc(actionValue,actionValue2);
+							CalendarObj.loadEtc(actionValue,actionValue2);
 						}
 						else if (actionCode=='desc'){
-							calendarObj.loadDesc(actionValue,actionValue2);
+							CalendarObj.loadDesc(actionValue,actionValue2);
 						}
 						else if (actionCode=='event'){
-							calendarObj.loadEventData(actionValue,actionValue2,actionValue3,actionValue4);
+							CalendarObj.loadEventData(actionValue,actionValue2,actionValue3,actionValue4);
 						}
 						else if (actionCode=='loadeventsjson'){
-							calendarObj.loadEventsJson(actionValue,actionValue2,actionValue3);
+							CalendarObj.loadEventsJson(actionValue,actionValue2,actionValue3);
 						}
 						else {
 							var vl=prompt(actionCode+': '+actionValue+', '+actionValue2+', '+responseLine,'exit');
@@ -503,7 +503,7 @@ getContainerViaAjaxSimple: function(jobName,containerName,theMethod,sendDataAry)
 					else if (atWholeMenus){atWholeMenusAry.push(responseLine);}
 //					------- copy a table into the calendar	   	  		
 					else if (atCopyToCalendar){
-						calendarObj.copyInTable(actionValue);
+						CalendarObj.copyInTable(actionValue);
 						var reDisplayCalendar=true;
 					}
 //					------- get container information	   	  		
@@ -512,12 +512,12 @@ getContainerViaAjaxSimple: function(jobName,containerName,theMethod,sendDataAry)
 						if (actionCode=='containername'){
 							var containerName = actionValue;
 							//alert ('containername: '+containerName);//xxxd
-							containerObj.setContainerName(containerName);
-							//containerObj.displayAry(containerObj.containerHash[containerName]['etc']);//xxxd
+							ContainerObj.setContainerName(containerName);
+							//ContainerObj.displayAry(ContainerObj.containerHash[containerName]['etc']);//xxxd
 						}
 						else if (actionCode=='loadetc'){
 							//alert ('load etc: '+containerName+', '+actionValue+', '+actionValue2);//xxxd
-							containerObj.loadEtcAjax(containerName,actionValue,actionValue2);
+							ContainerObj.loadEtcAjax(containerName,actionValue,actionValue2);
 						}
 					}
 //					------- get image information
@@ -525,12 +525,12 @@ getContainerViaAjaxSimple: function(jobName,containerName,theMethod,sendDataAry)
 						if (actionCode == 'setname'){
 							//dbFlg=1;
 							//alert ('setimagename');//xxxd
-							imageObj.setImageName(actionValue);
+							ImageObj.setImageName(actionValue);
 							//alert ('back from setimagename');//xxxd
 						}
 						else if (actionCode == 'loadetc'){
 							//alert ('setetcvalue');//xxxd
-							imageObj.setEtcValue(actionValue,actionValue2);
+							ImageObj.setEtcValue(actionValue,actionValue2);
 							//alert ('back from setetcvalue');//xxxd
 						}
 						else {alert ('2:invalid action code: '+actionCode+' '+actionValue+' '+actionValue2);}
@@ -538,22 +538,22 @@ getContainerViaAjaxSimple: function(jobName,containerName,theMethod,sendDataAry)
 //					------- get album
 					else if (atAlbum){
 						if (actionCode == 'setalbumname'){
-							albumObj.setName(actionValue);
+							AlbumObj.setName(actionValue);
 						}
 						else if (actionCode == 'loadalbumsrc'){
-							albumObj.loadInfo('src',actionValue);
+							AlbumObj.loadInfo('src',actionValue);
 						}
 						else if (actionCode == 'loadalbumtitles'){
-							albumObj.loadInfo('titles',actionValue);
+							AlbumObj.loadInfo('titles',actionValue);
 						}
 						else if (actionCode == 'loadalbumcaptions'){
-							albumObj.loadInfo('captions',actionValue);
+							AlbumObj.loadInfo('captions',actionValue);
 						}
 						else if (actionCode == 'loadvideoids'){
-							albumObj.loadInfo('videoids',actionValue);
+							AlbumObj.loadInfo('videoids',actionValue);
 						}
 						else if (actionCode == 'loadetc'){
-							albumObj.setEtcValue(actionValue,actionValue2);
+							AlbumObj.setEtcValue(actionValue,actionValue2);
 						}
 						else {
 							alert ('invalid for atAlbum: '+actionCode+', '+actionValue);
@@ -561,7 +561,7 @@ getContainerViaAjaxSimple: function(jobName,containerName,theMethod,sendDataAry)
 					}
 					else if (atParagraph){
 						if (actionCode == 'savenamedstring'){
-							userObj.saveNamedString(actionValue,actionValue2);
+							UserObj.saveNamedString(actionValue,actionValue2);
 						}
 						else {
 							alert ('invalid for atParagraph: '+actionCode+', '+actionValue);
@@ -569,7 +569,7 @@ getContainerViaAjaxSimple: function(jobName,containerName,theMethod,sendDataAry)
 					}
 					else if (atUtility){
 						if (actionCode == 'setupcontainerviaajaxjson'){
-							containerObj.setupContainerViaAjaxJson(actionValue,actionValue2,actionValue3);
+							ContainerObj.setupContainerViaAjaxJson(actionValue,actionValue2,actionValue3);
 						}
 					}
 					else {alert ('xxxd2: no ifelse: '+mainLp+'/'+mainCnt+', actioncode: '+actionCode);};
@@ -577,7 +577,7 @@ getContainerViaAjaxSimple: function(jobName,containerName,theMethod,sendDataAry)
 			}
 		}
 		//--------------------- final processing
-		utilObj.writeLog('debug9id','final processing...');
+		UtilObj.writeLog('debug9id','final processing...');
 		if (containerName == undefined){
 			alert ('line 579 ajax.getContainerViaAjaxSimple containername is undefined!!!');
 			alert (response_raw);
@@ -586,28 +586,28 @@ getContainerViaAjaxSimple: function(jobName,containerName,theMethod,sendDataAry)
 			//alert ('going to load innerhtml = showHtml: '+showHtml+ ', '+insertHtml);//xxxf
 			//xxxf
 			if (showHtml != false){
-				utilObj.writeLog('debug9id','ajax: load in inserthtml, showHtml: '+showHtml);
-				containerObj.loadInnerHtmlAjax(containerName,insertHtml);
-				utilObj.writeLog('debug9id','ajax: done with loadinnerhtmlajax for container: '+containerName);
+				UtilObj.writeLog('debug9id','ajax: load in inserthtml, showHtml: '+showHtml);
+				ContainerObj.loadInnerHtmlAjax(containerName,insertHtml);
+				UtilObj.writeLog('debug9id','ajax: done with loadinnerhtmlajax for container: '+containerName);
 			}
 			// need to do this after html is loaded for jquery I think
-			utilObj.writeLog('debug9id','loadcssajax for container: '+containerName);
-			containerObj.loadCssAjax(containerName);
-			utilObj.writeLog('debug9id','done loading cssajax');
+			UtilObj.writeLog('debug9id','loadcssajax for container: '+containerName);
+			ContainerObj.loadCssAjax(containerName);
+			UtilObj.writeLog('debug9id','done loading cssajax');
 		}
-		if (reDisplayCalendar){this.calendarObj.reDisplayCalendar();}
-		utilObj.writeLog('debug9id','set ajax is done');
-		containerObj.setAjaxIsDone();
-		utilObj.writeLog('debug1id','done set ajax is done');
+		if (reDisplayCalendar){this.CalendarObj.reDisplayCalendar();}
+		UtilObj.writeLog('debug9id','set ajax is done');
+		ContainerObj.setAjaxIsDone();
+		UtilObj.writeLog('debug1id','done set ajax is done');
 	},
 	parameters: {'senddata': sendData},
-	onFailure: function(){ alert('Something went wrong...'); containerObj.setAjaxIsDone; }
+	onFailure: function(){ alert('Something went wrong...'); ContainerObj.setAjaxIsDone; }
 	});
 },
 //========================================================
 ajaxPostToServer: function(jobName,operationName,sendDataAry){
-	containerObj.setAjaxIsRunning();
-	containerObj.jsDebug('ajax: function ajaxPostToServer(jobName,operationName,sendDataAry)');
+	ContainerObj.setAjaxIsRunning();
+	ContainerObj.jsDebug('ajax: function ajaxPostToServer(jobName,operationName,sendDataAry)');
 //	--- init setup
 	var ajaxFieldDelim='~';
 	var ajaxLineDelim='`';
@@ -667,7 +667,7 @@ ajaxPostToServer: function(jobName,operationName,sendDataAry){
 					var vluString=vluAry[1];
 					var idConvAry=vluString.split('~');
 					//alert ('ajax: run convtempids');//xxx
-					tableObj.convTempIds(tableName, idConvAry);
+					TableObj.convTempIds(tableName, idConvAry);
 				}
 			}
 			if (!startCapture){
@@ -680,19 +680,19 @@ ajaxPostToServer: function(jobName,operationName,sendDataAry){
 			alert (errorKey+') '+errorMsg);
 		}
 		else {
-			tableObj.clearUpdateFlags();
+			TableObj.clearUpdateFlags();
 		}
-		containerObj.setAjaxIsDone();
+		ContainerObj.setAjaxIsDone();
 	},
 	parameters: {'job': jobName, 'operation': operationName, 'container': containerName, 'senddata': sendData},
-	onFailure: function(){ alert('Something went wrong...'); containerObj.setAjaxIsDone(); }
+	onFailure: function(){ alert('Something went wrong...'); ContainerObj.setAjaxIsDone(); }
 	});
 },
 //========================================================
 postAjaxSimple: function(formName,jobName,operationName,tableName,sendDataAry){
-	containerObj.setAjaxIsRunning();
-	utilObj.writeLog('debug1id','!!ajaxObj.postAjaxSimple!!');
-	utilObj.writeLog('debug1id','setajaxisrunning, form: '+formName+', jobname: '+jobName+', operationname: '+operationName+', tablename: '+tableName);
+	ContainerObj.setAjaxIsRunning();
+	UtilObj.writeLog('debug1id','!!AjaxObj.postAjaxSimple!!');
+	UtilObj.writeLog('debug1id','setajaxisrunning, form: '+formName+', jobname: '+jobName+', operationname: '+operationName+', tablename: '+tableName);
 //	--- init setup
 	//alert ('operationname: '+operationName);//xxxd
 	var containerName='';
@@ -707,11 +707,11 @@ postAjaxSimple: function(formName,jobName,operationName,tableName,sendDataAry){
 	var baseUrlPath=location.pathname;
 	var baseUrl=baseUrlHost+baseUrlPath;
 	var url='http://'+baseUrl;
-	var dbName=userObj.getEtcValue('domainname');
+	var dbName=UserObj.getEtcValue('domainname');
 	if (dbName == undefined){dbName='';}
 //	--- get data to send and make it a string
 	var sendData=sendDataAry.join(ajaxLineDelim);
-	utilObj.writeLog('debug1id','url sent: '+url+', senddata: '+sendData);
+	UtilObj.writeLog('debug1id','url sent: '+url+', senddata: '+sendData);
 	new Ajax.Request(url, {
 		method: 'post',
 		onSuccess: function(transport){
@@ -729,7 +729,7 @@ postAjaxSimple: function(formName,jobName,operationName,tableName,sendDataAry){
 				if (formName == 'pictureprofile'){var silentForm=1;}
 				else {var silentForm=0;}
 				if (!(silentForm)){
-					formObj.clearFormFields(formName);
+					FormObj.clearFormFields(formName);
 					alert ('ok');//xxxd
 				}
 			}
@@ -740,7 +740,7 @@ postAjaxSimple: function(formName,jobName,operationName,tableName,sendDataAry){
 				if (formName == 'pictureprofile'){var silentForm=1;}
 				else {var silentForm=0;}
 				if (!(silentForm)){
-					formObj.clearFormFields(formName);
+					FormObj.clearFormFields(formName);
 				}
 				
 			}
@@ -754,7 +754,7 @@ postAjaxSimple: function(formName,jobName,operationName,tableName,sendDataAry){
 			//alert ('load '+loadMsg+' into '+loadId);//xxxf
 			try {$(loadId).innerHTML=loadMsg;}
 			catch (err){alert ('ajax.postAjaxSimple: '+err+' loadid: '+loadId);}
-			//containerObj.displayAry(responseAry);//xxxd
+			//ContainerObj.displayAry(responseAry);//xxxd
 		}
 		else if (errorKey=='okmsg'){
 //			- okmsg errorKey
@@ -769,19 +769,19 @@ postAjaxSimple: function(formName,jobName,operationName,tableName,sendDataAry){
 		else {
 //			- default error
 			//100911 - make so hdec hide conditional work
-			userObj.restrictHide();
+			UserObj.restrictHide();
 			alert ('('+errorKey+') '+errorMsg);
 		}
-		containerObj.setAjaxIsDone();
+		ContainerObj.setAjaxIsDone();
 		//alert ('postajaxsimple: done on return of postajax');//xxxf
 	},
 	parameters: {'job': jobName, 'operation': operationName, 'container': containerName, 'dbname': dbName, 'senddata': sendData},
-	onFailure: function(){ alert('Something went wrong...'); containerObj.setAjaxIsDone(); }
+	onFailure: function(){ alert('Something went wrong...'); ContainerObj.setAjaxIsDone(); }
 	});
 },
 //========================================================
 getFormDbViaAjax: function(jobName,operationName,sendDataAry){
-	containerObj.setAjaxIsRunning();
+	ContainerObj.setAjaxIsRunning();
 //	--- init setup
 	var ajaxFieldDelim='~';
 	var ajaxLineDelim='`';
@@ -828,12 +828,12 @@ getFormDbViaAjax: function(jobName,operationName,sendDataAry){
 			}
 		}
 		//alert ('formname: '+formName+', names: '+formColumnNames+', values: '+formColumnValues);//xxxd
-		formObj.loadFormFields(formName,formColumnNames,formColumnValues);
-		containerObj.setAjaxIsDone();
+		FormObj.loadFormFields(formName,formColumnNames,formColumnValues);
+		ContainerObj.setAjaxIsDone();
 //		- below we do the updating of the form
 	},
 	parameters: {'job': jobName, 'operation': operationName, 'container': containerName, 'senddata': sendData},
-	onFailure: function(){ alert('Something went wrong...'); containerObj.setAjaxIsDone(); }
+	onFailure: function(){ alert('Something went wrong...'); ContainerObj.setAjaxIsDone(); }
 	});
 },
 //========================================================
@@ -884,30 +884,30 @@ getFormDbViaAjax: function(jobName,operationName,sendDataAry){
 					//exit();//xxxd
 					switch (actionCode){
 					case 'tablename':
-						tableObj.setTableName(actionValue);
+						TableObj.setTableName(actionValue);
 						break;;
 					case 'displayary':
-		   	  			tableObj.loadDisplay(actionValue);
+		   	  			TableObj.loadDisplay(actionValue);
 		   	  			break;;
 					case 'selectary':
-						tableObj.loadSelect(actionValue);
+						TableObj.loadSelect(actionValue);
 	   	  				break;;
 					case 'dataary':
 		   	  				//vl=prompt(actionCode+': '+actionValue,'x');if (vl=='x'){exit();}
-						tableObj.loadData(actionValue);
+						TableObj.loadData(actionValue);
 						break;;
 					case 'etc':
-	   	  				tableObj.loadEtc(actionValue,actionValue2);
+	   	  				TableObj.loadEtc(actionValue,actionValue2);
 	   	  				break;;
 					case 'keyindex':
-		   	  			tableObj.loadKeyIndex(actionValue);
+		   	  			TableObj.loadKeyIndex(actionValue);
 		   	  			break;;
 					default:
 						alert ('err: '+theCode+': '+theValue+', '+theValue2);
 					}
 				}
-				//alert ('tableObj.displayPage()');//xxxd
-				tableObj.displayPage();
+				//alert ('TableObj.displayPage()');//xxxd
+				TableObj.displayPage();
 				//alert ('dbtablename: '+dbTableName+', dbcolumnnames: '+dbColumnNames);//xxxd
 				//alert ('dbcolumnvalues: '+dbColumnValuesAry);//xxxd
 				if (tablename != undefined){
@@ -921,7 +921,7 @@ getFormDbViaAjax: function(jobName,operationName,sendDataAry){
 //========================================================
 	postFormDataAjax: function(jobName,operationName,sendDataAry){
 		//xxxd - tableName is not used but is required!!!
-		containerObj.setAjaxIsRunning();
+		ContainerObj.setAjaxIsRunning();
 		//--- init setup
 		var containerName='';
 		var ajaxFieldDelim='~';
@@ -936,7 +936,7 @@ getFormDbViaAjax: function(jobName,operationName,sendDataAry){
 		var url='http://'+baseUrl;
 //--- get data to send and make it a string
 		var sendData=sendDataAry.join(ajaxLineDelim);
-		var dbName=userObj.getEtcValue('dbname');
+		var dbName=UserObj.getEtcValue('dbname');
 		if (dbName == undefined){dbName='';}
 		new Ajax.Request(url, {
 			method: 'post',
@@ -967,7 +967,7 @@ getFormDbViaAjax: function(jobName,operationName,sendDataAry){
 //--- user mode	
 							switch (responseCode){
 							case 'etchash':
-								userObj.setEtcValue(responseValue1,responseValue2);
+								UserObj.setEtcValue(responseValue1,responseValue2);
 								break;
 							default:
 								alert ('invalid user response code: '+responseCode);
@@ -984,7 +984,7 @@ getFormDbViaAjax: function(jobName,operationName,sendDataAry){
 							switch (errorKey){
 							case 'ok':
 								if (formName != ''){
-									formObj.clearFormFields(formName);
+									FormObj.clearFormFields(formName);
 								}
 								break;
 							case 'loadinnerhtml':
@@ -1000,10 +1000,10 @@ getFormDbViaAjax: function(jobName,operationName,sendDataAry){
 						}
 					}
 				}
-				containerObj.setAjaxIsDone();
+				ContainerObj.setAjaxIsDone();
 		   	},
 		   	parameters: {'dbname': dbName, 'job': jobName, 'operation': operationName, 'container': containerName, 'senddata': sendData},
-		   	onFailure: function(){ alert('Something went wrong...'); containerObj.setAjaxIsDone(); }
+		   	onFailure: function(){ alert('Something went wrong...'); ContainerObj.setAjaxIsDone(); }
 		});
 	}
 });	

@@ -25,7 +25,7 @@ var AjaxObject = Class.create({
 	   			var errorKey=responseAry[0];
 	   			var errorMsg=responseAry[1];
 	   			if (errorKey == 'ok'){
-					tableObj.clearUpdateFlags();
+					TableObj.clearUpdateFlags();
 	   			}
 	   		},
 		});

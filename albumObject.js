@@ -1,4 +1,4 @@
-var albumObject = Class.create({
+var AlbumObject = Class.create({
 //- data structures
 //this.albumName
 //this.albumHash[<albumName>]['etchash']['albumprofileid']		... id
@@ -94,7 +94,7 @@ var albumObject = Class.create({
 	},
 //====================================================
 	displayNextImageForever: function(){
-		utilObj.writeLog('debugsalesid','--albumObj.displayNextImageForever--');
+		UtilObj.writeLog('debugsalesid','--AlbumObj.displayNextImageForever--');
 		var checkFadeInDone=this.getEtcValue('fadeindone');
 		var checkFadeOutDone=this.getEtcValue('fadeoutdone');
 		if (checkFadeInDone == undefined){var fadeInDone=true;}
@@ -105,11 +105,11 @@ var albumObject = Class.create({
 		else {var dontDoIt=false;}
 // - go/no go
 		if (dontDoIt){
-			utilObj.writeLog('debugsalesid','dont do it! dontdoit: '+dontDoIt+', fadeindone: '+checkFadeInDone+', fadeoutdone: '+checkFadeOutDone);
-			var sessionId=setTimeout("albumObj.displayNextImageForever()",sleepTime);
+			UtilObj.writeLog('debugsalesid','dont do it! dontdoit: '+dontDoIt+', fadeindone: '+checkFadeInDone+', fadeoutdone: '+checkFadeOutDone);
+			var sessionId=setTimeout("AlbumObj.displayNextImageForever()",sleepTime);
 		}
 		else {
-			utilObj.writeLog('debugsalesid','do it! dontdoit: '+dontDoIt+', fadeindone: '+checkFadeInDone+', fadeoutdone: '+checkFadeOutDone);	
+			UtilObj.writeLog('debugsalesid','do it! dontdoit: '+dontDoIt+', fadeindone: '+checkFadeInDone+', fadeoutdone: '+checkFadeOutDone);	
 			var albumPos1Id=this.getEtcValue('albumpos1');
 			var albumPos2Id=this.getEtcValue('albumpos2');
 			var nextCurrentId=this.getEtcValue('albumposnext');
@@ -141,54 +141,54 @@ var albumObject = Class.create({
 			var sleepTime=this.getEtcValue('albumimagesleeptime');
 			if (sleepTime == undefined || sleepTime == ''){sleepTime=9999;}
 			sleepTime=Number(sleepTime);
-			utilObj.writeLog('debugsalesid','get src: '+theSrc+' from image no nextimageno: '+nextImageNo);
+			UtilObj.writeLog('debugsalesid','get src: '+theSrc+' from image no nextimageno: '+nextImageNo);
 // - do it
 			if (nextCurrentId=='albumpos1'){
-				utilObj.writeLog('debugsalesid','nextcurrentid is albumpos1 so'+albumPos1Id+' gets src: '+theSrc);
+				UtilObj.writeLog('debugsalesid','nextcurrentid is albumpos1 so'+albumPos1Id+' gets src: '+theSrc);
 				$(albumPos1Id).src=theSrc;
 				this.setEtcValue('albumposnext','albumpos2');
-				utilObj.writeLog('debugsalesid','set fadeoutdone to false');
+				UtilObj.writeLog('debugsalesid','set fadeoutdone to false');
 				this.setEtcValue('fadeoutdone',false);
-				utilObj.writeLog('debugsalesid','set fadeindone to false');
+				UtilObj.writeLog('debugsalesid','set fadeindone to false');
 				this.setEtcValue('fadeindone',false);
 				var useId='#'+albumPos2Id;
 				var that=this;
-				utilObj.writeLog('debugsalesid','fadeout: '+useId);
+				UtilObj.writeLog('debugsalesid','fadeout: '+useId);
 				jQuery(useId).fadeOut(fadeTime, 'linear', function() {
-					albumObj.setEtcValue('fadeoutdone',true);
+					AlbumObj.setEtcValue('fadeoutdone',true);
 				});
 				var useId2='#'+albumPos1Id;
 				jQuery(useId2).css("visibility","visible");
 				jQuery(useId2).hide();
-				utilObj.writeLog('debugsalesid','fadein: '+useId2);
+				UtilObj.writeLog('debugsalesid','fadein: '+useId2);
 				jQuery(useId2).fadeIn(fadeTime, 'linear', function() {
-					albumObj.setEtcValue('fadeindone',true);
-					utilObj.writeLog('debugsalesid','fadein done');
+					AlbumObj.setEtcValue('fadeindone',true);
+					UtilObj.writeLog('debugsalesid','fadein done');
 				});
 			}
 			else {
-				utilObj.writeLog('debugsalesid','nextcurrentid is albumpos2 so '+albumPos2Id+' gets src: '+theSrc);
+				UtilObj.writeLog('debugsalesid','nextcurrentid is albumpos2 so '+albumPos2Id+' gets src: '+theSrc);
 				//alert ('xxxf1');
 				$(albumPos2Id).src=theSrc;
 				//alert ('xxxf2');
 				this.setEtcValue('albumposnext','albumpos1');
 				var useId='#'+albumPos1Id;
-				utilObj.writeLog('debugsalesid','do fadeout for albumpos1: '+albumPos1Id);
+				UtilObj.writeLog('debugsalesid','do fadeout for albumpos1: '+albumPos1Id);
 				this.setEtcValue('fadeoutdone',false);
 				//alert ('xxxf3');
 				jQuery(useId).fadeOut(fadeTime, 'linear', function() {
-					albumObj.setEtcValue('fadeoutdone',true);
-					utilObj.writeLog('debugsalesid','fadeout is done so set fadeoutdone=true');
+					AlbumObj.setEtcValue('fadeoutdone',true);
+					UtilObj.writeLog('debugsalesid','fadeout is done so set fadeoutdone=true');
 				});
 				//alert ('xxxf4');
 				var useId2='#'+albumPos2Id;
-				utilObj.writeLog('debugsalesid','do fadein for albumpos2: '+albumPos2Id);
+				UtilObj.writeLog('debugsalesid','do fadein for albumpos2: '+albumPos2Id);
 				jQuery(useId2).css("visibility","visible");
 				jQuery(useId2).hide();
 				this.setEtcValue('fadeindone',false);
 				jQuery(useId2).fadeIn(fadeTime, 'linear', function() {
-					albumObj.setEtcValue('fadeindone',true);
-					utilObj.writeLog('debugsalesid','fadein is done so set fadeindone=true');
+					AlbumObj.setEtcValue('fadeindone',true);
+					UtilObj.writeLog('debugsalesid','fadein is done so set fadeindone=true');
 				});
 			}
 //--- exitautoforever or settimeoout
@@ -198,17 +198,17 @@ var albumObject = Class.create({
 				this.setEtcValue('exitautoforever',exitAutoForever);
 			}
 			if (exitAutoForever==false){
-				utilObj.writeLog('debugsalesid','set next session since exitautoforever is false');
-				var sessionId=setTimeout("albumObj.displayNextImageForever()",sleepTime);
+				UtilObj.writeLog('debugsalesid','set next session since exitautoforever is false');
+				var sessionId=setTimeout("AlbumObj.displayNextImageForever()",sleepTime);
 			}
 			else {
-				utilObj.writeLog('debugsalesid','exit out since exitautoforever is true');
+				UtilObj.writeLog('debugsalesid','exit out since exitautoforever is true');
 			}
 		}
 	},
 //==============================================================================
 	stopDisplayNextImageForever: function(albumName){
-		utilObj.writeLog('debugsalesid','set exitautoforever to true for album: '+albumName);
+		UtilObj.writeLog('debugsalesid','set exitautoforever to true for album: '+albumName);
 		this.setName(albumName);
 		this.setEtcValue('exitautoforever',true);
 	},

@@ -794,8 +794,8 @@ function setPictureDisplayV2(albumName,pictureNo,allId,imageId,imageTitleId,imag
 	//alert ('pictureno: '+pictureNo);//xxxd
 	var mediaType=albumsAry[albumName]['mediatypeary'][pictureNo];
 	//alert ('albumname: '+albumName+', mediatype: '+mediaType+', pictureno: '+pictureNo);//xxxd
-	var menuObjectId=menuAry[menuName]['menuobjectid'];
-	var menuObjectIdDiv=menuObjectId+'div';
+	var MenuObjectId=menuAry[menuName]['menuobjectid'];
+	var MenuObjectIdDiv=MenuObjectId+'div';
 	var menuPictureId=menuAry[menuName]['menupictureid'];
 	var menuPictureIdDiv=menuPictureId+'div';
 	var menuParamId=menuAry[menuName]['menuparamid'];
@@ -807,8 +807,8 @@ function setPictureDisplayV2(albumName,pictureNo,allId,imageId,imageTitleId,imag
 	catch (err){alert ('menid: '+menuId+' is an invalid id');}
 	if (mediaType != 'youtube'){
 		//- hide and blow away object
-		try {document.getElementById(menuObjectIdDiv).style.visibility='hidden';}
-		catch (err){alert ('menuobjectid: '+menuObjectIdDiv+' is an invalid id');}
+		try {document.getElementById(MenuObjectIdDiv).style.visibility='hidden';}
+		catch (err){alert ('menuobjectid: '+MenuObjectIdDiv+' is an invalid id');}
 		//- unhide picture
 		try {document.getElementById(menuPictureIdDiv).style.visibility='visible';}
 		catch (err){alert ('menupictureid: '+menuPictureIdDiv+' is an invalid id');}
@@ -823,8 +823,8 @@ function setPictureDisplayV2(albumName,pictureNo,allId,imageId,imageTitleId,imag
 		catch (err){alert ('menupictureid: '+menuPictureId+' is invalid');}
 	}
 	else {
-		try {document.getElementById(menuObjectIdDiv).style.visibility='visible';}
-		catch (err){alert ('menuobjectidDiv: '+menuObjectIdDiv+' is invalid');}
+		try {document.getElementById(MenuObjectIdDiv).style.visibility='visible';}
+		catch (err){alert ('menuobjectidDiv: '+MenuObjectIdDiv+' is invalid');}
 		document.getElementById(menuPictureIdDiv).style.visibility='hidden';
 		var videoId=albumsAry[albumName]['videoidary'][pictureNo];
 		var videoWidth=menuAry[menuName]['videowidth'];
@@ -1534,7 +1534,7 @@ function doRunAjaxPost(jobName,operationName,tableName,menuId,resetClassName,sen
 	   			alert (errorKey+', '+errorMsg);
 					if (errorKey=='ok'){alert ('-message received-');}
 					//- need to clear out form fields here
-					formObj.clearFormFields(formName);
+					FormObj.clearFormFields(formName);
 	   		},
 	   		parameters: {'job': jobName, 'operation': operationName, 'container': containerName, 'senddata': sendData},
 	   		onFailure: function(){ alert('Something went wrong...'); }

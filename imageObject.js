@@ -1,4 +1,4 @@
-var imageObject = Class.create({
+var ImageObject = Class.create({
 //- data structures
 //- this.imageHash[<imagename>]
 //						['etchash']
@@ -11,7 +11,7 @@ var imageObject = Class.create({
 		this.imageHash = new Hash();
 	},
 	doAlert: function(theMsg){
-		//alert ('imageObj: '+theMsg);
+		//alert ('ImageObj: '+theMsg);
 	},
 //======================================================
 	loadImageData: function(jobParamsAry){
@@ -24,7 +24,7 @@ var imageObject = Class.create({
 //- get codes/id lists
 		var imageIdList=this.getEtcValue('imageidlist');
 		try {var imageIdListAry=imageIdList.split('_');}
-		catch (err){alert ('imageObj.loadImagedata ('+err+') imagename: '+imageName);exit();}
+		catch (err){alert ('ImageObj.loadImagedata ('+err+') imagename: '+imageName);exit();}
 		var imageCodeList=this.getEtcValue('imagecodelist');
 		var imageCodeListAry=imageCodeList.split('_');
 		var imageNameList=this.getEtcValue('imagenamelist');
@@ -40,9 +40,9 @@ var imageObject = Class.create({
 			var theIdFeed=theValueAry[1];
 			var pos=imageCodeListAry.indexOf(theCode);
 			try {var theName=imageNameListAry[pos];}
-			catch (err){alert ('imageObj.loadImagedata: ('+err+') imageName: '+imageName);exit();}
+			catch (err){alert ('ImageObj.loadImagedata: ('+err+') imageName: '+imageName);exit();}
 			try {var theNameAry=theName.split('!');}
-			catch (err){alert ('imageObj.loadImagedata: ('+err+') imageName: '+imageName+', thecode: '+theCode+', pos: '+pos+', imagecodelist: '+imageCodeList);exit();}
+			catch (err){alert ('ImageObj.loadImagedata: ('+err+') imageName: '+imageName+', thecode: '+theCode+', pos: '+pos+', imagecodelist: '+imageCodeList);exit();}
 			var theNameFunction=theNameAry[1];
 			theName=theNameAry[0];
 			if (theValue=='file'){theValue=this.getEtcValue(theName);}
@@ -80,23 +80,23 @@ var imageObject = Class.create({
 					switch (theType){
 					case 'src':
 						try {$(theId).src=theValue;}
-						catch (err){alert ('imageObj.showImage: '+err+', thecode: '+theCode+', nameid: '+theId+', thevalue: '+theValue);}
+						catch (err){alert ('ImageObj.showImage: '+err+', thecode: '+theCode+', nameid: '+theId+', thevalue: '+theValue);}
 						break;
 					case 'dsrc':
 						var theValueAry=theValue.split('/');
 						var fileName=theValueAry.pop();
 						var theValue=theValue.join('/');
 						try {$(theId).src=theValue;}
-						catch (err){alert ('imageObj.showImage: '+err+', thecode: '+theCode+', nameid: '+theId+', thevalue: '+theValue);}
+						catch (err){alert ('ImageObj.showImage: '+err+', thecode: '+theCode+', nameid: '+theId+', thevalue: '+theValue);}
 						break;
 					case 'i':
 						try {$(theId).innerHTML=theValue;}
-						catch (err){alert ('imageObj.showImage: '+err+', thecode: '+theCode+', nameid: '+theId+', thevalue: '+theValue);}
+						catch (err){alert ('ImageObj.showImage: '+err+', thecode: '+theCode+', nameid: '+theId+', thevalue: '+theValue);}
 						break;
 					case 'v':
 						//if (flg==1){alert ('xxxd0');}
 						try {$(theId).value=theValue;}
-						catch (err){alert ('imageObj.showImage: '+err+', thecode: '+theCode+', nameid: '+theId+', thevalue: '+theValue);}
+						catch (err){alert ('ImageObj.showImage: '+err+', thecode: '+theCode+', nameid: '+theId+', thevalue: '+theValue);}
 						break;
 					case 'a':
 //- analyze window size and reduce if needed
@@ -118,7 +118,7 @@ var imageObject = Class.create({
 								newImageWidth=Math.round(imageWidth*(newImageHeight/imageHeight));
 							}
 							try {$(imageId).width=newImageWidth;}
-							catch (err){alert ('imageObj: '+err);}
+							catch (err){alert ('ImageObj: '+err);}
 							this.setEtcValue('currentimagewidth',newImageWidth);
 							this.setEtcValue('currentimageheight',newImageHeight);
 							var imagePercent=Math.round((newImageWidth/imageWidth)*100);
@@ -129,7 +129,7 @@ var imageObject = Class.create({
 							this.setEtcValue('currentimagewidth',imageWidth);
 							this.setEtcValue('currentimageheight',imageHeight);
 							try {$(imageId).width=imageWidth;}
-							catch (err){alert ('imageObj: '+err);}
+							catch (err){alert ('ImageObj: '+err);}
 						}
 						//alert ('window width: '+windowWidth);//xxxd
 						break;
@@ -146,7 +146,7 @@ var imageObject = Class.create({
 						this.setEtcValue('currentimagewidth',currentImageWidth);
 						var imageId=this.getEtcValue('imageid');
 						try {$(imageId).width=currentImageWidth;}
-						catch (err){alert ('imageObj: '+err);}
+						catch (err){alert ('ImageObj: '+err);}
 						var containerId=this.getEtcValue('imagecontainerid');
 						var heightDiff=oldCurrentImageHeight-currentImageHeight;
 						var widthDiff=imageWidth-currentImageWidth;
@@ -154,7 +154,7 @@ var imageObject = Class.create({
 						curTop=curTop.replace(/px/g,'');
 						var newCurTop=Number(curTop)+heightDiff;
 						try {$(containerId).style.top=newCurTop;}
-						catch (err){alert ('error in imageObj Line130 '+err);}
+						catch (err){alert ('error in ImageObj Line130 '+err);}
 						break;
 					default:
 						alert ('error in type: '+theType);
@@ -172,7 +172,7 @@ var imageObject = Class.create({
 		var changeType=jobParamsAry[1];
 		var changeId=jobParamsAry[2];
 		try {var newValue=$(changeId).value;}
-		catch (err){alert ('imageObj L139: '+err);}
+		catch (err){alert ('ImageObj L139: '+err);}
 		if (changeType == 'w'){
 			var imageWidth=this.getEtcValue('imagewidth');
 			var thePct=Math.round((newValue/imageWidth)*100);
@@ -296,7 +296,7 @@ var imageObject = Class.create({
 	},
 //===================================================
 	displayEtc: function(){
-		containerObj.displayAry(this.imageHash[this.imageName]['etchash']);
+		ContainerObj.displayAry(this.imageHash[this.imageName]['etchash']);
 	},
 //===================================================
 	moveImages: function(imagesStrg){
@@ -349,7 +349,7 @@ var imageObject = Class.create({
 			$(imageId).style.left=leftPos + 'px';
 			$(imageId).style.top=topPos + 'px';
 			if (this.test<500){
-				var runStrg="imageObj.moveImages('"+imagesStrg+"')";
+				var runStrg="ImageObj.moveImages('"+imagesStrg+"')";
 				var t=setTimeout(runStrg,150);
 			}
 			else {
@@ -359,7 +359,7 @@ var imageObject = Class.create({
 	},
 //=====================================================
 	changeSource: function(jobParamsAry){
-		//containerObj.displayAry('jobparams',jobParamsAry);
+		//ContainerObj.displayAry('jobparams',jobParamsAry);
 		var noParams=jobParamsAry.length;
 		//alert (noParams);
 		for (var lp=0;lp<noParams;lp=lp+2){
@@ -368,12 +368,12 @@ var imageObject = Class.create({
 			var theImageAry=theImage.split('?D');
 			var theImageLoc=theImageAry[1];
 			if (theImageLoc != undefined){
-				theImage=userObj.getEtcValue(theImageLoc);
+				theImage=UserObj.getEtcValue(theImageLoc);
 			}
 			if (theImage != undefined){
-				utilObj.writeLog('doalert','theCode: '+theCode+', theImage: '+theImage);
+				UtilObj.writeLog('doalert','theCode: '+theCode+', theImage: '+theImage);
 				//alert ('xxxf2 changesrc');
-				//containerObj.displayHash(theImage,this.imageHash[theImage]['etchash']);
+				//ContainerObj.displayHash(theImage,this.imageHash[theImage]['etchash']);
 				this.setImageName(theImage);
 				var theId=this.getEtcValue('imageid');
 				var buttonError=false;
@@ -390,7 +390,7 @@ var imageObject = Class.create({
 							//imageError=this.getEtcValue('imageerror');
 						}
 					}
-					utilObj.writeLog('doalert','set to reg: buttonerror: '+buttonError+', imageError: '+imageError+', imagesetting: '+imageSetting);
+					UtilObj.writeLog('doalert','set to reg: buttonerror: '+buttonError+', imageError: '+imageError+', imagesetting: '+imageSetting);
 					if (!buttonError){
 						var theSrc=this.getEtcValue('imagesource');
 						this.setEtcValue('imagesetting','reg');
@@ -402,11 +402,11 @@ var imageObject = Class.create({
 				case 'busy':
 					var imageSetting=this.getEtcValue('imagesetting');
 					if (imageSetting == undefined){imageSetting='reg';}
-					utilObj.writeLog('doalert','set to busy: imageSetting: '+imageSetting);
+					UtilObj.writeLog('doalert','set to busy: imageSetting: '+imageSetting);
 					var imageError=this.getEtcValue('imageerror');
 					if (imageSetting=='busy'){
 						//alert ('set imageerror to: alreadybusy');
-						utilObj.writeLog('doalert','set imageerror to: alreadybusy');
+						UtilObj.writeLog('doalert','set imageerror to: alreadybusy');
 						//alert ('xxxf: set alreadybusy for '+this.imageName);
 						this.setEtcValue('imageerror','alreadybusy');
 						var newImageError='alreadybusy';
@@ -428,10 +428,10 @@ var imageObject = Class.create({
 						this.setEtcValue('imagesetting','reg');
 					}
 				}
-				utilObj.writeLog ('doalert','imagesetting: '+imageSetting+', thesrc: '+theSrc);
+				UtilObj.writeLog ('doalert','imagesetting: '+imageSetting+', thesrc: '+theSrc);
 				if (!buttonError){
 					try {$(theId).src=theSrc;}
-					catch (err){alert ('imageObj.changeSource('+err+')  imagename: '+theImage+', thecode: '+theCode+', theSrc: '+theSrc);}
+					catch (err){alert ('ImageObj.changeSource('+err+')  imagename: '+theImage+', thecode: '+theCode+', theSrc: '+theSrc);}
 				}
 				//alert ('thcode: '+theCode+', theImage: '+theImage+', imageobj: '+this.imageHash[theImage]['etchash']+', thesrc: '+theSrc+', theid: '+theId);
 			}

@@ -1,12 +1,13 @@
-var formObject = Class.create({
+var FormObject = Class.create({
 //--- initialize
 	initialize: function() {
 		this.formFragmentAry = new Array();
 		this.formAry = new Array();
 	},
 //--------------------------------------------------
+MenuObj
 	addFragment: function(fragName,formFragment){
-		this.formFragmentAry[fragName]=formFragment;
+		this.formMenuObjFragmentAry[fragName]=formFragment;
 	},
 //--------------------------------------------------
 	setOptionXrefForm: function(formName){
@@ -70,10 +71,10 @@ var formObject = Class.create({
 			dataRowAry[dataRowAry.length]=dataValue;
 		}
 		if (displayType=='table'){
-			tableObj.updateRow(dataRowAry);
+			TableObj.updateRow(dataRowAry);
 		}
 		else if (displayType=='calendar'){
-			calendarObj.updateDay(dataRowAry);
+			CalendarObj.updateDay(dataRowAry);
 		}
 	},
 	//----------------------------------
