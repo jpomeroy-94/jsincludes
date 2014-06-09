@@ -5,7 +5,6 @@ var FormObject = Class.create({
 		this.formAry = new Array();
 	},
 //--------------------------------------------------
-MenuObj
 	addFragment: function(fragName,formFragment){
 		this.formMenuObjFragmentAry[fragName]=formFragment;
 	},
